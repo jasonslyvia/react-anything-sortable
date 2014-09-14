@@ -1,6 +1,6 @@
 {
   "name": "react-anything-sortable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A ReactJS component that can sort any children with IE8 compatibility",
   "main": "index.js",
   "scripts": {
