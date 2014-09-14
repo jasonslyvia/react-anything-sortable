@@ -38,4 +38,6 @@ var YourItem = React.createClass({
 ## Heads-up
 1. specify your style for `Sortable` and `Sortable Items`, check `style.css`
 2. don't forget the `this.renderWithSortable` call in `YourItem.jsx`
-3. enjoy!
+3. specify `sortData` in `YourItem.jsx` so that `Sortable` can get it
+4. add `onSort` props to `Sortable` to be noticed when a sort operation finished
+5. enjoy!
