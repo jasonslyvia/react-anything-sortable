@@ -1,0 +1,67 @@
+/* pre-built style */
+.ui-sortable {
+  position: relative;
+  display: block;
+  overflow: visible;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.ui-sortable:before,
+.ui-sortable:after{
+  content: " ";
+  display: table;
+}
+
+.ui-sortable:after{
+  clear: both;
+}
+.ui-sortable .ui-sortable-item {
+  float: left;
+  cursor: move;
+}
+.ui-sortable .ui-sortable-item.ui-sortable-dragging {
+  position: absolute;
+  z-index: 1688;
+}
+.ui-sortable .ui-sortable-placeholder {
+  display: none;
+}
+.ui-sortable .ui-sortable-placeholder.visible {
+  display: block;
+  z-index: -1;
+}
+
+/* custom style */
+body{
+  position: relative;
+}
+
+.item-1{
+  padding: 5px 8px;
+  background-color: rgba(23, 12, 123, .8);
+  color: #fff;
+  margin-right: 15px;
+}
+
+.item-2{
+  padding: 2px 4px;
+  background-color: rgba(233, 233, 12, .8);
+  color: #fff;
+  margin-right: 8px;
+}
+
+.item-3{
+  padding: 10px 0;
+  background-color: rgba(23, 255, 12, .8);
+  color: #fff;
+  margin-right: 20px;
+}
+.ui-sortable .ui-sortable-placeholder.visible {
+  opacity: .4;
+  border: 2px #ccc dashed;
+}
+#resultWrapper{
+  position: absolute;
+  top: 50px;
+}
