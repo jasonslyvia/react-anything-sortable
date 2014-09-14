@@ -1,5 +1,6 @@
 ## Description
 `react-anything-sortable` is a ReactJS component that can sort anyother component passed as `this.props.children`. It is compatible with IE8 and all modern browsers.
+[react-anything-sortable](https://raw.githubusercontent.com/jasonslyvia/react-anything-sortable/master/demo.gif)
 
 ## How to use
 You can check the straight-forward demo by examining `index.jsx`, or here's a brief demo.
