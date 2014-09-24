@@ -49,6 +49,10 @@ var Sortable = React.createClass({
     this.containerWidth = this.getDOMNode().offsetWidth;
   },
 
+  componentWillUnmount: function() {
+    this.unbindEvent();
+  },
+
   bindEvent: function(){
     var self = this;
     var ns = this._eventNamespace || _.uniqueId('.oneui-sortable');
@@ -142,7 +146,7 @@ var Sortable = React.createClass({
       }
     }
 
-    this.setState({
+    this.isMounted() && this.setState({
       isDragging: false,
       placeHolderIndex: null,
       left: null,
