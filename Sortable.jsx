@@ -341,7 +341,9 @@ var Sortable = React.createClass({
 
     var style = {
       top: this.state.top,
-      left: this.state.left
+      left: this.state.left,
+      width: this._dimensionArr[this._draggingIndex].width,
+      height: this._dimensionArr[this._draggingIndex].height
     };
     return CloneWithProps(item, {
       sortableClassName: 'ui-sortable-item ui-sortable-dragging',
@@ -352,7 +354,6 @@ var Sortable = React.createClass({
   },
 
   render: function(){
-    var self = this;
     var className = CX({
       'ui-sortable': true
     });
