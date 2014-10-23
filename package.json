@@ -2,7 +2,7 @@
   "name": "react-anything-sortable",
   "version": "0.0.3",
   "description": "A ReactJS component that can drag and sort any children with IE8 compatibility",
-  "main": "index.js",
+  "main": "bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
