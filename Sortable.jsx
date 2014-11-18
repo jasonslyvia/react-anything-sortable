@@ -10,7 +10,6 @@
  */
 var React = require('react/addons');
 var $ = require('jquery');
-var _ = require('lodash');
 var CX = React.addons.classSet;
 var CloneWithProps = React.addons.cloneWithProps;
 
@@ -19,11 +18,10 @@ var CloneWithProps = React.addons.cloneWithProps;
  */
 var Sortable = React.createClass({
   propTypes: {
-    oneClass: React.PropTypes.string,
     /**
      * callback fires after each sort operation finish
      * function (dataSet){
-     *   //dataSet已sort
+     *   //dataSet sorted
      * }
      */
     onSort: React.PropTypes.func
@@ -35,7 +33,11 @@ var Sortable = React.createClass({
       return {}
     });
     //keep tracking the order of all children
-    this._orderArr = _.range(this._dimensionArr.length);
+    this._orderArr = [];
+    var i = 0;
+    while(i < this._dimensionArr.length){
+      this._orderArr.push(i++);
+    }
 
     return {
       isDragging: false,
@@ -55,7 +57,7 @@ var Sortable = React.createClass({
 
   bindEvent: function(){
     var self = this;
-    var ns = this._eventNamespace || _.uniqueId('.oneui-sortable');
+    var ns = this._eventNamespace || '.react-sortable' + Math.ceil(Math.random() * 1000);
     this._eventNamespace = ns;
 
     //so that the focus won't be lost if cursor moving too fast
@@ -80,17 +82,15 @@ var Sortable = React.createClass({
    * @param  {numbner} index index of pre-dragging item
    */
   handleMouseDown: function(e, index){
-    var self = this;
-
-    self._draggingIndex = index;
-    self._prevX = e.pageX;
-    self._prevY = e.pageY;
-    self._initOffset = e.offset;
-    self._isReadyForDragging = true;
-    self._hasInitDragging = false;
+    this._draggingIndex = index;
+    this._prevX = e.pageX;
+    this._prevY = e.pageY;
+    this._initOffset = e.offset;
+    this._isReadyForDragging = true;
+    this._hasInitDragging = false;
 
     //start listening mousemove and mouseup
-    self.bindEvent();
+    this.bindEvent();
   },
 
   /**
@@ -98,29 +98,30 @@ var Sortable = React.createClass({
    * @param  {object} e     React event
    */
   handleMouseMove: function(e){
-    var self = this;
-    if (!self._isReadyForDragging) {
+    this._isMouseMoving = true;
+
+    if (!this._isReadyForDragging) {
       return false;
     }
 
-    if (!self._hasInitDragging) {
-      self._dimensionArr[self._draggingIndex].isPlaceHolder = true;
-      self._hasInitDragging = false;
+    if (!this._hasInitDragging) {
+      this._dimensionArr[this._draggingIndex].isPlaceHolder = true;
+      this._hasInitDragging = false;
     }
 
     var newOffset = this.calculateNewOffset(e);
     var newIndex = this.calculateNewIndex(e);
-    self._draggingIndex = newIndex;
+    this._draggingIndex = newIndex;
 
-    self.setState({
+    this.setState({
       isDragging: true,
       top: newOffset.top,
       left: newOffset.left,
       placeHolderIndex: newIndex
     });
 
-    self._prevX = e.pageX;
-    self._prevY = e.pageY;
+    this._prevX = e.pageX;
+    this._prevY = e.pageY;
   },
 
   /**
@@ -128,11 +129,15 @@ var Sortable = React.createClass({
    * @param  {object} e     React event
    */
   handleMouseUp: function(e){
-    //取消监听事件
+    if (!this._isMouseMoving) {
+      return;
+    }
     this.unbindEvent();
-    //重置临时变量
+
+    //reset temp vars
     this._draggingIndex = null;
     this._isReadyForDragging = false;
+    this._isMouseMoving = false;
     this._initOffset = null;
     this._prevX = null;
     this._prevY = null;
@@ -141,7 +146,7 @@ var Sortable = React.createClass({
       this._dimensionArr[this.state.placeHolderIndex].isPlaceHolder = false;
 
       //sort finished, callback fires
-      if (_.isFunction(this.props.onSort)) {
+      if ($.isFunction(this.props.onSort)) {
         this.props.onSort(this.getSortData());
       }
     }
@@ -162,7 +167,7 @@ var Sortable = React.createClass({
    * @param  {number} index
    */
   handleChildUpdate: function(offset, width, height, index){
-    _.assign(this._dimensionArr[index], {
+    $.extend(this._dimensionArr[index], {
       top: offset.top,
       left: offset.left,
       width: width,
@@ -179,7 +184,7 @@ var Sortable = React.createClass({
    */
   getIndexByOffset: function(offset, direction){
     var self = this;
-    if (!offset || !_.isNumber(offset.top) || !_.isNumber(offset.left)) {
+    if (!offset || !$.isNumeric(offset.top) || !$.isNumeric(offset.left)) {
       return 0;
     }
 
@@ -226,7 +231,7 @@ var Sortable = React.createClass({
    * @return {array}
    */
   swapArrayItemPosition: function(arr, from, to){
-    if (!arr || !_.isNumber(from) || !_.isNumber(to)) {
+    if (!arr || !$.isNumeric(from) || !$.isNumeric(to)) {
       return arr;
     }
 
@@ -282,12 +287,12 @@ var Sortable = React.createClass({
 
   getSortData: function(){
     var self = this;
-    return _.compact(self._orderArr.map(function(itemIndex, index){
+    return self._orderArr.map(function(itemIndex, index){
       if (self._dimensionArr[index].isDeleted) {
         return;
       }
       return self.props.children[itemIndex].props.sortData;
-    }));
+    });
   },
 
   /**
@@ -357,7 +362,6 @@ var Sortable = React.createClass({
     var className = CX({
       'ui-sortable': true
     });
-    className += this.props.oneClass ? ' ' + this.props.oneClass : '';
 
     return (
       <div className={className}>

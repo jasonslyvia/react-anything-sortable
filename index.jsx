@@ -6,7 +6,7 @@ var React = require('react');
 var Sortable = require('./Sortable.jsx');
 var Item = require('./DemoItem.jsx');
 
-React.renderComponent(
+React.render(
   <Sortable onSort={handleSort}>
     <Item className="item-1" sortData="chn">
       The People's Republic of China
