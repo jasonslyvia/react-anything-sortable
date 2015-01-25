@@ -1,6 +1,6 @@
 {
   "name": "react-anything-sortable",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A ReactJS component that can drag and sort any children with IE8 compatibility",
   "main": "Sortable.jsx",
   "scripts": {
@@ -29,12 +29,16 @@
   "devDependencies": {
     "browserify": "^5.11.2",
     "gulp": "^3.8.8",
-    "react": "*",
+    "react": "^0.12.0",
+    "react-lifecycle": "^1.0.0",
     "reactify": "*",
     "vinyl-source-stream": "*"
   },
   "jest": {
     "scriptPreprocessor": "preprocessor.js",
-    "unmockedModulePathPatterns": ["node_modules/react", "node_modules/jquery"]
+    "unmockedModulePathPatterns": [
+      "node_modules/react",
+      "node_modules/jquery"
+    ]
   }
 }

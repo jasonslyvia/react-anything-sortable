@@ -4,14 +4,14 @@ var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 
 gulp.task('build', function(){
-  browserify(['./index.jsx'])
+  browserify(['./index.jsx'], {debug: true})
     .transform(reactify)
     .bundle()
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['build'], function() {
     gulp.watch(['*.jsx'], ['build']);
 });
 

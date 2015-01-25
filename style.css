@@ -33,6 +33,10 @@
 }
 
 /* custom style */
+* {
+  box-sizing: border-box;
+}
+
 body{
   position: relative;
 }
@@ -57,10 +61,12 @@ body{
   color: #fff;
   margin-right: 20px;
 }
+
 .ui-sortable .ui-sortable-placeholder.visible {
   opacity: .4;
   border: 2px #ccc dashed;
 }
+
 #resultWrapper{
   position: absolute;
   top: 50px;

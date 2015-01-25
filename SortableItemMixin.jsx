@@ -1,5 +1,4 @@
 /**
- * @jsx React.DOM
  * @file react-anything-sortable mixin
  * @author jasonslyvia
  */

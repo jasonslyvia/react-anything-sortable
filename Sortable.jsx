@@ -1,5 +1,4 @@
 /**
- * @jsx React.DOM
  * @file react-anything-sortable
  * @author jasonslyvia
  */
@@ -62,6 +61,18 @@ var Sortable = React.createClass({
 
     //so that the focus won't be lost if cursor moving too fast
     $(document).on('mousemove'+ns, function(e){
+      /**
+       * Since Chrome may trigger redundant mousemove event evne if
+       * we didn't really move the mouse, we should make sure that
+       * mouse coordinates really changed then respond to mousemove
+       * event
+       * @see https://code.google.com/p/chromium/issues/detail?id=327114
+       */
+      if ((e.pageX === self._prevX && e.pageY === self._prevY) ||
+          (self._prevX === null && self._prevY === null)) {
+        return false;
+      }
+
       self.handleMouseMove.call(self, e);
     });
 

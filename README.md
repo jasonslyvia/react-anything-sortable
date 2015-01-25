@@ -9,7 +9,7 @@ You can check the straight-forward demo by examining `index.jsx`, or here's a br
 In `your_component.jsx`
 ````
 var React = require('react');
-var Sortable = require('react-anything-sortable/Sortable');
+var Sortable = require('react-anything-sortable');
 var YourSortableItem = require('./YourItem');
 
 React.renderComponent(
@@ -38,6 +38,6 @@ var YourItem = React.createClass({
 ## Heads-up
 1. specify your style for `Sortable` and `Sortable Items`, check `style.css`
 2. don't forget the `this.renderWithSortable` call in `YourItem.jsx`
-3. specify `sortData` in `YourItem.jsx` so that `Sortable` can get it
+3. specify `sortData` in `YourItem.jsx` so that `Sortable` can return the sorted array
 4. add `onSort` props to `Sortable` to be noticed when a sort operation finished
-5. enjoy!
+5. since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children.
