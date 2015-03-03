@@ -41,3 +41,7 @@ var YourItem = React.createClass({
 3. specify `sortData` in `YourItem.jsx` so that `Sortable` can return the sorted array
 4. add `onSort` props to `Sortable` to be noticed when a sort operation finished
 5. since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children.
+
+## Contributors
+
+1. [stayradiated](https://github.com/stayradiated)
