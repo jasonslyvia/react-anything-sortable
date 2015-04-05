@@ -1,0 +1,24 @@
+{
+  "parser": "babel-eslint",
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "quotes": [2, "single"],
+    "eol-last": [1],
+    "no-mixed-requires": [0],
+    "no-underscore-dangle": [0]
+  },
+  "globals": {
+    "describe": false,
+    "chai": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "it": false
+  }
+}
