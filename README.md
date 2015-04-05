@@ -12,6 +12,14 @@ It has no external dependencies but `React` itself.
 
 ![react-anything-sortable](http://ww3.sinaimg.cn/mw690/831e9385gw1equstgvfmzg20a50360va.gif)
 
+## Installation
+
+```
+$ npm install --save react-anything-sortable
+// or use bower
+$ bower install react-anythong-sortable
+```
+
 ## How to use
 You can check the straight-forward demo by examining `demo` folder, or here's a brief use case.
 
@@ -50,6 +58,7 @@ var YourItem = React.createClass({
 ````
 
 ## Heads-up
+
 1. Specify your style for `Sortable` and `Sortable Items`, check `demo/style.css`, **it is NOT optional!**
 2. Don't forget the `this.renderWithSortable` call in `YourItem.jsx`
 3. Specify `sortData` in `YourItem.jsx` so that `Sortable` can return the sorted array
