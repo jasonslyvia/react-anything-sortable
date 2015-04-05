@@ -1,11 +1,14 @@
 ## Description
+
 `react-anything-sortable` is a ReactJS component that can sort any component passed as `this.props.children`. It is compatible with IE8 and all modern browsers.
 
-** Sort custom style children **
+It has no external dependencies but `React` itself.
+
+**Sort custom style children**
 
 ![react-anything-sortable](http://ww4.sinaimg.cn/large/831e9385gw1equswkpcfag209p02sgn5.gif)
 
-** Sort images **
+**Sort images**
 
 ![react-anything-sortable](http://ww3.sinaimg.cn/mw690/831e9385gw1equstgvfmzg20a50360va.gif)
 
@@ -29,7 +32,7 @@ React.renderComponent(
 
 and in `YourItem.jsx`
 
-** Notice: There's a breaking change in requring `SortableItemMixin` in version 0.2.0 **
+**Notice: There's a breaking change in requring `SortableItemMixin` in version 0.2.0**
 
 ````
 var React = require('react');
