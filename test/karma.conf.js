@@ -22,13 +22,14 @@ module.exports = function(config) {
           ignore: ['**/test/**', '**/node_modules/**', '**/lib/**']
         })
       ],
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx'],
+      bundleDelay: 1000
     },
 
 
     // list of files / patterns to l/oad in the browser
     files: [
-      'test/**/*.js*',
+      {pattern: 'test/specs/test.js', included: true, watched: false},
       {pattern: 'demo/style.css', included: false}
     ],
 
@@ -44,7 +45,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js*': ['browserify']
+      'test/**/*.js': ['browserify']
     },
 
 
@@ -78,7 +79,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['Firefox', 'Chrome'],
 
     browserNoActivityTimeout: 60000,
 
