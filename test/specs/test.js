@@ -9,6 +9,24 @@ import spies from 'chai-spies';
 
 chai.use(spies);
 
+
+//Delay karma test execution
+window.__karma__.loaded = () => {};
+
+function injectCSS() {
+  var link = document.createElement('link');
+  link.href = 'base/demo/style.css';
+  link.type = 'text/css';
+  link.rel = 'stylesheet';
+  document.head.appendChild(link);
+
+  link.onload = () => {
+    window.__karma__.start();
+  };
+}
+
+injectCSS();
+
 var expect = chai.expect;
 
 //Helper function to simulate mouse move series events
@@ -199,13 +217,3 @@ describe('Sortable', () => {
   });
 });
 
-
-function injectCSS() {
-  var link = document.createElement('link');
-  link.href = 'base/demo/style.css';
-  link.type = 'text/css';
-  link.rel = 'stylesheet';
-  document.head.appendChild(link);
-}
-
-injectCSS();
