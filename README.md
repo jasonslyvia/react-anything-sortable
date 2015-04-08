@@ -2,7 +2,7 @@
 
 It has no external dependencies but `React` itself.
 
-[![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)
+[![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable)
 [![npm version](https://badge.fury.io/js/react-anything-sortable.svg)](http://badge.fury.io/js/react-anything-sortable)
 [![Bower version](https://badge.fury.io/bo/react-anything-sortable.svg)](http://badge.fury.io/bo/react-anything-sortable)
 
@@ -16,12 +16,15 @@ It has no external dependencies but `React` itself.
 
 ![react-anything-sortable](http://ww3.sinaimg.cn/mw690/831e9385gw1equstgvfmzg20a50360va.gif)
 
+**Children with custom event handler**
+![react-anything-sortable](http://ww4.sinaimg.cn/large/831e9385gw1eqy459cieqg20au02s0t4.gif)
+
 ## Installation
 
 ```
 $ npm install --save react-anything-sortable
 // or use bower
-$ bower install react-anythong-sortable
+$ bower install --save react-anything-sortable
 ```
 
 ## How to use

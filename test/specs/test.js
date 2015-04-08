@@ -104,7 +104,7 @@ describe('Sortable', () => {
 
     beforeEach(() => {
       component = React.render(
-        <Sortable>
+        <Sortable className="style-for-test">
           <DemoItem sortData="1" className="item-1">1</DemoItem>
           <DemoItem sortData="2" className="item-2">2</DemoItem>
           <DemoItem sortData="3" className="item-3">3</DemoItem>
@@ -173,6 +173,37 @@ describe('Sortable', () => {
 
       var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(3);
+    });
+
+    it('should NOT move item if there is no preceding mousedown event', () => {
+      target = document.querySelector('.item-1');
+
+      triggerEvent(target, 'mousedown', {
+        clientX: 25,
+        clientY: 11,
+        offset: {
+          left: 1,
+          top: 1
+        }
+      });
+
+      triggerEvent(target, 'mouseup', {
+        clientX: 25,
+        clientY: 11
+      });
+
+      triggerEvent(target, 'mousemove', {
+        clientX: 26,
+        clientY: 11
+      });
+
+      triggerEvent(target, 'mousemove', {
+        clientX: 300,
+        clientY: 20
+      });
+
+      target = document.querySelector('.ui-sortable-dragging');
+      expect(target).to.not.exist;
     });
   });
 

@@ -50,6 +50,22 @@ body{
   margin: 0;
 }
 
+.ui-sortable .ui-sortable-placeholder.visible {
+  opacity: .4;
+  -ms-filter: opacity(alpha=40);
+  border: 2px #ccc dashed;
+}
+
+.ui-sortable.style-for-test {
+  display: inline-block;
+}
+
+.section {
+  border-bottom: 2px #999 dashed;
+  padding-bottom: 30px;
+  margin-bottom: 50px;
+}
+
 .item-1{
   width: 50px;
   height: 50px;
@@ -74,25 +90,30 @@ body{
   margin-right: 20px;
 }
 
-.img-1,
-.img-2,
-.img-3{
+
+.img-item {
   margin-right: 20px;
-  width: 100px;
+  max-width: 150px;
   height: auto;
 }
 
-.ui-sortable .ui-sortable-placeholder.visible {
-  opacity: .4;
-  -ms-filter: opacity(alpha=40);
-  border: 2px #ccc dashed;
-}
-
-#resultWrapper{
-  margin-top: 20px;
-}
-
-#react1 {
-  margin-top: 50px;
+.action-item {
+  width: 100px;
   height: 40px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.action-item span {
+  line-height: 40px;
+  vertical-align: middle;
+}
+
+.action-item .close {
+  float: right;
+  width: 30px;
+  background: #f00;
+  cursor: pointer;
 }

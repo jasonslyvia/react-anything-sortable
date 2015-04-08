@@ -11,7 +11,8 @@
  * @dependency
  */
 import React from 'react/addons';
-import {on, off, isFunction, isNumeric, position, closest, assign, width, height,
+import {on, off, isFunction, isNumeric, position, closest, get,
+        assign, width, height,
         outerWidthWithMargin, outerHeightWithMargin} from './utils.js';
 
 var CX = React.addons.classSet;
@@ -28,7 +29,8 @@ export default React.createClass({
      *   //dataSet sorted
      * }
      */
-    onSort: React.PropTypes.func
+    onSort: React.PropTypes.func,
+    className: React.PropTypes.string,
   },
 
   getInitialState () {
@@ -148,9 +150,7 @@ export default React.createClass({
    * @param  {object} e     React event
    */
   handleMouseUp () {
-    if (!this._isMouseMoving) {
-      return;
-    }
+    var _hasMouseMoved = this._isMouseMoving;
     this.unbindEvent();
 
     //reset temp vars
@@ -170,7 +170,7 @@ export default React.createClass({
       }
     }
 
-    if (this.isMounted()) {
+    if (this.isMounted() && _hasMouseMoved) {
       this.setState({
         isDragging: false,
         placeHolderIndex: null,
@@ -294,7 +294,11 @@ export default React.createClass({
                            this.state.placeHolderIndex :
                            this._draggingIndex;
 
-    var offset = position(closest((e.target || e.srcElement), '.ui-sortable-item'));
+    // Since `mousemove` is listened on document, when cursor move too fast,
+    // `e.target` may be `body` or some other stuff instead of
+    // `.ui-sortable-item`
+    var target = closest((e.target || e.srcElement), '.ui-sortable-item') || get('.ui-sortable-dragging');
+    var offset = position(target);
     var direction = this._prevX > (e.pageX || e.clientX) ? 'left' : 'right';
 
     var newIndex = this.getIndexByOffset(offset, direction);
@@ -378,9 +382,7 @@ export default React.createClass({
   },
 
   render () {
-    var className = CX({
-      'ui-sortable': true
-    });
+    var className = 'ui-sortable ' + (this.props.className || '');
 
     return (
       <div className={className}>

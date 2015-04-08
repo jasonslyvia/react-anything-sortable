@@ -129,3 +129,7 @@ export function assign (target) {
   }
   return to;
 }
+
+export function get(selector) {
+  return document.querySelector(selector);
+}

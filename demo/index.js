@@ -7,9 +7,10 @@ import React from 'react/addons';
 import Sortable from '../src/index.js';
 import Item from './DemoItem.js';
 import ImageItem from './ImageItem.js';
+import ActionItem from './ActionItem.js';
 
 React.render(
-  <Sortable onSort={handleSort}>
+  <Sortable onSort={handleSort} className="style-for-test">
     <Item className="item-1" sortData="react" key={1}>
       React
     </Item>
@@ -29,15 +30,25 @@ function handleSort(data){
 React.render(
   <Sortable onSort={handleSort1}>
     <ImageItem src="http://ww4.sinaimg.cn/large/831e9385gw1equsc4s1hbj207y02xmx9.jpg"
-               className="img-1" sortData="react" />
+               sortData="react" />
     <ImageItem src="http://ww4.sinaimg.cn/large/831e9385gw1equsc3q8lej20fz04waa8.jpg"
-               className="img-2" sortData="angular" />
+               sortData="angular" />
     <ImageItem src="http://ww4.sinaimg.cn/large/831e9385gw1equsc46m7zj20ff02zq3h.jpg"
-               className="img-3" sortData="backbone" />
+               sortData="backbone" />
   </Sortable>
 , document.getElementById('react1'));
 
 function handleSort1(data){
   document.getElementById('result1').innerText = data.join(' ');
 }
+
+
+
+React.render(
+  <Sortable>
+    <ActionItem>Ember</ActionItem>
+    <ActionItem>jQuery</ActionItem>
+    <ActionItem>YUI</ActionItem>
+  </Sortable>
+, document.getElementById('react2'));
 

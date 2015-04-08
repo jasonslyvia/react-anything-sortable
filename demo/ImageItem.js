@@ -7,7 +7,7 @@ export default React.createClass({
   mixins: [SortableItemMixin],
   getDefaultProps () {
     return {
-      className: 'demo-image-item'
+      className: 'img-item'
     };
   },
 
