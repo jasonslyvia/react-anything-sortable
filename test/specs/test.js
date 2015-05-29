@@ -99,6 +99,25 @@ describe('Sortable', () => {
     });
   });
 
+  describe('Provide sortable child', () => {
+    beforeEach(() => {
+      React.render(
+        <Sortable>
+          <DemoItem sortData="1" />
+        </Sortable>
+      , document.body);
+    });
+
+    afterEach(() => {
+      React.unmountComponentAtNode(document.body);
+    });
+
+    it('should render 1 child', () => {
+      var children = document.querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(1);
+    });
+  });
+
   describe('Dragging children', () => {
     var component, target;
 
