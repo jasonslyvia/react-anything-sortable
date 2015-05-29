@@ -315,7 +315,11 @@ export default React.createClass({
       if (this._dimensionArr[index].isDeleted) {
         return undefined;
       }
-      return this.props.children[itemIndex].props.sortData;
+      var item = this.props.children[itemIndex];
+      if (!item) {
+        return undefined;
+      }
+      return item.props.sortData;
     });
   },
 
@@ -331,6 +335,9 @@ export default React.createClass({
     var items = _orderArr.map((itemIndex, index) => {
       var item = this.props.children[itemIndex];
       if (_dimensionArr[index].isDeleted) {
+        return undefined;
+      }
+      if (!item) {
         return undefined;
       }
       if (index === this._draggingIndex) {
