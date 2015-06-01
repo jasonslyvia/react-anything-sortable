@@ -19,7 +19,7 @@ gulp.task('browser-sync', function(){
 
 gulp.task('compile', function(){
   return gulp.src('src/*.js')
-  .pipe(babel())
+  .pipe(babel({ loose: ["es6.modules"] }))
   .pipe(gulp.dest('./lib/'))
   .pipe(browserSync.reload({stream: true}));
 });

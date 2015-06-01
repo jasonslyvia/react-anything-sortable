@@ -99,6 +99,54 @@ describe('Sortable', () => {
     });
   });
 
+  describe('Provide sortable child', () => {
+    beforeEach(() => {
+      React.render(
+        <Sortable>
+          <DemoItem sortData="1" />
+        </Sortable>
+      , document.body);
+    });
+
+    afterEach(() => {
+      React.unmountComponentAtNode(document.body);
+    });
+
+    it('should render 1 child', () => {
+      var children = document.querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(1);
+    });
+  });
+
+  describe('Provide sortable children with nulls', () => {
+    beforeEach(() => {
+
+      React.render(
+        <Sortable>
+          {
+            ['hello1', 'hello2', ''].map(function(name) {
+              if (name) {
+                return (<DemoItem sortData={name} />);
+              }
+              else {
+                return null;
+              }
+            })
+          }
+        </Sortable>
+      , document.body);
+    });
+
+    afterEach(() => {
+      React.unmountComponentAtNode(document.body);
+    });
+
+    it('should render 2 children', () => {
+      var children = document.querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(2);
+    });
+  });
+
   describe('Dragging children', () => {
     var component, target;
 

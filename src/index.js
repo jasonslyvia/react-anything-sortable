@@ -36,7 +36,7 @@ export default React.createClass({
   getInitialState () {
     //keep tracking the dimension and coordinates of all children
     this._dimensionArr = this.props.children ?
-                         this.props.children.map(() => {return {}; }) :
+                         ( Array.isArray(this.props.children) ? this.props.children.map(() => {return {}; }) : [{}] ) :
                          [];
 
     //keep tracking the order of all children
@@ -315,7 +315,11 @@ export default React.createClass({
       if (this._dimensionArr[index].isDeleted) {
         return undefined;
       }
-      return this.props.children[itemIndex].props.sortData;
+      var item = Array.isArray(this.props.children) ? this.props.children[itemIndex] : this.props.children;
+      if (!item) {
+        return undefined;
+      }
+      return item.props.sortData;
     });
   },
 
@@ -329,8 +333,11 @@ export default React.createClass({
     var draggingItem;
 
     var items = _orderArr.map((itemIndex, index) => {
-      var item = this.props.children[itemIndex];
+      var item = Array.isArray(this.props.children) ? this.props.children[itemIndex] : this.props.children;
       if (_dimensionArr[index].isDeleted) {
+        return undefined;
+      }
+      if (!item) {
         return undefined;
       }
       if (index === this._draggingIndex) {
