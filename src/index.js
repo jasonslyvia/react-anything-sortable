@@ -15,8 +15,8 @@ import {on, off, isFunction, isNumeric, position, closest, get,
         assign, width, height,
         outerWidthWithMargin, outerHeightWithMargin} from './utils.js';
 
-var CX = React.addons.classSet;
-var CloneWithProps = React.addons.cloneWithProps;
+const CX = React.addons.classSet;
+const CloneWithProps = React.addons.cloneWithProps;
 
 /**
  * @class Sortable
@@ -30,7 +30,7 @@ export default React.createClass({
      * }
      */
     onSort: React.PropTypes.func,
-    className: React.PropTypes.string,
+    className: React.PropTypes.string
   },
 
   getInitialState () {
@@ -41,7 +41,7 @@ export default React.createClass({
 
     //keep tracking the order of all children
     this._orderArr = [];
-    var i = 0;
+    let i = 0;
     while(i < this._dimensionArr.length){
       this._orderArr.push(i++);
     }
@@ -129,8 +129,8 @@ export default React.createClass({
       this._hasInitDragging = false;
     }
 
-    var newOffset = this.calculateNewOffset(e);
-    var newIndex = this.calculateNewIndex(e);
+    const newOffset = this.calculateNewOffset(e);
+    const newIndex = this.calculateNewIndex(e);
 
     this._draggingIndex = newIndex;
 
@@ -150,10 +150,10 @@ export default React.createClass({
    * @param  {object} e     React event
    */
   handleMouseUp () {
-    var _hasMouseMoved = this._isMouseMoving;
+    const _hasMouseMoved = this._isMouseMoving;
     this.unbindEvent();
 
-    //reset temp vars
+    //reset temp lets
     this._draggingIndex = null;
     this._isReadyForDragging = false;
     this._isMouseMoving = false;
@@ -212,17 +212,17 @@ export default React.createClass({
       return 0;
     }
 
-    var _dimensionArr = this._dimensionArr;
-    var offsetX = offset.left;
-    var offsetY = offset.top;
-    var prevIndex = this.state.placeHolderIndex !== null ?
+    const _dimensionArr = this._dimensionArr;
+    const offsetX = offset.left;
+    const offsetY = offset.top;
+    const prevIndex = this.state.placeHolderIndex !== null ?
                    this.state.placeHolderIndex :
                    this._draggingIndex;
-    var newIndex;
+    let newIndex;
 
     _dimensionArr.every((coord, index) => {
-      var relativeLeft = offsetX - coord.left;
-      var relativeTop = offsetY - coord.top;
+      const relativeLeft = offsetX - coord.left;
+      const relativeTop = offsetY - coord.top;
 
       if (offsetX < 0) {
         newIndex = 0;
@@ -259,7 +259,7 @@ export default React.createClass({
       return arr;
     }
 
-    var srcEl = arr.splice(src, 1)[0];
+    const srcEl = arr.splice(src, 1)[0];
     arr.splice(to, 0, srcEl);
     return arr;
   },
@@ -270,13 +270,13 @@ export default React.createClass({
    * @return {object}   {left: 1, top: 1}
    */
   calculateNewOffset (e) {
-    var deltaX = this._prevX - (e.pageX || e.clientX);
-    var deltaY = this._prevY - (e.pageY || e.clientY);
+    const deltaX = this._prevX - (e.pageX || e.clientX);
+    const deltaY = this._prevY - (e.pageY || e.clientY);
 
-    var prevLeft = this.state.left !== null ? this.state.left : this._initOffset.left;
-    var prevTop = this.state.top !== null ? this.state.top : this._initOffset.top;
-    var newLeft = prevLeft - deltaX;
-    var newTop = prevTop - deltaY;
+    const prevLeft = this.state.left !== null ? this.state.left : this._initOffset.left;
+    const prevTop = this.state.top !== null ? this.state.top : this._initOffset.top;
+    const newLeft = prevLeft - deltaX;
+    const newTop = prevTop - deltaY;
 
     return {
       left: newLeft,
@@ -290,18 +290,18 @@ export default React.createClass({
    * @return {number}
    */
   calculateNewIndex (e) {
-    var placeHolderIndex = this.state.placeHolderIndex !== null ?
+    let placeHolderIndex = this.state.placeHolderIndex !== null ?
                            this.state.placeHolderIndex :
                            this._draggingIndex;
 
     // Since `mousemove` is listened on document, when cursor move too fast,
     // `e.target` may be `body` or some other stuff instead of
     // `.ui-sortable-item`
-    var target = closest((e.target || e.srcElement), '.ui-sortable-item') || get('.ui-sortable-dragging');
-    var offset = position(target);
-    var direction = this._prevX > (e.pageX || e.clientX) ? 'left' : 'right';
+    const target = closest((e.target || e.srcElement), '.ui-sortable-item') || get('.ui-sortable-dragging');
+    const offset = position(target);
+    const direction = this._prevX > (e.pageX || e.clientX) ? 'left' : 'right';
 
-    var newIndex = this.getIndexByOffset(offset, direction);
+    const newIndex = this.getIndexByOffset(offset, direction);
     if (newIndex !== placeHolderIndex) {
       this._dimensionArr = this.swapArrayItemPosition(this._dimensionArr, placeHolderIndex, newIndex);
       this._orderArr = this.swapArrayItemPosition(this._orderArr, placeHolderIndex, newIndex);
@@ -315,10 +315,14 @@ export default React.createClass({
       if (this._dimensionArr[index].isDeleted) {
         return undefined;
       }
-      var item = Array.isArray(this.props.children) ? this.props.children[itemIndex] : this.props.children;
+
+      const item = Array.isArray(this.props.children) ?
+                   this.props.children[itemIndex] :
+                   this.props.children;
       if (!item) {
         return undefined;
       }
+
       return item.props.sortData;
     });
   },
@@ -327,13 +331,11 @@ export default React.createClass({
    * render all sortable children which mixined with SortableItemMixin
    */
   renderItems () {
-    var _dimensionArr = this._dimensionArr;
-    var _orderArr = this._orderArr;
+    const {_dimensionArr, _orderArr} = this;
+    let draggingItem;
 
-    var draggingItem;
-
-    var items = _orderArr.map((itemIndex, index) => {
-      var item = Array.isArray(this.props.children) ? this.props.children[itemIndex] : this.props.children;
+    const items = _orderArr.map((itemIndex, index) => {
+      let item = Array.isArray(this.props.children) ? this.props.children[itemIndex] : this.props.children;
       if (_dimensionArr[index].isDeleted) {
         return undefined;
       }
@@ -344,8 +346,8 @@ export default React.createClass({
         draggingItem = this.renderDraggingItem(item);
       }
 
-      var isPlaceHolder = _dimensionArr[index].isPlaceHolder;
-      var itemClassName = CX({
+      const isPlaceHolder = _dimensionArr[index].isPlaceHolder;
+      const itemClassName = CX({
         'ui-sortable-item': true,
         'ui-sortable-placeholder': isPlaceHolder,
         'visible': this.state.isDragging && isPlaceHolder
@@ -374,7 +376,7 @@ export default React.createClass({
       return;
     }
 
-    var style = {
+    const style = {
       top: this.state.top,
       left: this.state.left,
       width: this._dimensionArr[this._draggingIndex].width,
@@ -389,7 +391,7 @@ export default React.createClass({
   },
 
   render () {
-    var className = 'ui-sortable ' + (this.props.className || '');
+    const className = 'ui-sortable ' + (this.props.className || '');
 
     return (
       <div className={className}>
@@ -403,7 +405,7 @@ export default React.createClass({
 /**
  * @class SortableItemMixin
  */
-var SortableItemMixin = {
+let SortableItemMixin = {
   getDefaultProps () {
     return {
       sortableClassName: '',
@@ -415,8 +417,8 @@ var SortableItemMixin = {
   },
 
   handleSortableItemMouseDown (e) {
-    var target = closest((e.target || e.srcElement), '.ui-sortable-item');
-    var evt = {
+    const target = closest((e.target || e.srcElement), '.ui-sortable-item');
+    const evt = {
       pageX: (e.pageX || e.clientX),
       pageY: (e.pageY || e.clientY),
       offset: position(target)
@@ -426,7 +428,7 @@ var SortableItemMixin = {
   },
 
   componentDidMount () {
-    var node = this.getDOMNode();
+    const node = this.getDOMNode();
 
     on(node, 'selectstart', (e) => {
       if (e.preventDefault) {
@@ -445,7 +447,7 @@ var SortableItemMixin = {
   },
 
   componentDidUpdate () {
-    var node = this.getDOMNode();
+    const node = this.getDOMNode();
     this.props.onSortableItemMount(position(node),
                                    width(node),
                                    height(node),

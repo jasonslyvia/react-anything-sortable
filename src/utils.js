@@ -54,8 +54,7 @@ export function offset(el) {
     };
   }
 
-  var rect = el.getBoundingClientRect();
-
+  const rect = el.getBoundingClientRect();
   return {
     top: rect.top + document.body.scrollTop,
     left: rect.left + document.body.scrollLeft
@@ -71,16 +70,16 @@ export function height(el) {
 }
 
 export function outerWidthWithMargin(el) {
-  var _width = el.offsetWidth;
-  var style = el.currentStyle || getComputedStyle(el);
+  let _width = el.offsetWidth;
+  const style = el.currentStyle || getComputedStyle(el);
 
   _width += (parseInt(style.marginLeft) || 0) + (parseInt(style.marginRight) || 0);
   return _width;
 }
 
 export function outerHeightWithMargin(el) {
-  var _height = el.offsetHeight;
-  var style = el.currentStyle || getComputedStyle(el);
+  let _height = el.offsetHeight;
+  const style = el.currentStyle || getComputedStyle(el);
 
   _height += (parseInt(style.marginLeft) || 0) + (parseInt(style.marginRight) || 0);
   return _height;
@@ -88,18 +87,18 @@ export function outerHeightWithMargin(el) {
 
 export function closest(el, className) {
   className = className.replace(/^[\b\.]/, '');
-  var reg = new RegExp('\\b'+className+'\\b');
+  const reg = new RegExp('\\b'+className+'\\b');
 
-  var finder = (el, className) => {
-    if (el.className && el.className.match(reg)) {
+  const finder = (_el, _className) => {
+    if (_el.className && _el.className.match(reg)) {
       return el;
     }
     // matches document
-    else if (el.parentNode === null) {
+    else if (_el.parentNode === null) {
       return null;
     }
     else {
-      return finder(el.parentNode, className);
+      return finder(_el.parentNode, _className);
     }
   };
 
@@ -111,17 +110,17 @@ export function assign (target) {
     throw new TypeError('Cannot convert first argument to object');
   }
 
-  var to = Object(target);
-  for (var i = 1; i < arguments.length; i++) {
-    var nextSource = arguments[i];
+  let to = Object(target);
+  for (let i = 1; i < arguments.length; i++) {
+    const nextSource = arguments[i];
     if (nextSource === undefined || nextSource === null) {
       continue;
     }
 
-    var keysArray = Object.keys(Object(nextSource));
-    for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
-      var nextKey = keysArray[nextIndex];
-      var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+    const keysArray = Object.keys(Object(nextSource));
+    for (let nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+      const nextKey = keysArray[nextIndex];
+      const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
       if (desc !== undefined && desc.enumerable) {
         to[nextKey] = nextSource[nextKey];
       }

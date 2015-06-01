@@ -83,3 +83,4 @@ var YourItem = React.createClass({
 ## Contributors
 
 1. [stayradiated](https://github.com/stayradiated)
+2. [vizath](https://github.com/vizath)
