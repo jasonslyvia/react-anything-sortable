@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp = require('gulp');
-var babel = require('gulp-babel');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var source = require('vinyl-source-stream');
@@ -15,16 +14,6 @@ gulp.task('browser-sync', function(){
       index: 'index.html'
     }
   });
-});
-
-gulp.task('compile', function(){
-  return gulp.src('src/*.js')
-  .pipe(babel({
-    loose: ['es6.modules'],
-    stage: 0
-  }))
-  .pipe(gulp.dest('./lib/'))
-  .pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('demo', ['compile'], function(){
