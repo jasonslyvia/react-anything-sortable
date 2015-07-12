@@ -16,7 +16,7 @@ gulp.task('browser-sync', function(){
   });
 });
 
-gulp.task('demo', ['compile'], function(){
+gulp.task('demo', function(){
   return browserify(['./demo/index.js'], {debug: true})
     .transform(babelify)
     .bundle()
