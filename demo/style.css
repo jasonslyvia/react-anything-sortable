@@ -60,6 +60,10 @@ body{
   display: inline-block;
 }
 
+.ui-sortable.full-width .ui-sortable-item{
+  width: 100%;
+}
+
 .section {
   border-bottom: 2px #999 dashed;
   padding-bottom: 30px;

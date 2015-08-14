@@ -2,10 +2,11 @@
 'use strict';
 
 import React from 'react/addons';
-import Sortable, {SortableItemMixin} from '../../src/index.js';
+import Sortable, {SortableItemMixin} from '../../src/index';
 import DemoItem from '../../demo/DemoItem';
-import triggerEvent from '../triggerEvent.js';
+import triggerEvent from '../triggerEvent';
 import spies from 'chai-spies';
+import {moveX, moveY} from '../mouseMove';
 
 chai.use(spies);
 
@@ -27,40 +28,9 @@ function injectCSS() {
 
 injectCSS();
 
-var expect = chai.expect;
 
-//Helper function to simulate mouse move series events
-function moveX(target, src, to) {
-  triggerEvent(target, 'mousedown', {
-    clientX: src,
-    clientY: 25,
-    offset: {
-      left: 1,
-      top: 1
-    }
-  });
+const expect = chai.expect;
 
-  triggerEvent(target, 'mousemove', {
-    clientX: (src < to ? src + 1 : src - 1),
-    clientY: 25
-  });
-
-  var dragging = document.querySelector('.ui-sortable-dragging');
-  triggerEvent(dragging, 'mousemove', {
-    clientX: to,
-    clientY: 25
-  });
-
-  triggerEvent(dragging, 'mousemove', {
-    clientX: (src < to ? src + 1 : src - 1),
-    clientY: 25
-  });
-
-  triggerEvent(target, 'mouseup', {
-    clientX: (src < to ? src + 1 : src - 1),
-    clientY: 25
-  });
-}
 
 describe('Sortable', () => {
   describe('Default scenario', () => {
@@ -187,7 +157,7 @@ describe('Sortable', () => {
 
     it('should switch position when dragging from left to right', () => {
       target = document.querySelector('.ui-sortable-item');
-      moveX(target, 25, 180);
+      moveX(target, 25, 210);
 
       var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
       expect(children[children.length - 1].textContent).to.equal('1');
@@ -196,7 +166,7 @@ describe('Sortable', () => {
 
     it('should switch position when dragging from right to left', () => {
       target = document.querySelector('.item-3');
-      moveX(target, 180, 25);
+      moveX(target, 210, 25);
 
       var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
       expect(children[0].textContent).to.equal('3');
@@ -255,6 +225,46 @@ describe('Sortable', () => {
     });
   });
 
+  describe('Dragging children verically', () => {
+    var component, target;
+
+    beforeEach(() => {
+      component = React.render(
+        <Sortable className="style-for-test full-width">
+          <DemoItem sortData="1" className="item-1">1</DemoItem>
+          <DemoItem sortData="2" className="item-2">2</DemoItem>
+          <DemoItem sortData="3" className="item-3">3</DemoItem>
+        </Sortable>
+      , document.body);
+    });
+
+    afterEach(() => {
+      React.unmountComponentAtNode(document.body);
+      component = null;
+      target = null;
+    });
+
+
+    it('should switch position when dragging from up to down', () => {
+      target = document.querySelector('.ui-sortable-item');
+
+      moveY(target, 25, 180);
+
+      var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
+      expect(children[children.length - 1].textContent).to.equal('1');
+    });
+
+
+    it('should switch position when dragging from down to up', () => {
+      target = document.querySelector('.item-3');
+      moveY(target, 180, 25);
+
+      var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
+      expect(children[0].textContent).to.equal('3');
+    });
+
+  });
+
   describe('onSort Props', () => {
     var callback;
 
@@ -277,13 +287,13 @@ describe('Sortable', () => {
 
     it('should call onSort when a drag\'n\'drop finished', () => {
       var target = document.querySelector('.item-1');
-      moveX(target, 25, 180);
+      moveX(target, 25, 210);
       expect(callback).to.have.been.called.with(['2', '3', '1']);
     });
 
     it('should call onSort when a opposite drag\'n\'drop finished', () => {
       var target = document.querySelector('.item-3');
-      moveX(target, 180, 25);
+      moveX(target, 210, 25);
       expect(callback).to.have.been.called.with(['3', '1', '2']);
     });
 

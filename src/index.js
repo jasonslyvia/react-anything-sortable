@@ -55,7 +55,7 @@ export default React.createClass({
   },
 
   componentDidMount () {
-    this.containerWidth = this.getDOMNode().offsetWidth;
+    this.containerWidth = React.findDOMNode(this).offsetWidth;
   },
 
   componentWillUnmount () {
@@ -220,25 +220,27 @@ export default React.createClass({
                    this._draggingIndex;
     let newIndex;
 
-    _dimensionArr.every((coord, index) => {
-      const relativeLeft = offsetX - coord.left;
-      const relativeTop = offsetY - coord.top;
+    _dimensionArr.every((item, index) => {
+      const relativeLeft = offsetX - item.left;
+      const relativeTop = offsetY - item.top;
 
-      if (offsetX < 0) {
-        newIndex = 0;
-        return false;
-      }
-      else if (offsetX > this.containerWidth) {
-        newIndex = _dimensionArr.length - 1;
-        return false;
-      }
-      else if (relativeLeft < coord.fullWidth && relativeTop < coord.fullHeight) {
-        if (relativeLeft < coord.fullWidth / 2 && direction === 'left') {
+      if (relativeLeft < item.fullWidth && relativeTop < item.fullHeight) {
+        if (relativeLeft < item.fullWidth / 2 && direction === 'left') {
           newIndex = index;
         }
-        else if(relativeLeft > coord.fullWidth / 2 && direction === 'right'){
-          newIndex = Math.min(index+1, _dimensionArr.length-1);
+        else if(relativeLeft > item.fullWidth / 2 && direction === 'right'){
+          newIndex = Math.min(index + 1, _dimensionArr.length - 1);
         }
+        else if (relativeTop < item.fullHeight / 2 && direction === 'up') {
+          newIndex = index;
+        }
+        else if (relativeTop > item.fullHeight / 2 && direction === 'down') {
+          newIndex = index;
+        }
+        else {
+          return true;
+        }
+
         return false;
       }
       return true;
@@ -299,7 +301,20 @@ export default React.createClass({
     // `.ui-sortable-item`
     const target = closest((e.target || e.srcElement), '.ui-sortable-item') || get('.ui-sortable-dragging');
     const offset = position(target);
-    const direction = this._prevX > (e.pageX || e.clientX) ? 'left' : 'right';
+
+    const deltaX = Math.abs(this._prevX - (e.pageX || e.clientX));
+    const deltaY = Math.abs(this._prevY - (e.pageY || e.clientY));
+
+    let direction;
+    // tend to move left/right
+    if (deltaX > deltaY) {
+      direction = this._prevX > (e.pageX || e.clientX) ? 'left' : 'right';
+    }
+    // tend to move up/down
+    else {
+      direction = this._prevY > (e.pageY || e.clientY) ? 'up' : 'down';
+    }
+
 
     const newIndex = this.getIndexByOffset(offset, direction);
     if (newIndex !== placeHolderIndex) {
@@ -428,7 +443,7 @@ let SortableItemMixin = {
   },
 
   componentDidMount () {
-    const node = this.getDOMNode();
+    const node = React.findDOMNode(this);
 
     on(node, 'selectstart', (e) => {
       if (e.preventDefault) {
@@ -447,7 +462,7 @@ let SortableItemMixin = {
   },
 
   componentDidUpdate () {
-    const node = this.getDOMNode();
+    const node = React.findDOMNode(this);
     this.props.onSortableItemMount(position(node),
                                    width(node),
                                    height(node),
