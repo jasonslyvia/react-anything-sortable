@@ -1,8 +1,8 @@
 {
   "name": "react-anything-sortable",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A ReactJS component that can drag and sort any children with IE8 compatibility",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start test/karma.conf.js"
   },
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/jasonslyvia/react-anything-sortable",
   "dependencies": {
-    "react": "^0.12.0"
+    "react": "~0.13.0"
   },
   "devDependencies": {
     "babelify": "^6.0.1",
@@ -46,10 +46,5 @@
     "react": "^0.12.0",
     "react-lifecycle": "^1.0.0",
     "vinyl-source-stream": "*"
-  },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
   }
 }

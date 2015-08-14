@@ -91,7 +91,7 @@ export function closest(el, className) {
 
   const finder = (_el, _className) => {
     if (_el.className && _el.className.match(reg)) {
-      return el;
+      return _el;
     }
     // matches document
     else if (_el.parentNode === null) {
