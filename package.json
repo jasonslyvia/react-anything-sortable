@@ -21,10 +21,11 @@
     "url": "https://github.com/jasonslyvia/react-anything-sortable/issues"
   },
   "homepage": "https://github.com/jasonslyvia/react-anything-sortable",
-  "dependencies": {
+  "peerDependencies": {
     "react": "~0.13.0"
   },
   "devDependencies": {
+    "react": "~0.13.0",
     "babelify": "^6.0.1",
     "browser-sync": "^2.5.2",
     "browserify": "^5.11.2",
