@@ -1,6 +1,6 @@
 {
   "name": "react-anything-sortable",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A ReactJS component that can drag and sort any children with IE8 compatibility",
   "main": "lib/index.js",
   "scripts": {
@@ -25,7 +25,6 @@
     "react": "~0.13.0"
   },
   "devDependencies": {
-    "react": "~0.13.0",
     "babelify": "^6.0.1",
     "browser-sync": "^2.5.2",
     "browserify": "^5.11.2",
