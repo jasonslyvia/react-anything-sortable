@@ -3,13 +3,14 @@
  */
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
+import { render } from 'react-dom';
 import Sortable from '../src/index.js';
 import Item from './DemoItem.js';
 import ImageItem from './ImageItem.js';
 import ActionItem from './ActionItem.js';
 
-React.render(
+render(
   <Sortable onSort={handleSort} className="style-for-test">
     <Item className="item-1" sortData="react" key={1}>
       React
@@ -27,7 +28,7 @@ function handleSort(data){
   document.getElementById('result').innerText = data.join(' ');
 }
 
-React.render(
+render(
   <Sortable onSort={handleSort1}>
     <ImageItem src="http://ww4.sinaimg.cn/large/831e9385gw1equsc4s1hbj207y02xmx9.jpg"
                sortData="react" />
@@ -44,7 +45,7 @@ function handleSort1(data){
 
 
 
-React.render(
+render(
   <Sortable>
     <ActionItem>Ember</ActionItem>
     <ActionItem>jQuery</ActionItem>

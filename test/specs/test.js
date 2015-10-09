@@ -1,7 +1,7 @@
 /*eslint no-unused-expressions:0 */
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
 import Sortable, {SortableItemMixin} from '../../src/index';
 import DemoItem from '../../demo/DemoItem';
 import triggerEvent from '../triggerEvent';
