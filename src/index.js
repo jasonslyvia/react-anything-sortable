@@ -10,13 +10,12 @@
 /**
  * @dependency
  */
-import React from 'react/addons';
+import React from 'react';
+import { findDOMNode } from 'react-dom';
+import classnames from 'classnames';
 import {on, off, isFunction, isNumeric, position, closest, get,
         assign, width, height,
         outerWidthWithMargin, outerHeightWithMargin} from './utils.js';
-
-const CX = React.addons.classSet;
-const CloneWithProps = React.addons.cloneWithProps;
 
 /**
  * @class Sortable
@@ -55,7 +54,7 @@ export default React.createClass({
   },
 
   componentDidMount () {
-    this.containerWidth = React.findDOMNode(this).offsetWidth;
+    this.containerWidth = findDOMNode(this).offsetWidth;
   },
 
   componentWillUnmount () {
@@ -362,15 +361,15 @@ export default React.createClass({
       }
 
       const isPlaceHolder = _dimensionArr[index].isPlaceHolder;
-      const itemClassName = CX({
+      const itemClassName = classnames({
         'ui-sortable-item': true,
         'ui-sortable-placeholder': isPlaceHolder,
         'visible': this.state.isDragging && isPlaceHolder
       });
 
-      return CloneWithProps(item, {
+      return React.cloneElement(item, {
         key: index,
-        sortableClassName: itemClassName,
+        className: `${item.props.className} ${itemClassName}`,
         sortableIndex: index,
         onSortableItemMouseDown: isPlaceHolder ? undefined : (e) => {
           this.handleMouseDown.call(this, e, index);
@@ -397,7 +396,7 @@ export default React.createClass({
       width: this._dimensionArr[this._draggingIndex].width,
       height: this._dimensionArr[this._draggingIndex].height
     };
-    return CloneWithProps(item, {
+    return React.cloneElement(item, {
       sortableClassName: 'ui-sortable-item ui-sortable-dragging',
       key: this._dimensionArr.length,
       sortableStyle: style,
@@ -443,7 +442,7 @@ let SortableItemMixin = {
   },
 
   componentDidMount () {
-    const node = React.findDOMNode(this);
+    const node = findDOMNode(this);
 
     on(node, 'selectstart', (e) => {
       if (e.preventDefault) {
@@ -462,7 +461,7 @@ let SortableItemMixin = {
   },
 
   componentDidUpdate () {
-    const node = React.findDOMNode(this);
+    const node = findDOMNode(this);
     this.props.onSortableItemMount(position(node),
                                    width(node),
                                    height(node),
@@ -472,9 +471,9 @@ let SortableItemMixin = {
   },
 
   renderWithSortable (item) {
-    return React.addons.cloneWithProps(item, {
-      className: this.props.sortableClassName,
-      style: this.props.sortableStyle,
+    return React.cloneElement(item, {
+      className: `${item.props.className} ${this.props.sortableClassName}`,
+      style: {...item.props.sortableStyle, ...this.props.sortableStyle},
       key: this.props.sortableIndex,
       onMouseDown: this.handleSortableItemMouseDown
     });
