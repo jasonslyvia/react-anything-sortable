@@ -55,7 +55,7 @@ React.render(
 
 and in `YourItem.js`
 
-**Notice: There's a breaking change since requring `SortableItemMixin` in version 0.2.0**
+**Notice: There's a breaking change for requring `SortableItemMixin` since 0.2.0**
 
 ES6 `import` is recommended.
 
