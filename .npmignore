@@ -1,5 +1,4 @@
 node_modules/
-src/
 demo/
 test/
 gulpfile.js

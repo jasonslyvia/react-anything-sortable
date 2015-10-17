@@ -1,7 +1,6 @@
 // Karma configuration
 // Generated on Wed Mar 18 2015 11:41:18 GMT+0800 (CST)
 'use strict';
-var istanbul = require('browserify-istanbul');
 
 module.exports = function(config) {
   config.set({
@@ -12,20 +11,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai', 'browserify'],
-
-    browserify: {
-      debug: true,
-      transform: [
-        ['babelify'],
-        istanbul({
-          ignore: ['**/test/**', '**/node_modules/**', '**/lib/**']
-        })
-      ],
-      extensions: ['.js', '.jsx'],
-      bundleDelay: 1000
-    },
-
+    frameworks: ['mocha', 'chai'],
 
     // list of files / patterns to l/oad in the browser
     files: [
@@ -45,8 +31,29 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': ['browserify']
+      'test/**/*.js': ['webpack', 'sourcemap', 'coverage']
     },
+
+    webpack: {
+      devtool: 'inline-source-map',
+      module: {
+        loaders: [{
+          test: /\.js$/,
+          include: /src|test|demo/,
+          loader: 'babel?stage=0&loose=all'
+        }]
+      }
+    },
+
+
+    plugins: [
+      'karma-webpack',
+      'karma-mocha',
+      'karma-coverage',
+      'karma-chai',
+      'karma-sourcemap-loader',
+      'karma-firefox-launcher'
+    ],
 
 
     // test results reporter to use

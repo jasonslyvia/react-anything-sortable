@@ -1,6 +1,6 @@
 `react-anything-sortable` is a ReactJS component that can sort any component passed as `this.props.children`. It is compatible with IE8 and all modern browsers.
 
-It has no external dependencies but `React` itself.
+It has no external dependencies but `React` itself. (In upcoming releases, it will add two more dependencies since React has split `addons` into separate npm modules.)
 
 [![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable)
 [![npm version](https://badge.fury.io/js/react-anything-sortable.svg)](http://badge.fury.io/js/react-anything-sortable)
@@ -24,22 +24,28 @@ It has no external dependencies but `React` itself.
 
 ```
 $ npm install --save react-anything-sortable
+//
 // or use bower
 $ bower install --save react-anything-sortable
+//
+// or just include `lib/index.js` in a <script> tag and
+// use it by `window['react-anything-sortable']`;
+//
+// technically AMD is supported too, but seriously you gonna stick with it in late 2015?
 ```
 
 ## How to use
 
 You can check the straight-forward demo by examining `demo` folder, or here's a brief example.
 
-In `YourComponent.jsx`
+In `YourComponent.js`
 
 ````
 var React = require('react');
 var Sortable = require('react-anything-sortable');
 var YourSortableItem = require('./YourItem');
 
-React.renderComponent(
+React.render(
 <Sortable onSort={handleSort}>
   <YourItem sortData="1" />
   <YourItem sortData="2" />
@@ -47,9 +53,28 @@ React.renderComponent(
 , document.body);
 ````
 
-and in `YourItem.jsx`
+and in `YourItem.js`
 
-**Notice: There's a breaking change in requring `SortableItemMixin` in version 0.2.0**
+**Notice: There's a breaking change since requring `SortableItemMixin` in version 0.2.0**
+
+ES6 `import` is recommended.
+
+```
+import React from 'react/addons';
+import {SortableItemMixin} from 'react-anything-sortable';
+
+const YourItem = React.createClass({
+  mixins: [SortableItemMixin],
+
+  render() {
+    return this.renderWithSortable(     // <= this.renderWithSortable is important
+      <div>your item</div>
+    );
+  }
+});
+```
+
+Or if your favor the old fashion way
 
 ````
 var React = require('react');
@@ -66,18 +91,22 @@ var YourItem = React.createClass({
 });
 ````
 
-## Heads-up
+## Notice
 
 1. Specify your style for `Sortable` and `Sortable Items`, check `demo/style.css`, **it is NOT optional!**
-2. Don't forget the `this.renderWithSortable` call in `YourItem.jsx`
-3. Specify `sortData` in `YourItem.jsx` so that `Sortable` can return the sorted array
+2. Don't forget the `this.renderWithSortable` call in `YourItem.js`
+3. Specify `sortData` in `YourItem.js` so that `Sortable` can return the sorted array
 4. Add `onSort` props to `Sortable` to be noticed when a sort operation finished
 5. Since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children.
 
 
-## Tests
+## Scripts
 
-`$ npm run test`
+```
+$ npm run test
+$ npm run watch
+$ npm run build
+```
 
 
 ## Contributors
