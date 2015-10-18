@@ -6,7 +6,7 @@
     "jasonslyvia <jasonslyvia@gmail.com>"
   ],
   "description": "A ReactJS component that can sort any children with IE8 compatibility",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "moduleType": [
     "es6",
     "node"
