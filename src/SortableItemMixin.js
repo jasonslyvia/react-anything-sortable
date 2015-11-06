@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {on, position, closest, width, height,
         outerWidthWithMargin, outerHeightWithMargin} from './utils';
 
@@ -28,7 +29,7 @@ export default {
   },
 
   componentDidMount () {
-    const node = React.findDOMNode(this);
+    const node = ReactDOM.findDOMNode(this);
 
     on(node, 'selectstart', (e) => {
       if (e.preventDefault) {
@@ -47,7 +48,7 @@ export default {
   },
 
   componentDidUpdate () {
-    const node = React.findDOMNode(this);
+    const node = ReactDOM.findDOMNode(this);
     this.props.onSortableItemMount(position(node),
                                    width(node),
                                    height(node),
@@ -57,7 +58,7 @@ export default {
   },
 
   renderWithSortable (item) {
-    return React.addons.cloneWithProps(item, {
+    return React.cloneElement(item, {
       className: this.props.sortableClassName,
       style: this.props.sortableStyle,
       key: this.props.sortableIndex,

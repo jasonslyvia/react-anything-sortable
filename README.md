@@ -1,6 +1,8 @@
 `react-anything-sortable` is a ReactJS component that can sort any component passed as `this.props.children`. It is compatible with IE8 and all modern browsers.
 
-It has no external dependencies but `React` itself. (In upcoming releases, it will add two more dependencies since React has split `addons` into separate npm modules.)
+It has no external dependencies but `React` itself.
+
+**If you're using React v0.13, please use `react-anything-sortable@0.3.2` instead, it's the latest compatible version.**
 
 [![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable)
 [![npm version](https://badge.fury.io/js/react-anything-sortable.svg)](http://badge.fury.io/js/react-anything-sortable)
@@ -24,6 +26,8 @@ It has no external dependencies but `React` itself. (In upcoming releases, it wi
 
 ```
 $ npm install --save react-anything-sortable
+// if you're using React v0.13, try
+$ npm install --save react-anything-sortable@0.3.2
 //
 // or use bower
 $ bower install --save react-anything-sortable
@@ -41,11 +45,11 @@ You can check the straight-forward demo by examining `demo` folder, or here's a 
 In `YourComponent.js`
 
 ````
-var React = require('react');
+var ReactDOM = require('react-dom');
 var Sortable = require('react-anything-sortable');
 var YourSortableItem = require('./YourItem');
 
-React.render(
+ReactDOM.render(
 <Sortable onSort={handleSort}>
   <YourItem sortData="1" />
   <YourItem sortData="2" />
@@ -55,12 +59,10 @@ React.render(
 
 and in `YourItem.js`
 
-**Notice: There's a breaking change for requring `SortableItemMixin` since 0.2.0**
-
 ES6 `import` is recommended.
 
 ```
-import React from 'react/addons';
+import React from 'react';
 import {SortableItemMixin} from 'react-anything-sortable';
 
 const YourItem = React.createClass({
@@ -74,7 +76,7 @@ const YourItem = React.createClass({
 });
 ```
 
-Or if your favor the old fashion way
+Or if you favor the old fashion way
 
 ````
 var React = require('react');

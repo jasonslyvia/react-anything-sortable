@@ -1,7 +1,8 @@
 /*eslint no-unused-expressions:0 */
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Sortable, {SortableItemMixin} from '../../src/index';
 import DemoItem from '../../demo/DemoItem';
 import triggerEvent from '../triggerEvent';
@@ -35,11 +36,11 @@ const expect = chai.expect;
 describe('Sortable', () => {
   describe('Default scenario', () => {
     beforeEach(() => {
-      React.render(<Sortable />, document.body);
+      ReactDOM.render(<Sortable />, document.body);
     });
 
     afterEach(() => {
-      React.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.body);
     });
 
     it('should render properly without any child', () => {
@@ -50,7 +51,7 @@ describe('Sortable', () => {
 
   describe('Provide sortable children', () => {
     beforeEach(() => {
-      React.render(
+      ReactDOM.render(
         <Sortable>
           <DemoItem sortData="1" />
           <DemoItem sortData="2" />
@@ -60,7 +61,7 @@ describe('Sortable', () => {
     });
 
     afterEach(() => {
-      React.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.body);
     });
 
     it('should render 3 children', () => {
@@ -71,7 +72,7 @@ describe('Sortable', () => {
 
   describe('Provide sortable child', () => {
     beforeEach(() => {
-      React.render(
+      ReactDOM.render(
         <Sortable>
           <DemoItem sortData="1" />
         </Sortable>
@@ -79,7 +80,7 @@ describe('Sortable', () => {
     });
 
     afterEach(() => {
-      React.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.body);
     });
 
     it('should render 1 child', () => {
@@ -91,7 +92,7 @@ describe('Sortable', () => {
   describe('Provide sortable children with nulls', () => {
     beforeEach(() => {
 
-      React.render(
+      ReactDOM.render(
         <Sortable>
           {
             ['hello1', 'hello2', ''].map(function(name) {
@@ -108,7 +109,7 @@ describe('Sortable', () => {
     });
 
     afterEach(() => {
-      React.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.body);
     });
 
     it('should render 2 children', () => {
@@ -121,7 +122,7 @@ describe('Sortable', () => {
     var component, target;
 
     beforeEach(() => {
-      component = React.render(
+      component = ReactDOM.render(
         <Sortable className="style-for-test">
           <DemoItem sortData="1" className="item-1">1</DemoItem>
           <DemoItem sortData="2" className="item-2">2</DemoItem>
@@ -131,7 +132,7 @@ describe('Sortable', () => {
     });
 
     afterEach(() => {
-      React.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.body);
       component = null;
       target = null;
     });
@@ -229,7 +230,7 @@ describe('Sortable', () => {
     var component, target;
 
     beforeEach(() => {
-      component = React.render(
+      component = ReactDOM.render(
         <Sortable className="style-for-test full-width">
           <DemoItem sortData="1" className="item-1">1</DemoItem>
           <DemoItem sortData="2" className="item-2">2</DemoItem>
@@ -239,7 +240,7 @@ describe('Sortable', () => {
     });
 
     afterEach(() => {
-      React.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.body);
       component = null;
       target = null;
     });
@@ -271,7 +272,7 @@ describe('Sortable', () => {
     beforeEach(() => {
       callback = chai.spy();
 
-      React.render(
+      ReactDOM.render(
         <Sortable onSort={callback}>
           <DemoItem sortData="1" className="item-1">1</DemoItem>
           <DemoItem sortData="2" className="item-2">2</DemoItem>
@@ -281,7 +282,7 @@ describe('Sortable', () => {
     });
 
     afterEach(() => {
-      React.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.body);
       callback = null;
     });
 
