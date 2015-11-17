@@ -10,6 +10,8 @@ It has no external dependencies but `React` itself.
 
 ## Quick Demo
 
+[Live Demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html)
+
 **Sort custom style children**
 
 ![react-anything-sortable](http://ww4.sinaimg.cn/large/831e9385gw1equswkpcfag209p02sgn5.gif)
