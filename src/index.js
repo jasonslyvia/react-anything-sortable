@@ -326,10 +326,6 @@ const Sortable = React.createClass({
 
   getSortData () {
     return this._orderArr.map((itemIndex, index) => {
-      if (this._dimensionArr[index].isDeleted) {
-        return undefined;
-      }
-
       const item = Array.isArray(this.props.children) ?
                    this.props.children[itemIndex] :
                    this.props.children;
@@ -350,9 +346,6 @@ const Sortable = React.createClass({
 
     const items = _orderArr.map((itemIndex, index) => {
       let item = Array.isArray(this.props.children) ? this.props.children[itemIndex] : this.props.children;
-      if (_dimensionArr[index].isDeleted) {
-        return undefined;
-      }
       if (!item) {
         return undefined;
       }
