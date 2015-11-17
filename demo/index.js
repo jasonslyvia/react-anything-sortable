@@ -45,7 +45,7 @@ function handleSort1(data){
 
 
 
-React.render(
+ReactDOM.render(
   <Sortable>
     <ActionItem>Ember</ActionItem>
     <ActionItem>jQuery</ActionItem>
