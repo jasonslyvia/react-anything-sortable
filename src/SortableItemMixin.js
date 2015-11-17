@@ -7,28 +7,27 @@ import {on, position, closest, width, height,
  * @class SortableItemMixin
  */
 export default {
-  getDefaultProps () {
+  getDefaultProps() {
     return {
       sortableClassName: '',
       sortableStyle: {},
       onSortableItemMount: () => {},
-      onSortableItemUnmount: () => {},
-      onSortableItemMouseDown: () => {}
+      onSortableItemReadyToMove: () => {}
     };
   },
 
-  handleSortableItemMouseDown (e) {
+  handleSortableItemReadyToMove(e) {
     const target = closest((e.target || e.srcElement), '.ui-sortable-item');
     const evt = {
-      pageX: (e.pageX || e.clientX),
-      pageY: (e.pageY || e.clientY),
+      pageX: (e.pageX || e.clientX || e.touches[0].pageX),
+      pageY: (e.pageY || e.clientY || e.touches[0].pageY),
       offset: position(target)
     };
 
-    this.props.onSortableItemMouseDown(evt, this.props.sortableIndex);
+    this.props.onSortableItemReadyToMove(evt, this.props.sortableIndex);
   },
 
-  componentDidMount () {
+  componentDidMount() {
     const node = ReactDOM.findDOMNode(this);
 
     on(node, 'selectstart', (e) => {
@@ -47,7 +46,7 @@ export default {
                                    this.props.sortableIndex);
   },
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     const node = ReactDOM.findDOMNode(this);
     this.props.onSortableItemMount(position(node),
                                    width(node),
@@ -57,12 +56,13 @@ export default {
                                    this.props.sortableIndex);
   },
 
-  renderWithSortable (item) {
+  renderWithSortable(item) {
     return React.cloneElement(item, {
       className: this.props.sortableClassName,
       style: this.props.sortableStyle,
       key: this.props.sortableIndex,
-      onMouseDown: this.handleSortableItemMouseDown
+      onMouseDown: this.handleSortableItemReadyToMove,
+      onTouchStart: this.handleSortableItemReadyToMove
     });
   }
 };

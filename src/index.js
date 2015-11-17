@@ -32,7 +32,7 @@ const Sortable = React.createClass({
     className: React.PropTypes.string
   },
 
-  getInitialState () {
+  getInitialState() {
     //keep tracking the dimension and coordinates of all children
     this._dimensionArr = this.props.children ?
                          ( Array.isArray(this.props.children) ? this.props.children.map(() => {return {}; }) : [{}] ) :
@@ -53,15 +53,15 @@ const Sortable = React.createClass({
     };
   },
 
-  componentDidMount () {
+  componentDidMount() {
     this.containerWidth = ReactDOM.findDOMNode(this).offsetWidth;
   },
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.unbindEvent();
   },
 
-  bindEvent () {
+  bindEvent() {
     //so that the focus won't be lost if cursor moving too fast
     this.__mouseMoveHandler = (e) => {
       /**
@@ -83,16 +83,46 @@ const Sortable = React.createClass({
       this.handleMouseUp.call(this, e);
     };
 
-    on(document, 'mousemove', this.__mouseMoveHandler);
-    on(document, 'mouseup', this.__mouseUpHandler);
+    this.__touchMoveHandler = (e) => {
+      this.handleMouseMove.call(this, {
+        target: e.target,
+        clientX: e.touches[0].clientX,
+        clientY: e.touches[0].clientY,
+        pageX: e.touches[0].pageX,
+        pageY: e.touches[0].pageY
+      });
+    };
+
+    this.__touchEndOrCancelHandler = (e) => {
+      this.handleMouseUp.call(this, e);
+    };
+
+    if (!!('ontouchstart' in window)) {
+      on(document, 'touchmove', this.__touchMoveHandler);
+      on(document, 'touchend', this.__touchEndOrCancelHandler);
+      on(document, 'touchcancel', this.__touchEndOrCancelHandler);
+    }
+    else {
+      on(document, 'mousemove', this.__mouseMoveHandler);
+      on(document, 'mouseup', this.__mouseUpHandler);
+    }
   },
 
-  unbindEvent () {
-    off(document, 'mousemove', this.__mouseMoveHandler);
-    off(document, 'mouseup', this.__mouseUpHandler);
+  unbindEvent() {
+    if (!!('ontouchstart' in window)) {
+      off(document, 'touchmove', this.__touchMoveHandler);
+      off(document, 'touchend', this.__touchEndOrCancelHandler);
+      off(document, 'touchcancel', this.__touchEndOrCancelHandler);
+    }
+    else {
+      off(document, 'mousemove', this.__mouseMoveHandler);
+      off(document, 'mouseup', this.__mouseUpHandler);
+    }
 
     this.__mouseMoveHandler = null;
     this.__mouseUpHandler = null;
+    this.__touchMoveHandler = null;
+    this.__touchEndOrCancelHandler = null;
   },
 
   /**
@@ -100,7 +130,7 @@ const Sortable = React.createClass({
    * @param  {object} e     React event
    * @param  {numbner} index index of pre-dragging item
    */
-  handleMouseDown (e, index) {
+  handleMouseDown(e, index) {
     this._draggingIndex = index;
     this._prevX = (e.pageX || e.clientX);
     this._prevY = (e.pageY || e.clientY);
@@ -116,7 +146,7 @@ const Sortable = React.createClass({
    * `add` a dragging item and re-calculating position of placeholder
    * @param  {object} e     React event
    */
-  handleMouseMove (e) {
+  handleMouseMove(e) {
     this._isMouseMoving = true;
 
     if (!this._isReadyForDragging) {
@@ -148,7 +178,7 @@ const Sortable = React.createClass({
    * replace placeholder with dragging item
    * @param  {object} e     React event
    */
-  handleMouseUp () {
+  handleMouseUp() {
     const _hasMouseMoved = this._isMouseMoving;
     this.unbindEvent();
 
@@ -188,7 +218,7 @@ const Sortable = React.createClass({
    * @param  {number} fullHeight (with margin)
    * @param  {number} index
    */
-  handleChildUpdate (offset, width, height, fullWidth, fullHeight, index) {
+  handleChildUpdate(offset, width, height, fullWidth, fullHeight, index) {
     assign(this._dimensionArr[index], {
       top: offset.top,
       left: offset.left,
@@ -206,7 +236,7 @@ const Sortable = React.createClass({
    *                 interchanging position of different width elements
    * @return {number}
    */
-  getIndexByOffset (offset, direction) {
+  getIndexByOffset(offset, direction) {
     if (!offset || !isNumeric(offset.top) || !isNumeric(offset.left)) {
       return 0;
     }
@@ -255,7 +285,7 @@ const Sortable = React.createClass({
    * @param  {number} to
    * @return {array}
    */
-  swapArrayItemPosition (arr, src, to) {
+  swapArrayItemPosition(arr, src, to) {
     if (!arr || !isNumeric(src) || !isNumeric(to)) {
       return arr;
     }
@@ -270,7 +300,7 @@ const Sortable = React.createClass({
    * @param  {object} e MouseMove event
    * @return {object}   {left: 1, top: 1}
    */
-  calculateNewOffset (e) {
+  calculateNewOffset(e) {
     const deltaX = this._prevX - (e.pageX || e.clientX);
     const deltaY = this._prevY - (e.pageY || e.clientY);
 
@@ -290,7 +320,7 @@ const Sortable = React.createClass({
    * @param  {object} e MouseMove event
    * @return {number}
    */
-  calculateNewIndex (e) {
+  calculateNewIndex(e) {
     let placeHolderIndex = this.state.placeHolderIndex !== null ?
                            this.state.placeHolderIndex :
                            this._draggingIndex;
@@ -298,7 +328,7 @@ const Sortable = React.createClass({
     // Since `mousemove` is listened on document, when cursor move too fast,
     // `e.target` may be `body` or some other stuff instead of
     // `.ui-sortable-item`
-    const target = closest((e.target || e.srcElement), '.ui-sortable-item') || get('.ui-sortable-dragging');
+    const target = get('.ui-sortable-dragging');
     const offset = position(target);
 
     const deltaX = Math.abs(this._prevX - (e.pageX || e.clientX));
@@ -314,7 +344,6 @@ const Sortable = React.createClass({
       direction = this._prevY > (e.pageY || e.clientY) ? 'up' : 'down';
     }
 
-
     const newIndex = this.getIndexByOffset(offset, direction);
     if (newIndex !== placeHolderIndex) {
       this._dimensionArr = this.swapArrayItemPosition(this._dimensionArr, placeHolderIndex, newIndex);
@@ -324,7 +353,7 @@ const Sortable = React.createClass({
     return newIndex;
   },
 
-  getSortData () {
+  getSortData() {
     return this._orderArr.map((itemIndex, index) => {
       const item = Array.isArray(this.props.children) ?
                    this.props.children[itemIndex] :
@@ -340,7 +369,7 @@ const Sortable = React.createClass({
   /**
    * render all sortable children which mixined with SortableItemMixin
    */
-  renderItems () {
+  renderItems() {
     const {_dimensionArr, _orderArr} = this;
     let draggingItem;
 
@@ -360,7 +389,7 @@ const Sortable = React.createClass({
         key: index,
         sortableClassName: `${item.props.className} ${itemClassName}`,
         sortableIndex: index,
-        onSortableItemMouseDown: isPlaceHolder ? undefined : (e) => {
+        onSortableItemReadyToMove: isPlaceHolder ? undefined : (e) => {
           this.handleMouseDown.call(this, e, index);
         },
         onSortableItemMount: this.handleChildUpdate
@@ -374,7 +403,7 @@ const Sortable = React.createClass({
    * render the item that being dragged
    * @param  {object} item a reference of this.props.children
    */
-  renderDraggingItem (item) {
+  renderDraggingItem(item) {
     if (!item) {
       return;
     }
@@ -393,7 +422,7 @@ const Sortable = React.createClass({
     });
   },
 
-  render () {
+  render() {
     const className = 'ui-sortable ' + (this.props.className || '');
 
     return (
