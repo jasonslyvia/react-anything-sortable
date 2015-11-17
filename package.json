@@ -6,7 +6,8 @@
   "scripts": {
     "watch": "./node_modules/.bin/webpack --config webpack.conf.js",
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config webpack.conf.js",
-    "test": "./node_modules/karma/bin/karma start test/karma.conf.js"
+    "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
+    "demo": "./node_modules/.bin/webpack demo/index.js demo/bundle.js --progress --devtoll source-map --module-bind 'js=babel?stage=0&loose=all'"
   },
   "repository": {
     "type": "git",
