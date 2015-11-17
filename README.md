@@ -2,11 +2,16 @@
 
 It has no external dependencies but `React` itself.
 
-**If you're using React v0.13, please use `react-anything-sortable@0.3.2` instead, it's the latest compatible version.**
-
 [![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable)
 [![npm version](https://badge.fury.io/js/react-anything-sortable.svg)](http://badge.fury.io/js/react-anything-sortable)
 [![Bower version](https://badge.fury.io/bo/react-anything-sortable.svg)](http://badge.fury.io/bo/react-anything-sortable)
+
+## Features
+
+ - Sort any React element you like, images, composite components, etc.
+ - No external dependencies but `React` itself
+ - Touch event support (since 1.1.0)
+ - Thoroughly tested
 
 ## Quick Demo
 
@@ -26,25 +31,22 @@ It has no external dependencies but `React` itself.
 
 ## Installation
 
+**If you're using React v0.13, please use `react-anything-sortable@0.3.2` instead, it's the latest compatible version.**
+
 ```
 $ npm install --save react-anything-sortable
+
 // if you're using React v0.13, try
 $ npm install --save react-anything-sortable@0.3.2
-//
-// or use bower
-$ bower install --save react-anything-sortable
-//
-// or just include `lib/index.js` in a <script> tag and
-// use it by `window['react-anything-sortable']`;
-//
-// technically AMD is supported too, but seriously you gonna stick with it in late 2015?
+
+// UMD build is provided as well, but please do consider use modern module bundlers like webpack or browserify.
 ```
 
 ## How to use
 
 You can check the straight-forward demo by examining `demo` folder, or here's a brief example.
 
-In `YourComponent.js`
+In `app.js`
 
 ````
 var ReactDOM = require('react-dom');
@@ -61,7 +63,7 @@ ReactDOM.render(
 
 and in `YourItem.js`
 
-ES6 `import` is recommended.
+ES 6 `import` is recommended
 
 ```
 import React from 'react';
@@ -110,6 +112,8 @@ var YourItem = React.createClass({
 $ npm run test
 $ npm run watch
 $ npm run build
+$ npm run demo
+$ npm run demo-watch
 ```
 
 
