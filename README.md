@@ -1,10 +1,5 @@
-`react-anything-sortable` is a ReactJS component that can sort any component passed as `this.props.children`. It is compatible with IE8 and all modern browsers.
-
-It has no external dependencies but `React` itself.
-
 [![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable)
 [![npm version](https://badge.fury.io/js/react-anything-sortable.svg)](http://badge.fury.io/js/react-anything-sortable)
-[![Bower version](https://badge.fury.io/bo/react-anything-sortable.svg)](http://badge.fury.io/bo/react-anything-sortable)
 
 ## Features
 
