@@ -31,7 +31,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': ['webpack', 'sourcemap', 'coverage']
+      'test/**/*.js': ['webpack', 'sourcemap'],
     },
 
     webpack: {
@@ -41,6 +41,11 @@ module.exports = function(config) {
           test: /\.js$/,
           include: /src|test|demo/,
           loader: 'babel?stage=0&loose=all'
+        }],
+        postLoaders: [{
+          test: /\.js$/,
+          include: /src/,
+          loader: 'istanbul-instrumenter'
         }]
       }
     },
@@ -52,19 +57,28 @@ module.exports = function(config) {
       'karma-coverage',
       'karma-chai',
       'karma-sourcemap-loader',
-      'karma-firefox-launcher'
+      'karma-firefox-launcher',
+      'istanbul-instrumenter-loader',
+      'karma-coveralls'
     ],
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress', 'coverage', 'coveralls'],
 
     coverageReporter: {
-      type: 'text',
       dir: 'test',
-      subdir: 'coverage'
+      reporters: [{
+        type: 'html',
+        subdir: 'coverage'
+      }, {
+        type: 'text',
+      }, {
+        type: 'lcov',
+        subdir: 'coverage'
+      }]
     },
 
     // web server port
