@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {on, position, closest, width, height,
+import {on, position, closest, width, height, isFunction,
         outerWidthWithMargin, outerHeightWithMargin} from './utils';
 
 /**
@@ -11,8 +11,8 @@ export default {
     return {
       sortableClassName: '',
       sortableStyle: {},
-      onSortableItemMount: () => {},
-      onSortableItemReadyToMove: () => {}
+      onSortableItemMount: null,
+      onSortableItemReadyToMove: null
     };
   },
 
@@ -38,22 +38,28 @@ export default {
         e.returnValue = false;
       }
     });
-    this.props.onSortableItemMount(position(node),
-                                   width(node),
-                                   height(node),
-                                   outerWidthWithMargin(node),
-                                   outerHeightWithMargin(node),
-                                   this.props.sortableIndex);
+
+    if (isFunction(this.props.onSortableItemMount)) {
+      this.props.onSortableItemMount(position(node),
+                                     width(node),
+                                     height(node),
+                                     outerWidthWithMargin(node),
+                                     outerHeightWithMargin(node),
+                                     this.props.sortableIndex);
+    }
   },
 
   componentDidUpdate() {
     const node = ReactDOM.findDOMNode(this);
-    this.props.onSortableItemMount(position(node),
-                                   width(node),
-                                   height(node),
-                                   outerWidthWithMargin(node),
-                                   outerHeightWithMargin(node),
-                                   this.props.sortableIndex);
+
+    if (isFunction(this.props.onSortableItemMount)) {
+      this.props.onSortableItemMount(position(node),
+                                     width(node),
+                                     height(node),
+                                     outerWidthWithMargin(node),
+                                     outerHeightWithMargin(node),
+                                     this.props.sortableIndex);
+    }
   },
 
   renderWithSortable(item) {

@@ -46,21 +46,6 @@ export function position(el) {
   };
 }
 
-export function offset(el) {
-  if (!el) {
-    return {
-      left: 0,
-      top: 0
-    };
-  }
-
-  const rect = el.getBoundingClientRect();
-  return {
-    top: rect.top + document.body.scrollTop,
-    left: rect.left + document.body.scrollLeft
-  };
-}
-
 export function width(el) {
   return el.offsetWidth;
 }

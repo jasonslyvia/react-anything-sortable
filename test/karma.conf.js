@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to l/oad in the browser
     files: [
-      {pattern: 'test/specs/test.js', included: true, watched: false},
+      {pattern: 'test/specs/*.js', included: true, watched: false},
       {pattern: 'demo/style.css', included: false}
     ],
 
