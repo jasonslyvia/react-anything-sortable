@@ -53,3 +53,50 @@ ReactDOM.render(
   </Sortable>
 , document.getElementById('react2'));
 
+
+class DynamicDemo extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      arr: [998, 225, 13]
+    };
+    this._sortableKey = 0;
+  }
+
+  handleAddElement() {
+    this._sortableKey++;
+    this.setState({
+      arr: this.state.arr.concat(Math.round(Math.random() * 1000))
+    });
+  }
+
+  handleRemoveElement(index) {
+    const newArr = this.state.arr.slice()
+    newArr.splice(index, 1);
+    this._sortableKey++;
+
+    this.setState({
+      arr: newArr
+    });
+  }
+
+  render() {
+    return (
+      <div className="dynamic-demo">
+        <button onClick={::this.handleAddElement}>Add 1 element</button>
+        <Sortable key={this._sortableKey}>
+          {this.state.arr.map((num, index) => {
+            return (
+              <Item key="index" className="dynamic-item">
+                {num}
+                <span className="delete" onMouseDown={this.handleRemoveElement.bind(this, index)}>&times;</span>
+              </Item>
+            );
+          })}
+        </Sortable>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<DynamicDemo />, document.getElementById('react3'));
