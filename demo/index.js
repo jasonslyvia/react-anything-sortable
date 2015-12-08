@@ -100,3 +100,18 @@ class DynamicDemo extends React.Component {
 }
 
 ReactDOM.render(<DynamicDemo />, document.getElementById('react3'));
+
+
+ReactDOM.render(
+  <Sortable className="containment-demo" containment>
+    <Item className="item-1" sortData="react" key={1}>
+      React
+    </Item>
+    <Item className="item-2" sortData="angular" key={2}>
+      Angular
+    </Item>
+    <Item className="item-3" sortData="backbone" key={3}>
+      Backbone
+    </Item>
+  </Sortable>
+, document.getElementById('react4'));

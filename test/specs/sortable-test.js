@@ -305,5 +305,23 @@ describe('Sortable', () => {
       expect(callback).to.have.been.called.twice;
     });
   });
+
+  describe('containment', () => {
+    it('should NOT move when mouse outside of Sortable container', () => {
+      ReactDOM.render(
+        <Sortable containment>
+          <DemoItem sortData="1" className="item-1">1</DemoItem>
+          <DemoItem sortData="2" className="item-2">2</DemoItem>
+          <DemoItem sortData="3" className="item-3">3</DemoItem>
+        </Sortable>
+      , document.body);
+
+      var target = document.querySelector('.item-1');
+      moveY(target, 100, 20, 25, true);
+
+      var draggingItem = document.querySelector('.ui-sortable-dragging');
+      expect(draggingItem.getBoundingClientRect().top).to.be.below(100);
+    });
+  });
 });
 

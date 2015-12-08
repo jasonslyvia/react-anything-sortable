@@ -1,10 +1,10 @@
 import triggerEvent from './triggerEvent';
 
-export function moveX(target, src, to) {
+export function moveX(target, src, to, y = 25, noMouseUp = false) {
   const delta = src > to ? -1 : 1;
   triggerEvent(target, 'mousedown', {
     clientX: src,
-    clientY: 25,
+    clientY: y,
     offset: {
       left: 1,
       top: 1
@@ -13,36 +13,31 @@ export function moveX(target, src, to) {
 
   triggerEvent(target, 'mousemove', {
     clientX: src + delta,
-    clientY: 25
+    clientY: y
   });
 
   var dragging = document.querySelector('.ui-sortable-dragging');
   triggerEvent(dragging, 'mousemove', {
     clientX: to,
-    clientY: 25
+    clientY: y
   });
 
   triggerEvent(dragging, 'mousemove', {
     clientX: to + delta,
-    clientY: 25
+    clientY: y
   });
 
-  // triggerEvent(dragging, 'mousemove', {
-  //   clientX: to - delta,
-  //   clientY: 25
-  // });
-
-  triggerEvent(target, 'mouseup', {
+  !noMouseUp && triggerEvent(target, 'mouseup', {
     clientX: to + delta,
-    clientY: 25
+    clientY: y
   });
 }
 
-export function moveY(target, src, to) {
+export function moveY(target, src, to, x = 25, noMouseUp = false) {
   const delta = src > to ? -1 : 1;
 
   triggerEvent(target, 'mousedown', {
-    clientX: 25,
+    clientX: x,
     clientY: src,
     offset: {
       left: 1,
@@ -52,22 +47,27 @@ export function moveY(target, src, to) {
 
   triggerEvent(target, 'mousemove', {
     clientY: src + (-delta),
-    clientX: 25
+    clientX: x
+  });
+
+  triggerEvent(target, 'mousemove', {
+    clientY: src + (-delta),
+    clientX: x
   });
 
   var dragging = document.querySelector('.ui-sortable-dragging');
   triggerEvent(dragging, 'mousemove', {
-    clientX: 25,
+    clientX: x,
     clientY: to
   });
 
   triggerEvent(dragging, 'mousemove', {
-    clientX: 25,
+    clientX: x,
     clientY: to + delta
   });
 
-  triggerEvent(target, 'mouseup', {
-    clientX: 25,
+  !noMouseUp && triggerEvent(target, 'mouseup', {
+    clientX: x,
     clientY: to + delta
   });
 }

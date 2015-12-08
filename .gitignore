@@ -1,4 +1,5 @@
 node_modules/
 bundle.js
+*.map
 test/coverage
 .coveralls.yml

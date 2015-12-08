@@ -145,3 +145,10 @@ body{
   color: red;
 }
 
+.containment-demo {
+  border: 1px #999 dotted;
+  padding: 20px;
+  margin: 20px;
+  overflow: hidden;
+}
+
