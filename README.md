@@ -4,7 +4,7 @@
 
  - Sort any React element you like, images, composite components, etc.
  - No external dependencies but `React` itself
- - Touch event support (since 1.1.0)
+ - Touch event support
  - Thoroughly tested
 
 ## Quick Demo
@@ -25,13 +25,13 @@
 
 ## Installation
 
-**If you're using React v0.13, please use `react-anything-sortable@0.3.2` instead, it's the latest compatible version.**
+**If you're using React v0.13, please use `react-anything-sortable@0.x` instead, it's the latest compatible version.**
 
 ```
 $ npm install --save react-anything-sortable
 
 // if you're using React v0.13, try
-$ npm install --save react-anything-sortable@0.3.2
+$ npm install --save react-anything-sortable@0.x
 
 // UMD build is provided as well, but please do consider use modern module bundlers like webpack or browserify.
 ```
@@ -91,13 +91,37 @@ var YourItem = React.createClass({
 });
 ````
 
+## Props
+
+### onSort
+
+Type: Function Default: () => {}
+
+Being called with sorted data when a sort operation is finished.
+
+**Arguments**
+
+ 1. sortedArray (*Array*) Sorted array consists of `sortData` plucked from each sortable item
+
+### containment
+
+Type: Bool Default: false
+
+Constrain dragging area within sortable container.
+
+### sortData
+
+**Add this props to `SortableItem` rather than `Sortable` !**
+
+Type: Any Default: undefined
+
+Will be returned by `onSort` callback in the form of array.
+
 ## Notice
 
 1. Specify your style for `Sortable` and `Sortable Items`, check `demo/style.css`, **it is NOT optional!**
 2. Don't forget the `this.renderWithSortable` call in `YourItem.js`
-3. Specify `sortData` in `YourItem.js` so that `Sortable` can return the sorted array
-4. Add `onSort` props to `Sortable` to be noticed when a sort operation finished
-5. Since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children.
+3. Since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children.
 
 
 ## Scripts
