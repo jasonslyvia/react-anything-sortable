@@ -10,7 +10,7 @@
 /**
  * @dependency
  */
-import React from 'react';
+import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import {on, off, isFunction, isNumeric, position, closest, get,
         assign} from './utils';
@@ -28,8 +28,9 @@ const Sortable = React.createClass({
      *   //dataSet sorted
      * }
      */
-    onSort: React.PropTypes.func,
-    className: React.PropTypes.string
+    onSort: PropTypes.func,
+    className: PropTypes.string,
+    containment: PropTypes.bool
   },
 
   getInitialState() {
@@ -53,8 +54,14 @@ const Sortable = React.createClass({
     };
   },
 
-  componentDidMount() {
-    this.containerWidth = ReactDOM.findDOMNode(this).offsetWidth;
+  componentDidUpdate() {
+    const container = ReactDOM.findDOMNode(this);
+    const rect = container.getBoundingClientRect();
+
+    this._top = rect.top + document.body.scrollTop;
+    this._left = rect.left + document.body.scrollLeft;
+    this._bottom = this._top + rect.height;
+    this._right = this._left + rect.width;
   },
 
   componentWillUnmount() {
@@ -156,6 +163,15 @@ const Sortable = React.createClass({
     if (!this._hasInitDragging) {
       this._dimensionArr[this._draggingIndex].isPlaceHolder = true;
       this._hasInitDragging = false;
+    }
+
+    if (this.props.containment) {
+      const x = e.pageX || e.clientX;
+      const y = e.pageY || e.clientY;
+
+      if (x < this._left || x > this._right || y < this._top || y > this._bottom) {
+        return false;
+      }
     }
 
     const newOffset = this.calculateNewOffset(e);
