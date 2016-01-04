@@ -57,21 +57,22 @@ ReactDOM.render(
 
 and in `SortableItem.js`
 
-ES 6 `import` is recommended
+A modern usage would be
 
 ```
 import React from 'react';
-import { SortableItemMixin } from 'react-anything-sortable';
+import { sortable } from 'react-anything-sortable';
 
-const SortableItem = React.createClass({
-  mixins: [SortableItemMixin],
-
+@sortable
+class YourItem extends React.Component {
   render() {
-    return this.renderWithSortable(     // <= this.renderWithSortable is important
-      <div>your item</div>
+    return (
+      <div {...this.props}>      // <-- make sure destructure props to your own item,
+        your item                //     it contains required `className`s and
+      </div>                     //     event handlers
     );
   }
-});
+};
 ```
 
 Or if you favor the old fashion way
@@ -84,7 +85,7 @@ var SortableItem = React.createClass({
   mixins: [SortableItemMixin],
 
   render: function(){
-    return this.renderWithSortable(
+    return this.renderWithSortable(  // <-- this.renderWithSortable call is essential
       <div>your item</div>
     );
   }
