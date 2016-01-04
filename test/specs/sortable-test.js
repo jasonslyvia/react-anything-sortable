@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Sortable, {SortableItemMixin} from '../../src/index';
 import DemoItem from '../../demo/DemoItem';
+import DemoHOCItem from '../../demo/DemoHOCItem';
 import triggerEvent from '../triggerEvent';
 import spies from 'chai-spies';
 import {moveX, moveY} from '../mouseMove';
@@ -23,6 +24,9 @@ function injectCSS() {
   document.head.appendChild(link);
 
   link.onload = () => {
+    var div = document.createElement('div');
+    div.id = 'react';
+    document.body.appendChild(div);
     window.__karma__.start();
   };
 }
@@ -36,11 +40,11 @@ const expect = chai.expect;
 describe('Sortable', () => {
   describe('Default scenario', () => {
     beforeEach(() => {
-      ReactDOM.render(<Sortable />, document.body);
+      ReactDOM.render(<Sortable />, document.getElementById('react'));
     });
 
     afterEach(() => {
-      ReactDOM.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
     });
 
     it('should render properly without any child', () => {
@@ -57,11 +61,11 @@ describe('Sortable', () => {
           <DemoItem sortData="2" />
           <DemoItem sortData="3" />
         </Sortable>
-      , document.body);
+      , document.getElementById('react'));
     });
 
     afterEach(() => {
-      ReactDOM.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
     });
 
     it('should render 3 children', () => {
@@ -76,11 +80,11 @@ describe('Sortable', () => {
         <Sortable>
           <DemoItem sortData="1" />
         </Sortable>
-      , document.body);
+      , document.getElementById('react'));
     });
 
     afterEach(() => {
-      ReactDOM.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
     });
 
     it('should render 1 child', () => {
@@ -105,11 +109,11 @@ describe('Sortable', () => {
             })
           }
         </Sortable>
-      , document.body);
+      , document.getElementById('react'));
     });
 
     afterEach(() => {
-      ReactDOM.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
     });
 
     it('should render 2 children', () => {
@@ -128,11 +132,11 @@ describe('Sortable', () => {
           <DemoItem sortData="2" className="item-2">2</DemoItem>
           <DemoItem sortData="3" className="item-3">3</DemoItem>
         </Sortable>
-      , document.body);
+      , document.getElementById('react'));
     });
 
     afterEach(() => {
-      ReactDOM.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
       component = null;
       target = null;
     });
@@ -151,7 +155,7 @@ describe('Sortable', () => {
 
       triggerEvent(target, 'mousemove');
 
-      var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(4);
     });
 
@@ -160,7 +164,7 @@ describe('Sortable', () => {
       target = document.querySelector('.ui-sortable-item');
       moveX(target, 25, 210);
 
-      var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[children.length - 1].textContent).to.equal('1');
     });
 
@@ -169,7 +173,7 @@ describe('Sortable', () => {
       target = document.querySelector('.item-3');
       moveX(target, 210, 25);
 
-      var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[0].textContent).to.equal('3');
     });
 
@@ -190,7 +194,7 @@ describe('Sortable', () => {
         clientY: 10
       });
 
-      var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(3);
     });
 
@@ -236,11 +240,11 @@ describe('Sortable', () => {
           <DemoItem sortData="2" className="item-2">2</DemoItem>
           <DemoItem sortData="3" className="item-3">3</DemoItem>
         </Sortable>
-      , document.body);
+      , document.getElementById('react'));
     });
 
     afterEach(() => {
-      ReactDOM.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
       component = null;
       target = null;
     });
@@ -251,7 +255,7 @@ describe('Sortable', () => {
 
       moveY(target, 25, 180);
 
-      var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[children.length - 1].textContent).to.equal('1');
     });
 
@@ -260,7 +264,7 @@ describe('Sortable', () => {
       target = document.querySelector('.item-3');
       moveY(target, 180, 25);
 
-      var children = component.getDOMNode().querySelectorAll('.ui-sortable-item');
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[0].textContent).to.equal('3');
     });
 
@@ -278,11 +282,11 @@ describe('Sortable', () => {
           <DemoItem sortData="2" className="item-2">2</DemoItem>
           <DemoItem sortData="3" className="item-3">3</DemoItem>
         </Sortable>
-      , document.body);
+      , document.getElementById('react'));
     });
 
     afterEach(() => {
-      ReactDOM.unmountComponentAtNode(document.body);
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
       callback = null;
     });
 
@@ -314,13 +318,121 @@ describe('Sortable', () => {
           <DemoItem sortData="2" className="item-2">2</DemoItem>
           <DemoItem sortData="3" className="item-3">3</DemoItem>
         </Sortable>
-      , document.body);
+      , document.getElementById('react'));
 
       var target = document.querySelector('.item-1');
       moveY(target, 100, 20, 25, true);
 
       var draggingItem = document.querySelector('.ui-sortable-dragging');
       expect(draggingItem.getBoundingClientRect().top).to.be.below(100);
+    });
+  });
+
+  describe('Higher order component', () => {
+    var component, target;
+
+    beforeEach(() => {
+      component = ReactDOM.render(
+        <Sortable className="style-for-test">
+          <DemoHOCItem sortData="1" className="item-1" key={1}>1</DemoHOCItem>
+          <DemoHOCItem sortData="2" className="item-2" key={2}>2</DemoHOCItem>
+          <DemoHOCItem sortData="3" className="item-3" key={3}>3</DemoHOCItem>
+        </Sortable>
+      , document.getElementById('react'));
+    });
+
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+      component = null;
+      target = null;
+    });
+
+    it('should add a dragging children', () => {
+      target = document.querySelector('.ui-sortable-item');
+
+      triggerEvent(target, 'mousedown', {
+        clientX: 11,
+        clientY: 11,
+        offset: {
+          left: 1,
+          top: 1
+        }
+      });
+
+      triggerEvent(target, 'mousemove');
+
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(4);
+    });
+
+
+    it('should switch position when dragging from left to right', () => {
+      target = document.querySelector('.ui-sortable-item');
+      moveX(target, 25, 210);
+
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      expect(children[children.length - 1].textContent).to.equal('1');
+    });
+
+
+    it('should switch position when dragging from right to left', () => {
+      target = document.querySelector('.item-3');
+      moveX(target, 210, 25);
+
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      expect(children[0].textContent).to.equal('3');
+    });
+
+    it('should remove dragging children when mouseup', () => {
+      target = document.querySelector('.ui-sortable-item');
+
+      triggerEvent(target, 'mousedown', {
+        clientX: 11,
+        clientY: 11,
+        offset: {
+          left: 1,
+          top: 1
+        }
+      });
+
+      triggerEvent(target, 'mouseup', {
+        clientX: 50,
+        clientY: 10
+      });
+
+      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(3);
+    });
+
+    it('should NOT move item if there is no preceding mousedown event', () => {
+      target = document.querySelector('.item-1');
+
+      triggerEvent(target, 'mousedown', {
+        clientX: 25,
+        clientY: 11,
+        offset: {
+          left: 1,
+          top: 1
+        }
+      });
+
+      triggerEvent(target, 'mouseup', {
+        clientX: 25,
+        clientY: 11
+      });
+
+      triggerEvent(target, 'mousemove', {
+        clientX: 26,
+        clientY: 11
+      });
+
+      triggerEvent(target, 'mousemove', {
+        clientX: 300,
+        clientY: 20
+      });
+
+      target = document.querySelector('.ui-sortable-dragging');
+      expect(target).to.not.exist;
     });
   });
 });
