@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {SortableItemMixin} from '../src/index.js';
+import { SortableItemMixin } from '../src/index.js';
 
 export default React.createClass({
   mixins: [SortableItemMixin],

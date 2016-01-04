@@ -7,20 +7,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Sortable from '../src/index.js';
 import Item from './DemoItem.js';
+import DemoHOCItem from './DemoHOCItem.js';
 import ImageItem from './ImageItem.js';
 import ActionItem from './ActionItem.js';
 
 ReactDOM.render(
   <Sortable onSort={handleSort} className="style-for-test">
-    <Item className="item-1" sortData="react" key={1}>
+    <DemoHOCItem className="item-1" sortData="react" key={1}>
       React
-    </Item>
-    <Item className="item-2" sortData="angular" key={2}>
+    </DemoHOCItem>
+    <DemoHOCItem className="item-2" sortData="angular" key={2}>
       Angular
-    </Item>
-    <Item className="item-3" sortData="backbone" key={3}>
+    </DemoHOCItem>
+    <DemoHOCItem className="item-3" sortData="backbone" key={3}>
       Backbone
-    </Item>
+    </DemoHOCItem>
   </Sortable>
 , document.getElementById('react'));
 
