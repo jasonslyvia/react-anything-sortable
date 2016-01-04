@@ -64,7 +64,7 @@ import React from 'react';
 import { sortable } from 'react-anything-sortable';
 
 @sortable
-class YourItem extends React.Component {
+class SortableItem extends React.Component {
   render() {
     return (
       <div {...this.props}>      // <-- make sure destructure props to your own item,
