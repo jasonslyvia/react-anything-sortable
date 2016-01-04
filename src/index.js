@@ -449,6 +449,7 @@ const Sortable = React.createClass({
   }
 });
 
-Sortable.SortableItemMixin = SortableItemMixin;
+Sortable.SortableItemMixin = SortableItemMixin();
+Sortable.sortable = SortableItemMixin;
 
 export default Sortable;
