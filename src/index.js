@@ -344,7 +344,7 @@ const Sortable = React.createClass({
     // Since `mousemove` is listened on document, when cursor move too fast,
     // `e.target` may be `body` or some other stuff instead of
     // `.ui-sortable-item`
-    const target = closest((e.target || e.srcElement), '.ui-sortable-item') || get('.ui-sortable-dragging');
+    const target = get('.ui-sortable-dragging') || closest((e.target || e.srcElement), '.ui-sortable-item');
     const offset = position(target);
 
     const deltaX = Math.abs(this._prevX - (e.pageX || e.clientX));
