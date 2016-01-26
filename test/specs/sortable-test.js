@@ -155,7 +155,7 @@ describe('Sortable', () => {
       expect(children.length).to.equal(4);
     });
 
-    it.only('should place dragging children in dragging position', () => {
+    it('should place dragging children in dragging position', () => {
       target = document.querySelector('.ui-sortable-item:nth-child(3)');
 
       triggerEvent(target, 'mousedown', {
