@@ -147,10 +147,6 @@ describe('Sortable', () => {
       triggerEvent(target, 'mousedown', {
         clientX: 11,
         clientY: 11,
-        offset: {
-          left: 1,
-          top: 1
-        }
       });
 
       triggerEvent(target, 'mousemove');
@@ -159,6 +155,24 @@ describe('Sortable', () => {
       expect(children.length).to.equal(4);
     });
 
+    it.only('should place dragging children in dragging position', () => {
+      target = document.querySelector('.ui-sortable-item:nth-child(3)');
+
+      triggerEvent(target, 'mousedown', {
+        clientX: 150,
+        clientY: 30,
+      });
+
+      triggerEvent(target, 'mousemove', {
+        clientX: 149,
+        clientY: 30
+      });
+
+      var child = ReactDOM.findDOMNode(component).querySelector('.ui-sortable-placeholder');
+      var children = [].slice.call(ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item'));
+      expect(children.length).to.equal(4);
+      expect(children.indexOf(child)).to.equal(2);
+    });
 
     it('should switch position when dragging from left to right', () => {
       target = document.querySelector('.ui-sortable-item');
@@ -167,7 +181,6 @@ describe('Sortable', () => {
       var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[children.length - 1].textContent).to.equal('1');
     });
-
 
     it('should switch position when dragging from right to left', () => {
       target = document.querySelector('.item-3');
@@ -267,7 +280,6 @@ describe('Sortable', () => {
       var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[0].textContent).to.equal('3');
     });
-
   });
 
   describe('onSort Props', () => {
