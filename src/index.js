@@ -162,7 +162,7 @@ const Sortable = React.createClass({
 
     if (!this._hasInitDragging) {
       this._dimensionArr[this._draggingIndex].isPlaceHolder = true;
-      this._hasInitDragging = false;
+      this._hasInitDragging = true;
     }
 
     if (this.props.containment) {
@@ -344,7 +344,7 @@ const Sortable = React.createClass({
     // Since `mousemove` is listened on document, when cursor move too fast,
     // `e.target` may be `body` or some other stuff instead of
     // `.ui-sortable-item`
-    const target = get('.ui-sortable-dragging');
+    const target = closest((e.target || e.srcElement), '.ui-sortable-item') || get('.ui-sortable-dragging');
     const offset = position(target);
 
     const deltaX = Math.abs(this._prevX - (e.pageX || e.clientX));
