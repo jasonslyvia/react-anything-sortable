@@ -89,18 +89,20 @@ class DynamicDemo extends React.Component {
   }
 
   render() {
+    function renderItem(num, index) {
+      return (
+        <Item key={index} className="dynamic-item" sortData={num}>
+          {num}
+          <span className="delete" onMouseDown={this.handleRemoveElement.bind(this, index)}>&times;</span>
+        </Item>
+      );
+    }
+
     return (
       <div className="dynamic-demo">
         <button onClick={::this.handleAddElement}>Add 1 element</button>
         <Sortable key={this._sortableKey} onSort={::this.handleSort}>
-          {this.state.arr.map((num, index) => {
-            return (
-              <Item key="index" className="dynamic-item" sortData={num}>
-                {num}
-                <span className="delete" onMouseDown={this.handleRemoveElement.bind(this, index)}>&times;</span>
-              </Item>
-            );
-          })}
+          {this.state.arr.map(renderItem, this)}
         </Sortable>
       </div>
     );
