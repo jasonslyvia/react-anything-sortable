@@ -132,7 +132,7 @@ $ npm run test
 $ npm run watch
 $ npm run build
 $ npm run demo
-$ npm run demo-watch
+$ npm run demo:watch
 ```
 
 
