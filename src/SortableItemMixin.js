@@ -106,7 +106,7 @@ export default (Component) => {
 
     renderWithSortable(item) {
       return React.cloneElement(item, {
-        className: this.props.sortableClassName,
+        className: this.props.sortableClassName + ' ' + item.props.className,
         style: this.props.sortableStyle,
         key: this.props.sortableIndex,
         onMouseDown: this.handleSortableItemReadyToMove,
