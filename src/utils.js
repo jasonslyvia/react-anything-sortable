@@ -117,3 +117,43 @@ export function assign (target) {
 export function get(selector) {
   return document.querySelector(selector);
 }
+
+
+export function addClass(el, className) {
+  if (typeof el === 'string') el = document.querySelectorAll(el);
+  const els = (el instanceof NodeList) ? [].slice.call(el) : [el];
+
+  els.forEach(e => {
+    if (this.hasClass(e, className)) { return; }
+
+    if (e.classList) {
+      e.classList.add(className);
+    } else {
+      e.className += ' ' + className;
+    }
+  });
+}
+
+  // el can be an Element, NodeList or selector
+export function removeClass(el, className) {
+  if (typeof el === 'string') el = document.querySelectorAll(el);
+  const els = (el instanceof NodeList) ? [].slice.call(el) : [el];
+
+  els.forEach(e => {
+    if (this.hasClass(e, className)) {
+      if (e.classList) {
+        e.classList.remove(className);
+      } else {
+        e.className = e.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+      }
+    }
+  });
+}
+
+export function  hasClass(el, className) {
+  if (typeof el === 'string') el = document.querySelector(el);
+  if (el.classList) {
+    return el.classList.contains(className);
+  }
+  return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+}
