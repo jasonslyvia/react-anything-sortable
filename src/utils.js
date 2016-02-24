@@ -117,3 +117,14 @@ export function assign (target) {
 export function get(selector) {
   return document.querySelector(selector);
 }
+
+export function findMostOften(arr) {
+  const obj = {};
+  arr.forEach(i => {
+    obj[i] = obj[i] ? obj[i] + 1 : 1;
+  });
+
+  return Object.keys(obj).sort((a, b) => {
+    return obj[b] - obj[a];
+  })[0];
+}

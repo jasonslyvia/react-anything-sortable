@@ -10,12 +10,14 @@
 /**
  * @dependency
  */
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import {on, off, isFunction, isNumeric, position, closest, get,
-        assign} from './utils';
+import { on, off, isFunction, isNumeric, position, closest, get,
+        assign, findMostOften } from './utils';
 import SortableItemMixin from './SortableItemMixin';
 
+
+const STACK_SIZE = 6;
 
 /**
  * @class Sortable
@@ -347,20 +349,23 @@ const Sortable = React.createClass({
     const target = get('.ui-sortable-dragging') || closest((e.target || e.srcElement), '.ui-sortable-item');
     const offset = position(target);
 
-    const deltaX = Math.abs(this._prevX - (e.pageX || e.clientX));
-    const deltaY = Math.abs(this._prevY - (e.pageY || e.clientY));
+    const currentX = e.pageX || e.clientX;
+    const currentY = e.pageY || e.clientY;
+
+    const deltaX = Math.abs(this._prevX - currentX);
+    const deltaY = Math.abs(this._prevY - currentY);
 
     let direction;
     // tend to move left/right
     if (deltaX > deltaY) {
-      direction = this._prevX > (e.pageX || e.clientX) ? 'left' : 'right';
+      direction = this._prevX > currentX ? 'left' : 'right';
     }
     // tend to move up/down
     else {
-      direction = this._prevY > (e.pageY || e.clientY) ? 'up' : 'down';
+      direction = this._prevY > currentY ? 'up' : 'down';
     }
 
-    const newIndex = this.getIndexByOffset(offset, direction);
+    const newIndex = this.getIndexByOffset(offset, this.getPossibleDirection(direction));
     if (newIndex !== placeHolderIndex) {
       this._dimensionArr = this.swapArrayItemPosition(this._dimensionArr, placeHolderIndex, newIndex);
       this._orderArr = this.swapArrayItemPosition(this._orderArr, placeHolderIndex, newIndex);
@@ -380,6 +385,20 @@ const Sortable = React.createClass({
 
       return item.props.sortData;
     });
+  },
+
+  getPossibleDirection(direction) {
+    this._stack = this._stack || [];
+    this._stack.push(direction);
+    if (this._stack.length > STACK_SIZE) {
+      this._stack.shift();
+    }
+
+    if (this._stack.length < STACK_SIZE) {
+      return direction;
+    }
+
+    return findMostOften(this._stack);
   },
 
   /**
