@@ -106,27 +106,19 @@ const Sortable = React.createClass({
       this.handleMouseUp.call(this, e);
     };
 
-    if (!!('ontouchstart' in window)) {
-      on(document, 'touchmove', this.__touchMoveHandler);
-      on(document, 'touchend', this.__touchEndOrCancelHandler);
-      on(document, 'touchcancel', this.__touchEndOrCancelHandler);
-    }
-    else {
-      on(document, 'mousemove', this.__mouseMoveHandler);
-      on(document, 'mouseup', this.__mouseUpHandler);
-    }
+    on(document, 'touchmove', this.__touchMoveHandler);
+    on(document, 'touchend', this.__touchEndOrCancelHandler);
+    on(document, 'touchcancel', this.__touchEndOrCancelHandler);
+    on(document, 'mousemove', this.__mouseMoveHandler);
+    on(document, 'mouseup', this.__mouseUpHandler);
   },
 
   unbindEvent() {
-    if (!!('ontouchstart' in window)) {
-      off(document, 'touchmove', this.__touchMoveHandler);
-      off(document, 'touchend', this.__touchEndOrCancelHandler);
-      off(document, 'touchcancel', this.__touchEndOrCancelHandler);
-    }
-    else {
-      off(document, 'mousemove', this.__mouseMoveHandler);
-      off(document, 'mouseup', this.__mouseUpHandler);
-    }
+    off(document, 'touchmove', this.__touchMoveHandler);
+    off(document, 'touchend', this.__touchEndOrCancelHandler);
+    off(document, 'touchcancel', this.__touchEndOrCancelHandler);
+    off(document, 'mousemove', this.__mouseMoveHandler);
+    off(document, 'mouseup', this.__mouseUpHandler);
 
     this.__mouseMoveHandler = null;
     this.__mouseUpHandler = null;
