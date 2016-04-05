@@ -122,7 +122,7 @@ Will be returned by `onSort` callback in the form of array.
 
 1. Specify your style for `Sortable` and `Sortable Items`, check `demo/style.css`, **it is NOT optional!**
 2. Don't forget the `this.renderWithSortable` call in `SortableItem`
-3. Since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children.
+3. Since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children. Checkout [dynamic demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html) for more details.
 
 
 ## Scripts
