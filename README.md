@@ -25,8 +25,6 @@
 
 ## Installation
 
-**If you're using React v0.13, please use `react-anything-sortable@0.x` instead, it's the latest compatible version.**
-
 ```
 $ npm install --save react-anything-sortable
 
@@ -47,7 +45,7 @@ You can check the straight-forward demo by examining `demo` folder, or here's a 
 
 In `app.js`
 
-````
+````javascript
 var ReactDOM = require('react-dom');
 var Sortable = require('react-anything-sortable');
 var SortableItem = require('./SortableItem');
@@ -64,7 +62,7 @@ and in `SortableItem.js`
 
 A modern usage would be
 
-```
+```javascript
 import React from 'react';
 import { sortable } from 'react-anything-sortable';
 
@@ -82,7 +80,7 @@ class SortableItem extends React.Component {
 
 Or if you favor the old fashion way
 
-````
+````javascript
 var React = require('react');
 var SortableItemMixin = require('react-anything-sortable').SortableItemMixin;
 
@@ -125,8 +123,8 @@ Will be returned by `onSort` callback in the form of array.
 
 ## Notice
 
-1. Specify your style for `Sortable` and `Sortable Items`, check `demo/style.css`, **it is NOT optional!**
-2. Don't forget the `this.renderWithSortable` call in `SortableItem`
+1. Specify your style for `Sortable` and `Sortable Items`, check `sortable.css`, **it is NOT optional!**
+2. Don't forget the `this.renderWithSortable` call in `SortableItem`, or spread props to your component if using decorators.
 3. Since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children. Checkout [dynamic demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html) for more details.
 
 
