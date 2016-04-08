@@ -93,6 +93,8 @@ const Sortable = React.createClass({
     };
 
     this.__touchMoveHandler = (e) => {
+      // blocks the default scrolling as we sort an element
+      e.preventDefault()
       this.handleMouseMove.call(this, {
         target: e.target,
         clientX: e.touches[0].clientX,
