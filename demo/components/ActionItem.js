@@ -1,29 +1,27 @@
-'use strict';
-
 import React from 'react';
-import { SortableItemMixin } from '../src/index.js';
+import { SortableItemMixin } from '../../src/index.js';
 
-export default React.createClass({
+export default React.createClass({  //eslint-disable-line
   mixins: [SortableItemMixin],
-  getDefaultProps () {
+  getDefaultProps() {
     return {
       className: 'action-item'
     };
   },
 
-  getInitialState (){
+  getInitialState() {
     return {
       clicked: false
     };
   },
 
-  handleClick () {
+  handleClick() {
     this.setState({
       clicked: !this.state.clicked
     });
   },
 
-  render () {
+  render() {
     return this.renderWithSortable(
       <div className={this.props.className}>
         {this.props.children}

@@ -1,20 +1,20 @@
-'use strict';
-
 import React from 'react';
-import { SortableItemMixin } from '../src/index.js';
+import { SortableItemMixin } from '../../src/index.js';
 
 export default React.createClass({
   mixins: [SortableItemMixin],
-  getDefaultProps () {
+
+  getDefaultProps() {
     return {
       className: 'demo-item'
     };
   },
 
-  render () {
+  render() {
+    const { className, children } = this.props;
     return this.renderWithSortable(
-      <div className={this.props.className}>
-        {this.props.children}
+      <div className={className}>
+        {children}
       </div>
     );
   }

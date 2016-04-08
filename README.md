@@ -9,7 +9,7 @@
 
 ## Quick Demo
 
-[Live Demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html)
+[Live Demo](http://jasonslyvia.github.io/react-anything-sortable/demo/)
 
 **Sort custom style children**
 
@@ -30,11 +30,16 @@
 ```
 $ npm install --save react-anything-sortable
 
-// if you're using React v0.13, try
-$ npm install --save react-anything-sortable@0.x
-
 // UMD build is provided as well, but please do consider use modern module bundlers like webpack or browserify.
 ```
+
+You have to add necessary styles for sortable working properly, if you're using bundle tools like webpack, just 
+
+```javascript
+import 'react-anything-sortable/sortable.css';
+```
+
+Or copy this css to your own style base.
 
 ## How to use
 

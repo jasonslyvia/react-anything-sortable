@@ -37,7 +37,10 @@
   z-index: -1;
 }
 
-/* custom style */
+
+
+
+/* demo style, DO NOT COPY THIS TO YOUR PROJECT */
 html {
   box-sizing: border-box;
 }
@@ -48,6 +51,30 @@ html {
 body{
   position: relative;
   margin: 0;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a.active {
+  color: #f40;
+}
+
+.demo-title > a {
+  margin-left: 20px;
+  font: 12px/16px "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+  font-weight: normal;
+}
+
+.wrapper {
+  padding: 20px;
 }
 
 .ui-sortable .ui-sortable-placeholder.visible {

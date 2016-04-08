@@ -1,19 +1,17 @@
 /*eslint no-unused-expressions:0 */
-'use strict';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Sortable, {SortableItemMixin} from '../../src/index';
-import DemoItem from '../../demo/DemoItem';
-import DemoHOCItem from '../../demo/DemoHOCItem';
+import Sortable from '../../src/index';
+import DemoItem from '../../demo/components/DemoItem';
+import DemoHOCItem from '../../demo/components/DemoHOCItem';
 import triggerEvent from '../triggerEvent';
 import spies from 'chai-spies';
-import {moveX, moveY} from '../mouseMove';
+import { moveX, moveY } from '../mouseMove';
 
 chai.use(spies);
 
 
-//Delay karma test execution
+// Delay karma test execution
 window.__karma__.loaded = () => {};
 
 function injectCSS() {
