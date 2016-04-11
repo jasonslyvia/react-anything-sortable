@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, hashHistory, Link, Redirect } from 'react-router';
+import { Router, Route, hashHistory, Link, Redirect } from 'react-router';
 
 import Containment from './pages/containment';
 import Dynamic from './pages/dynamic';
 import HOC from './pages/hoc';
 import Image from './pages/image';
+import Handle from './pages/handle';
 
 const App = ({ children }) => (
   <div className="wrapper">
@@ -14,6 +15,7 @@ const App = ({ children }) => (
       <li><Link to="/image" activeClassName="active">Image</Link></li>
       <li><Link to="/dynamic" activeClassName="active">Dynamic</Link></li>
       <li><Link to="/containment" activeClassName="active">Containment</Link></li>
+      <li><Link to="/handle" activeClassName="active">Handle</Link></li>
     </ul>
     {children}
   </div>
@@ -26,6 +28,7 @@ const routes = (
       <Route path="/image" component={Image} />
       <Route path="/dynamic" component={Dynamic} />
       <Route path="/containment" component={Containment} />
+      <Route path="/handle" component={Handle} />
       <Redirect to="/normal" />
     </Route>
   </Router>

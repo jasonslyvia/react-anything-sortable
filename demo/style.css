@@ -179,3 +179,19 @@ a.active {
   overflow: hidden;
 }
 
+.handle-demo .demo-item {
+  padding: 4px 8px;
+  background: #fff;
+  border: 1px #ccc solid;
+  margin-right: 10px;
+  cursor: default;
+}
+
+.handle-demo .demo-item .handle {
+  cursor: move;
+  margin-left: 5px;
+}
+
+.handle-demo .demo-item .handle:hover {
+  color: #f40;
+}
