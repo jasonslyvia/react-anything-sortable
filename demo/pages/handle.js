@@ -22,16 +22,16 @@ export default class Containment extends React.Component {
           <a href="https://github.com/jasonslyvia/react-anything-sortable/tree/master/demo/pages/handle.js" target="_blank">source</a>
         </h4>
         <p className="sort-result">{this.state.result}</p>
-        <Sortable className="handle-demo">
-          <DemoItem sortData="react" key={1} sortHandleClass="handle">
+        <Sortable className="handle-demo" sortHandle="handle">
+          <DemoItem sortData="react" key={1}>
             React
             <span className="handle">↔</span>
           </DemoItem>
-          <DemoItem sortData="angular" key={2} sortHandleClass="handle">
+          <DemoItem sortData="angular" key={2}>
             Angular
             <span className="handle">↔</span>
           </DemoItem>
-          <DemoItem sortData="backbone" key={3} sortHandleClass="handle">
+          <DemoItem sortData="backbone" key={3}>
             Backbone
             <span className="handle">↔</span>
           </DemoItem>

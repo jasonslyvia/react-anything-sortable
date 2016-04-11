@@ -113,6 +113,12 @@ Type: Bool Default: false
 
 Constrain dragging area within sortable container.
 
+### sortHandle
+
+Type: String Default: undefined
+
+A className to allow only matching element of sortable item to trigger sort operation. Checkout [this demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html#/handle).
+
 ### sortData
 
 **Add this props to `SortableItem` rather than `Sortable` !**

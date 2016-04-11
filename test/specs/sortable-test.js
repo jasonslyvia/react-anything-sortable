@@ -1,4 +1,4 @@
-/*eslint no-unused-expressions:0 */
+/* eslint no-unused-expressions:0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Sortable from '../../src/index';
@@ -449,16 +449,16 @@ describe('Sortable', () => {
   describe('Sort handle', () => {
     it('should not move when `sortHandleClass` is set and target doesn\'t match', () => {
       ReactDOM.render(
-        <Sortable>
-          <DemoItem sortData="1" className="item-1" sortHandleClass="handle">
+        <Sortable sortHandle="handle">
+          <DemoItem sortData="1" className="item-1">
             1
             <span className="handle">↔</span>
           </DemoItem>
-          <DemoItem sortData="2" className="item-2" sortHandleClass="handle">
+          <DemoItem sortData="2" className="item-2">
             2
             <span className="handle">↔</span>
           </DemoItem>
-          <DemoItem sortData="3" className="item-3" sortHandleClass="handle">
+          <DemoItem sortData="3" className="item-3">
             3
             <span className="handle">↔</span>
           </DemoItem>
