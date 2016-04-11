@@ -445,5 +445,38 @@ describe('Sortable', () => {
       expect(target).to.not.exist;
     });
   });
+
+  describe('Sort handle', () => {
+    it('should not move when `sortHandleClass` is set and target doesn\'t match', () => {
+      ReactDOM.render(
+        <Sortable>
+          <DemoItem sortData="1" className="item-1" sortHandleClass="handle">
+            1
+            <span className="handle">↔</span>
+          </DemoItem>
+          <DemoItem sortData="2" className="item-2" sortHandleClass="handle">
+            2
+            <span className="handle">↔</span>
+          </DemoItem>
+          <DemoItem sortData="3" className="item-3" sortHandleClass="handle">
+            3
+            <span className="handle">↔</span>
+          </DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      var target = document.querySelector('.item-1');
+      moveY(target, 100, 20, 25, true);
+
+      var draggingItem = document.querySelector('.ui-sortable-dragging');
+      expect(draggingItem).to.not.exist;
+
+      var handle = document.querySelector('.item-1 .handle');
+      moveX(handle, 100, 20, 25, true);
+      draggingItem = document.querySelector('.ui-sortable-dragging');
+
+      expect(draggingItem).to.exist;
+    });
+  });
 });
 

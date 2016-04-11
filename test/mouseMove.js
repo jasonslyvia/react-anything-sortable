@@ -17,6 +17,10 @@ export function moveX(target, src, to, y = 25, noMouseUp = false) {
   });
 
   var dragging = document.querySelector('.ui-sortable-dragging');
+  if (!dragging) {
+    return;
+  }
+
   triggerEvent(dragging, 'mousemove', {
     clientX: to,
     clientY: y
@@ -56,6 +60,10 @@ export function moveY(target, src, to, x = 25, noMouseUp = false) {
   });
 
   var dragging = document.querySelector('.ui-sortable-dragging');
+  if (!dragging) {
+    return;
+  }
+
   triggerEvent(dragging, 'mousemove', {
     clientX: x,
     clientY: to
