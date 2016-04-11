@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {on, position, closest, width, height, isFunction,
-        outerWidthWithMargin, outerHeightWithMargin} from './utils';
+import { on, position, closest, width, height, isFunction,
+        outerWidthWithMargin, outerHeightWithMargin } from './utils';
 
 function handleSortableItemReadyToMove(e) {
   // if sort handle is defined then only handle sort if the target matches the sort handle
-  if (this.props.sortHandleClass && !e.target.classList.contains(this.props.sortHandleClass)) {
+  if (this.props.sortHandleClass &&
+      e.target.className.indexOf(this.props.sortHandleClass) === -1) {
     return;
   }
-  
+
   const target = closest((e.target || e.srcElement), '.ui-sortable-item');
   const evt = {
     pageX: (e.pageX || e.clientX || e.touches[0].pageX),
@@ -27,8 +28,7 @@ function handleComponentDidMount() {
   on(node, 'selectstart', (e) => {
     if (e.preventDefault) {
       e.preventDefault();
-    }
-    else {
+    } else {
       e.returnValue = false;
     }
   });
@@ -90,12 +90,14 @@ export default (Component) => {
       render() {
         const { sortableClassName, sortableStyle, sortableIndex, ...rest } = this.props;
         return (
-          <Component {...rest} className={sortableClassName} style={sortableStyle} key={sortableIndex}
-                     onMouseDown={::this.handleSortableItemReadyToMove}
-                     onTouchStart={::this.handleSortableItemReadyToMove} />
+          <Component {...rest} className={sortableClassName}
+            style={sortableStyle} key={sortableIndex}
+            onMouseDown={::this.handleSortableItemReadyToMove}
+            onTouchStart={::this.handleSortableItemReadyToMove}
+          />
         );
       }
-    }
+    };
   }
 
   return {
@@ -103,7 +105,7 @@ export default (Component) => {
       return _defaultProps;
     },
 
-    handleSortableItemReadyToMove: handleSortableItemReadyToMove,
+    handleSortableItemReadyToMove,
 
     componentDidMount: handleComponentDidMount,
 
@@ -111,12 +113,12 @@ export default (Component) => {
 
     renderWithSortable(item) {
       return React.cloneElement(item, {
-        className: this.props.sortableClassName + ' ' + item.props.className,
+        className: `${this.props.sortableClassName} ${item.props.className}`,
         style: this.props.sortableStyle,
         key: this.props.sortableIndex,
         onMouseDown: this.handleSortableItemReadyToMove,
         onTouchStart: this.handleSortableItemReadyToMove
       });
     }
-  }
+  };
 };
