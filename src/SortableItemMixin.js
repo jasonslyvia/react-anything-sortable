@@ -4,6 +4,11 @@ import {on, position, closest, width, height, isFunction,
         outerWidthWithMargin, outerHeightWithMargin} from './utils';
 
 function handleSortableItemReadyToMove(e) {
+  // if sort handle is defined then only handle sort if the target matches the sort handle
+  if (this.props.sortHandleClass && !e.target.classList.contains(this.props.sortHandleClass)) {
+    return;
+  }
+  
   const target = closest((e.target || e.srcElement), '.ui-sortable-item');
   const evt = {
     pageX: (e.pageX || e.clientX || e.touches[0].pageX),
