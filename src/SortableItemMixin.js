@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { on, position, closest, width, height, isFunction,
         outerWidthWithMargin, outerHeightWithMargin } from './utils';
 
 function handleSortableItemReadyToMove(e) {
   // if sort handle is defined then only handle sort if the target matches the sort handle
-  if (this.props.sortHandleClass &&
-      e.target.className.indexOf(this.props.sortHandleClass) === -1) {
+  if (this.props.sortHandle &&
+      e.target.className.indexOf(this.props.sortHandle) === -1) {
     return;
   }
 
@@ -75,6 +75,13 @@ export default (Component) => {
     return class SortableItem extends React.Component {
       static defaultProps = _defaultProps;
 
+      static propTypes = {
+        sortableClassName: PropTypes.string,
+        sortableStyle: PropTypes.object,
+        sortableIndex: PropTypes.number,
+        sortHandle: PropTypes.string
+      };
+
       handleSortableItemReadyToMove(e) {
         handleSortableItemReadyToMove.call(this, e);
       }
@@ -88,10 +95,13 @@ export default (Component) => {
       }
 
       render() {
-        const { sortableClassName, sortableStyle, sortableIndex, ...rest } = this.props;
+        const { sortableClassName, sortableStyle, sortableIndex, sortHandle, ...rest } = this.props;
         return (
-          <Component {...rest} className={sortableClassName}
-            style={sortableStyle} key={sortableIndex}
+          <Component {...rest}
+            className={sortableClassName}
+            style={sortableStyle}
+            key={sortableIndex}
+            sortHandle={sortHandle}
             onMouseDown={::this.handleSortableItemReadyToMove}
             onTouchStart={::this.handleSortableItemReadyToMove}
           />
@@ -101,6 +111,13 @@ export default (Component) => {
   }
 
   return {
+    propTypes: {
+      sortableClassName: PropTypes.string,
+      sortableStyle: PropTypes.object,
+      sortableIndex: PropTypes.number,
+      sortHandle: PropTypes.string
+    },
+
     getDefaultProps() {
       return _defaultProps;
     },
@@ -116,6 +133,7 @@ export default (Component) => {
         className: `${this.props.sortableClassName} ${item.props.className}`,
         style: this.props.sortableStyle,
         key: this.props.sortableIndex,
+        sortHandle: this.props.sortHandle,
         onMouseDown: this.handleSortableItemReadyToMove,
         onTouchStart: this.handleSortableItemReadyToMove
       });

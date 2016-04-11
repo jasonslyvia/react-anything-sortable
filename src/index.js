@@ -3,10 +3,7 @@
  * @author jasonslyvia
  */
 
-/*eslint new-cap:0, consistent-return: 0 */
-
-'use strict';
-
+/* eslint new-cap:0, consistent-return: 0, react/prefer-es6-class: 0, react/sort-comp: 0 */
 /**
  * @dependency
  */
@@ -32,19 +29,23 @@ const Sortable = React.createClass({
      */
     onSort: PropTypes.func,
     className: PropTypes.string,
-    containment: PropTypes.bool
+    sortHandle: PropTypes.string,
+    containment: PropTypes.bool,
+    children: PropTypes.arrayOf(PropTypes.node)
   },
 
   getInitialState() {
-    //keep tracking the dimension and coordinates of all children
+    // keep tracking the dimension and coordinates of all children
     this._dimensionArr = this.props.children ?
-                         ( Array.isArray(this.props.children) ? this.props.children.map(() => {return {}; }) : [{}] ) :
+                          Array.isArray(this.props.children) ?
+                            this.props.children.map(() => ({})) :
+                            [{}] :
                          [];
 
-    //keep tracking the order of all children
+    // keep tracking the order of all children
     this._orderArr = [];
     let i = 0;
-    while(i < this._dimensionArr.length){
+    while (i < this._dimensionArr.length) {
       this._orderArr.push(i++);
     }
 
@@ -71,7 +72,7 @@ const Sortable = React.createClass({
   },
 
   bindEvent() {
-    //so that the focus won't be lost if cursor moving too fast
+    // so that the focus won't be lost if cursor moving too fast
     this.__mouseMoveHandler = (e) => {
       /**
        * Since Chrome may trigger redundant mousemove event evne if
@@ -94,7 +95,8 @@ const Sortable = React.createClass({
 
     this.__touchMoveHandler = (e) => {
       // blocks the default scrolling as we sort an element
-      e.preventDefault()
+      e.preventDefault();
+
       this.handleMouseMove.call(this, {
         target: e.target,
         clientX: e.touches[0].clientX,
@@ -141,7 +143,7 @@ const Sortable = React.createClass({
     this._isReadyForDragging = true;
     this._hasInitDragging = false;
 
-    //start listening mousemove and mouseup
+    // start listening mousemove and mouseup
     this.bindEvent();
   },
 
@@ -194,7 +196,7 @@ const Sortable = React.createClass({
     const _hasMouseMoved = this._isMouseMoving;
     this.unbindEvent();
 
-    //reset temp lets
+    // reset temp lets
     this._draggingIndex = null;
     this._isReadyForDragging = false;
     this._isMouseMoving = false;
@@ -205,13 +207,13 @@ const Sortable = React.createClass({
     if (this.state.isDragging) {
       this._dimensionArr[this.state.placeHolderIndex].isPlaceHolder = false;
 
-      //sort finished, callback fires
+      // sort finished, callback fires
       if (isFunction(this.props.onSort)) {
         this.props.onSort(this.getSortData());
       }
     }
 
-    if (this.isMounted() && _hasMouseMoved) {
+    if (_hasMouseMoved) {
       this.setState({
         isDragging: false,
         placeHolderIndex: null,
@@ -234,10 +236,10 @@ const Sortable = React.createClass({
     assign(this._dimensionArr[index], {
       top: offset.top,
       left: offset.left,
-      width: width,
-      height: height,
-      fullWidth: fullWidth,
-      fullHeight: fullHeight
+      width,
+      height,
+      fullWidth,
+      fullHeight
     });
   },
 
@@ -268,17 +270,13 @@ const Sortable = React.createClass({
       if (relativeLeft < item.fullWidth && relativeTop < item.fullHeight) {
         if (relativeLeft < item.fullWidth / 2 && direction === 'left') {
           newIndex = index;
-        }
-        else if(relativeLeft > item.fullWidth / 2 && direction === 'right'){
+        } else if (relativeLeft > item.fullWidth / 2 && direction === 'right'){
           newIndex = Math.min(index + 1, _dimensionArr.length - 1);
-        }
-        else if (relativeTop < item.fullHeight / 2 && direction === 'up') {
+        } else if (relativeTop < item.fullHeight / 2 && direction === 'up') {
           newIndex = index;
-        }
-        else if (relativeTop > item.fullHeight / 2 && direction === 'down') {
+        } else if (relativeTop > item.fullHeight / 2 && direction === 'down') {
           newIndex = index;
-        }
-        else {
+        } else {
           return true;
         }
 
@@ -333,14 +331,15 @@ const Sortable = React.createClass({
    * @return {number}
    */
   calculateNewIndex(e) {
-    let placeHolderIndex = this.state.placeHolderIndex !== null ?
+    const placeHolderIndex = this.state.placeHolderIndex !== null ?
                            this.state.placeHolderIndex :
                            this._draggingIndex;
 
     // Since `mousemove` is listened on document, when cursor move too fast,
     // `e.target` may be `body` or some other stuff instead of
     // `.ui-sortable-item`
-    const target = get('.ui-sortable-dragging') || closest((e.target || e.srcElement), '.ui-sortable-item');
+    const target = get('.ui-sortable-dragging') ||
+                   closest((e.target || e.srcElement), '.ui-sortable-item');
     const offset = position(target);
 
     const currentX = e.pageX || e.clientX;
@@ -350,18 +349,19 @@ const Sortable = React.createClass({
     const deltaY = Math.abs(this._prevY - currentY);
 
     let direction;
-    // tend to move left/right
     if (deltaX > deltaY) {
+      // tend to move left/right
       direction = this._prevX > currentX ? 'left' : 'right';
-    }
-    // tend to move up/down
-    else {
+    } else {
+      // tend to move up/down
       direction = this._prevY > currentY ? 'up' : 'down';
     }
 
     const newIndex = this.getIndexByOffset(offset, this.getPossibleDirection(direction));
     if (newIndex !== placeHolderIndex) {
-      this._dimensionArr = this.swapArrayItemPosition(this._dimensionArr, placeHolderIndex, newIndex);
+      this._dimensionArr = this.swapArrayItemPosition(this._dimensionArr,
+                                                      placeHolderIndex,
+                                                      newIndex);
       this._orderArr = this.swapArrayItemPosition(this._orderArr, placeHolderIndex, newIndex);
     }
 
@@ -369,7 +369,7 @@ const Sortable = React.createClass({
   },
 
   getSortData() {
-    return this._orderArr.map((itemIndex, index) => {
+    return this._orderArr.map((itemIndex) => {
       const item = Array.isArray(this.props.children) ?
                    this.props.children[itemIndex] :
                    this.props.children;
@@ -399,11 +399,13 @@ const Sortable = React.createClass({
    * render all sortable children which mixined with SortableItemMixin
    */
   renderItems() {
-    const {_dimensionArr, _orderArr} = this;
+    const { _dimensionArr, _orderArr } = this;
     let draggingItem;
 
     const items = _orderArr.map((itemIndex, index) => {
-      let item = Array.isArray(this.props.children) ? this.props.children[itemIndex] : this.props.children;
+      const item = Array.isArray(this.props.children) ?
+                 this.props.children[itemIndex] :
+                 this.props.children;
       if (!item) {
         return undefined;
       }
@@ -412,7 +414,9 @@ const Sortable = React.createClass({
       }
 
       const isPlaceHolder = _dimensionArr[index].isPlaceHolder;
-      const itemClassName = `ui-sortable-item ${isPlaceHolder && 'ui-sortable-placeholder'} ${this.state.isDragging && isPlaceHolder && 'visible'}`;
+      const itemClassName = `ui-sortable-item
+                             ${isPlaceHolder && 'ui-sortable-placeholder'}
+                             ${this.state.isDragging && isPlaceHolder && 'visible'}`;
 
       return React.cloneElement(item, {
         key: index,
@@ -421,7 +425,8 @@ const Sortable = React.createClass({
         onSortableItemReadyToMove: isPlaceHolder ? undefined : (e) => {
           this.handleMouseDown.call(this, e, index);
         },
-        onSortableItemMount: this.handleChildUpdate
+        onSortableItemMount: this.handleChildUpdate,
+        sortHandle: this.props.sortHandle
       });
     });
 
@@ -447,12 +452,13 @@ const Sortable = React.createClass({
       sortableClassName: `${item.props.className} ui-sortable-item ui-sortable-dragging`,
       key: this._dimensionArr.length,
       sortableStyle: style,
-      isDragging: true
+      isDragging: true,
+      sortHandle: this.props.sortHandle
     });
   },
 
   render() {
-    const className = 'ui-sortable ' + (this.props.className || '');
+    const className = `ui-sortable ${this.props.className || ''}`;
 
     return (
       <div className={className}>
