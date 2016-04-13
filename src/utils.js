@@ -2,14 +2,11 @@
  * @fileOverview jQuery replacement
  * @author jasonslyvia
  */
-'use strict';
-
 export function on(el, eventName, callback) {
   if (el.addEventListener) {
     el.addEventListener(eventName, callback, false);
-  }
-  else if (el.attachEvent) {
-    el.attachEvent('on'+eventName, (e) => {
+  } else if (el.attachEvent) {
+    el.attachEvent(`on${eventName}`, (e) => {
       callback.call(el, e || window.event);
     });
   }
@@ -18,9 +15,8 @@ export function on(el, eventName, callback) {
 export function off(el, eventName, callback) {
   if (el.removeEventListener) {
     el.removeEventListener(eventName, callback);
-  }
-  else if (el.detachEvent) {
-    el.detachEvent('on'+eventName, callback);
+  } else if (el.detachEvent) {
+    el.detachEvent(`on${eventName}`, callback);
   }
 }
 
@@ -58,7 +54,7 @@ export function outerWidthWithMargin(el) {
   let _width = el.offsetWidth;
   const style = el.currentStyle || getComputedStyle(el);
 
-  _width += (parseInt(style.marginLeft) || 0) + (parseInt(style.marginRight) || 0);
+  _width += (parseInt(style.marginLeft, 10) || 0) + (parseInt(style.marginRight, 10) || 0);
   return _width;
 }
 
@@ -66,23 +62,24 @@ export function outerHeightWithMargin(el) {
   let _height = el.offsetHeight;
   const style = el.currentStyle || getComputedStyle(el);
 
-  _height += (parseInt(style.marginLeft) || 0) + (parseInt(style.marginRight) || 0);
+  _height += (parseInt(style.marginLeft, 10) || 0) + (parseInt(style.marginRight, 10) || 0);
   return _height;
 }
 
 export function closest(el, className) {
   className = className.replace(/^[\b\.]/, '');
-  const reg = new RegExp('\\b'+className+'\\b');
+  const reg = new RegExp(`\\b${className}\\b`);
 
   const finder = (_el, _className) => {
-    if (_el.className && _el.className.match(reg)) {
+    const _elClassName = typeof _el.className === 'object' ?
+                         _el.className.baseVal :
+                         _el.className;
+    if (_elClassName && _elClassName.match(reg)) {
       return _el;
-    }
-    // matches document
-    else if (_el.parentNode === null) {
+    } else if (_el.parentNode === null) {
+      // matches document
       return null;
-    }
-    else {
+    } else {
       return finder(_el.parentNode, _className);
     }
   };
@@ -90,12 +87,12 @@ export function closest(el, className) {
   return finder(el, className);
 }
 
-export function assign (target) {
+export function assign(target) {
   if (target === undefined || target === null) {
     throw new TypeError('Cannot convert first argument to object');
   }
 
-  let to = Object(target);
+  const to = Object(target);
   for (let i = 1; i < arguments.length; i++) {
     const nextSource = arguments[i];
     if (nextSource === undefined || nextSource === null) {
@@ -124,7 +121,5 @@ export function findMostOften(arr) {
     obj[i] = obj[i] ? obj[i] + 1 : 1;
   });
 
-  return Object.keys(obj).sort((a, b) => {
-    return obj[b] - obj[a];
-  })[0];
+  return Object.keys(obj).sort((a, b) => (obj[b] - obj[a]))[0];
 }

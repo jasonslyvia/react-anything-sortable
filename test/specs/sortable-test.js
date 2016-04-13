@@ -15,14 +15,14 @@ chai.use(spies);
 window.__karma__.loaded = () => {};
 
 function injectCSS() {
-  var link = document.createElement('link');
+  const link = document.createElement('link');
   link.href = 'base/demo/style.css';
   link.type = 'text/css';
   link.rel = 'stylesheet';
   document.head.appendChild(link);
 
   link.onload = () => {
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     div.id = 'react';
     document.body.appendChild(div);
     window.__karma__.start();
@@ -46,7 +46,7 @@ describe('Sortable', () => {
     });
 
     it('should render properly without any child', () => {
-      var node = document.querySelector('.ui-sortable');
+      const node = document.querySelector('.ui-sortable');
       expect(node).to.exist;
     });
   });
@@ -67,7 +67,7 @@ describe('Sortable', () => {
     });
 
     it('should render 3 children', () => {
-      var children = document.querySelectorAll('.ui-sortable-item');
+      const children = document.querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(3);
     });
   });
@@ -86,7 +86,7 @@ describe('Sortable', () => {
     });
 
     it('should render 1 child', () => {
-      var children = document.querySelectorAll('.ui-sortable-item');
+      const children = document.querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(1);
     });
   });
@@ -115,13 +115,13 @@ describe('Sortable', () => {
     });
 
     it('should render 2 children', () => {
-      var children = document.querySelectorAll('.ui-sortable-item');
+      const children = document.querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(2);
     });
   });
 
   describe('Dragging children', () => {
-    var component, target;
+    let component, target;
 
     beforeEach(() => {
       component = ReactDOM.render(
@@ -149,7 +149,7 @@ describe('Sortable', () => {
 
       triggerEvent(target, 'mousemove');
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(4);
     });
 
@@ -166,8 +166,8 @@ describe('Sortable', () => {
         clientY: 30
       });
 
-      var child = ReactDOM.findDOMNode(component).querySelector('.ui-sortable-placeholder');
-      var children = [].slice.call(ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item'));
+      const child = ReactDOM.findDOMNode(component).querySelector('.ui-sortable-placeholder');
+      const children = [].slice.call(ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item'));
       expect(children.length).to.equal(4);
       expect(children.indexOf(child)).to.equal(2);
     });
@@ -176,7 +176,7 @@ describe('Sortable', () => {
       target = document.querySelector('.ui-sortable-item');
       moveX(target, 25, 210);
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[children.length - 1].textContent).to.equal('1');
     });
 
@@ -184,7 +184,7 @@ describe('Sortable', () => {
       target = document.querySelector('.item-3');
       moveX(target, 210, 25);
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[0].textContent).to.equal('3');
     });
 
@@ -205,7 +205,7 @@ describe('Sortable', () => {
         clientY: 10
       });
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(3);
     });
 
@@ -242,7 +242,7 @@ describe('Sortable', () => {
   });
 
   describe('Dragging children verically', () => {
-    var component, target;
+    let component, target;
 
     beforeEach(() => {
       component = ReactDOM.render(
@@ -266,7 +266,7 @@ describe('Sortable', () => {
 
       moveY(target, 25, 180);
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[children.length - 1].textContent).to.equal('1');
     });
 
@@ -275,13 +275,13 @@ describe('Sortable', () => {
       target = document.querySelector('.item-3');
       moveY(target, 180, 25);
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[0].textContent).to.equal('3');
     });
   });
 
   describe('onSort Props', () => {
-    var callback;
+    let callback;
 
     beforeEach(() => {
       callback = chai.spy();
@@ -301,19 +301,19 @@ describe('Sortable', () => {
     });
 
     it('should call onSort when a drag\'n\'drop finished', () => {
-      var target = document.querySelector('.item-1');
+      const target = document.querySelector('.item-1');
       moveX(target, 25, 210);
       expect(callback).to.have.been.called.with(['2', '3', '1']);
     });
 
     it('should call onSort when a opposite drag\'n\'drop finished', () => {
-      var target = document.querySelector('.item-3');
+      const target = document.querySelector('.item-3');
       moveX(target, 210, 25);
       expect(callback).to.have.been.called.with(['3', '1', '2']);
     });
 
     it('should call onSort anytime there is a mouseup fired', () => {
-      var target = document.querySelector('.item-1');
+      const target = document.querySelector('.item-1');
       moveX(target, 25, 80);
       moveX(target, 80, 180);
       expect(callback).to.have.been.called.twice;
@@ -330,16 +330,16 @@ describe('Sortable', () => {
         </Sortable>
       , document.getElementById('react'));
 
-      var target = document.querySelector('.item-1');
+      const target = document.querySelector('.item-1');
       moveY(target, 100, 20, 25, true);
 
-      var draggingItem = document.querySelector('.ui-sortable-dragging');
+      const draggingItem = document.querySelector('.ui-sortable-dragging');
       expect(draggingItem.getBoundingClientRect().top).to.be.below(100);
     });
   });
 
   describe('Higher order component', () => {
-    var component, target;
+    let component, target;
 
     beforeEach(() => {
       component = ReactDOM.render(
@@ -371,7 +371,7 @@ describe('Sortable', () => {
 
       triggerEvent(target, 'mousemove');
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(4);
     });
 
@@ -380,7 +380,7 @@ describe('Sortable', () => {
       target = document.querySelector('.ui-sortable-item');
       moveX(target, 25, 210);
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[children.length - 1].textContent).to.equal('1');
     });
 
@@ -389,7 +389,7 @@ describe('Sortable', () => {
       target = document.querySelector('.item-3');
       moveX(target, 210, 25);
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[0].textContent).to.equal('3');
     });
 
@@ -410,7 +410,7 @@ describe('Sortable', () => {
         clientY: 10
       });
 
-      var children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children.length).to.equal(3);
     });
 
@@ -447,6 +447,10 @@ describe('Sortable', () => {
   });
 
   describe('Sort handle', () => {
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+    });
+
     it('should not move when `sortHandleClass` is set and target doesn\'t match', () => {
       ReactDOM.render(
         <Sortable sortHandle="handle">
@@ -465,13 +469,50 @@ describe('Sortable', () => {
         </Sortable>
       , document.getElementById('react'));
 
-      var target = document.querySelector('.item-1');
+      const target = document.querySelector('.item-1');
       moveY(target, 100, 20, 25, true);
 
-      var draggingItem = document.querySelector('.ui-sortable-dragging');
+      let draggingItem = document.querySelector('.ui-sortable-dragging');
       expect(draggingItem).to.not.exist;
 
-      var handle = document.querySelector('.item-1 .handle');
+      const handle = document.querySelector('.item-1 .handle');
+      moveX(handle, 100, 20, 25, true);
+      draggingItem = document.querySelector('.ui-sortable-dragging');
+
+      expect(draggingItem).to.exist;
+    });
+
+    it('should not throw when sort handle is/contains SVG', () => {
+      ReactDOM.render(
+        <Sortable sortHandle="handle">
+          <DemoItem sortData="1" className="item-1">
+            1
+            <span className="handle">
+              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M.004.393H4.74l6.56 10.61-.003-10.61H16v15.214h-4.696L4.71 4.997v10.61H0L.004.393" fill-rule="nonzero"></path></svg>
+            </span>
+          </DemoItem>
+          <DemoItem sortData="2" className="item-2">
+            2
+            <span className="handle">
+              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M.004.393H4.74l6.56 10.61-.003-10.61H16v15.214h-4.696L4.71 4.997v10.61H0L.004.393" fill-rule="nonzero"></path></svg>
+            </span>
+          </DemoItem>
+          <DemoItem sortData="3" className="item-3">
+            3
+            <span className="handle">
+              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M.004.393H4.74l6.56 10.61-.003-10.61H16v15.214h-4.696L4.71 4.997v10.61H0L.004.393" fill-rule="nonzero"></path></svg>
+            </span>
+          </DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      const target = document.querySelector('.item-1');
+      moveY(target, 100, 5, 25, true);
+
+      let draggingItem = document.querySelector('.ui-sortable-dragging');
+      expect(draggingItem).to.not.exist;
+
+      const handle = document.querySelector('.item-1 .handle svg path');
       moveX(handle, 100, 20, 25, true);
       draggingItem = document.querySelector('.ui-sortable-dragging');
 

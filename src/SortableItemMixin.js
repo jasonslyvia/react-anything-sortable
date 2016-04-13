@@ -5,8 +5,7 @@ import { on, position, closest, width, height, isFunction,
 
 function handleSortableItemReadyToMove(e) {
   // if sort handle is defined then only handle sort if the target matches the sort handle
-  if (this.props.sortHandle &&
-      e.target.className.indexOf(this.props.sortHandle) === -1) {
+  if (this.props.sortHandle && closest(e.target || e.srcElement, this.props.sortHandle) === null) {
     return;
   }
 
