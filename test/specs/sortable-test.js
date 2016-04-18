@@ -303,13 +303,13 @@ describe('Sortable', () => {
     it('should call onSort when a drag\'n\'drop finished', () => {
       const target = document.querySelector('.item-1');
       moveX(target, 25, 210);
-      expect(callback).to.have.been.called.with(['2', '3', '1']);
+      expect(callback).to.have.been.called.with(['2', '3', '1'], '1', 2);
     });
 
     it('should call onSort when a opposite drag\'n\'drop finished', () => {
       const target = document.querySelector('.item-3');
       moveX(target, 210, 25);
-      expect(callback).to.have.been.called.with(['3', '1', '2']);
+      expect(callback).to.have.been.called.with(['3', '1', '2'], '3', 0);
     });
 
     it('should call onSort anytime there is a mouseup fired', () => {
