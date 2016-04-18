@@ -195,7 +195,8 @@ const Sortable = React.createClass({
   handleMouseUp() {
     const _hasMouseMoved = this._isMouseMoving;
     this.unbindEvent();
-
+    
+    const draggingIndex = this._draggingIndex;
     // reset temp lets
     this._draggingIndex = null;
     this._isReadyForDragging = false;
@@ -209,7 +210,8 @@ const Sortable = React.createClass({
 
       // sort finished, callback fires
       if (isFunction(this.props.onSort)) {
-        this.props.onSort(this.getSortData());
+        const sortData = this.getSortData();      
+        this.props.onSort(sortData, sortData[draggingIndex], draggingIndex);
       }
     }
 
