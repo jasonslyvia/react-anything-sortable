@@ -164,3 +164,4 @@ $ npm run demo:watch
 1. [stayradiated](https://github.com/stayradiated)
 2. [vizath](https://github.com/vizath)
 3. [zthomas](https://github.com/zthomas)
+4. [jakubruffer](https://github.com/jakubruffer)
