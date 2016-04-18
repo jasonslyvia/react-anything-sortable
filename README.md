@@ -1,4 +1,4 @@
-# react-anything-sortable [![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable) [![npm version](https://badge.fury.io/js/react-anything-sortable.svg)](http://badge.fury.io/js/react-anything-sortable) [![Coverage Status](https://coveralls.io/repos/jasonslyvia/react-anything-sortable/badge.svg?branch=master&service=github)](https://coveralls.io/github/jasonslyvia/react-anything-sortable?branch=master)
+# react-anything-sortable [![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable) [![npm version](https://badge.fury.io/js/react-anything-sortable.svg)](http://badge.fury.io/js/react-anything-sortable) [![Coverage Status](https://coveralls.io/repos/github/jasonslyvia/react-anything-sortable/badge.svg?branch=master)](https://coveralls.io/github/jasonslyvia/react-anything-sortable?branch=master)
 
 ## Features
 
@@ -106,6 +106,8 @@ Being called with sorted data when a sort operation is finished.
 **Arguments**
 
  1. sortedArray (*Array*) Sorted array consists of `sortData` plucked from each sortable item
+ 2. currentDraggingSortData (*Any*) The sortData of dragging element
+ 3. currentDraggingIndex (*Number*) The index of dragging element
 
 ### containment
 
