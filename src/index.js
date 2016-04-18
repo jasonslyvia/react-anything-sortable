@@ -195,7 +195,7 @@ const Sortable = React.createClass({
   handleMouseUp() {
     const _hasMouseMoved = this._isMouseMoving;
     this.unbindEvent();
-    
+
     const draggingIndex = this._draggingIndex;
     // reset temp lets
     this._draggingIndex = null;
@@ -208,20 +208,20 @@ const Sortable = React.createClass({
     if (this.state.isDragging) {
       this._dimensionArr[this.state.placeHolderIndex].isPlaceHolder = false;
 
+      if (_hasMouseMoved) {
+        this.setState({
+          isDragging: false,
+          placeHolderIndex: null,
+          left: null,
+          top: null
+        });
+      }
+
       // sort finished, callback fires
       if (isFunction(this.props.onSort)) {
-        const sortData = this.getSortData();      
+        const sortData = this.getSortData();
         this.props.onSort(sortData, sortData[draggingIndex], draggingIndex);
       }
-    }
-
-    if (_hasMouseMoved) {
-      this.setState({
-        isDragging: false,
-        placeHolderIndex: null,
-        left: null,
-        top: null
-      });
     }
   },
 
