@@ -133,8 +133,8 @@ export default (Component) => {
         style: this.props.sortableStyle,
         key: this.props.sortableIndex,
         sortHandle: this.props.sortHandle,
-        onMouseDown: this.handleSortableItemReadyToMove,
-        onTouchStart: this.handleSortableItemReadyToMove
+        onMouseDown: ::this.handleSortableItemReadyToMove,
+        onTouchStart: ::this.handleSortableItemReadyToMove
       });
     }
   };
