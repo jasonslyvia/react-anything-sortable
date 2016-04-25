@@ -115,11 +115,15 @@ Type: Bool Default: false
 
 Constrain dragging area within sortable container.
 
+[demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html#/containment)
+
 ### sortHandle
 
 Type: String Default: undefined
 
-A className to allow only matching element of sortable item to trigger sort operation. Checkout [this demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html#/handle).
+A className to allow only matching element of sortable item to trigger sort operation. 
+
+[demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html#/handle)
 
 ### sortData
 
@@ -128,18 +132,6 @@ A className to allow only matching element of sortable item to trigger sort oper
 Type: Any Default: undefined
 
 Will be returned by `onSort` callback in the form of array.
-
-## Sort Element Props
-to further customize the behaviour you can pass in a sort handle class to the element being sorted. If the sort event target doesn't match this class it will not trigger any sorting action. 
-This helps on mobile devices when elements may take up an entire row and the user needs space to scroll.
-```
-...
-  <Sortable onSort={ this.handleSort } >
-    <SortableItem sortHandleClass="sort-handle" >
-  </Sortable>
-...
-```
-
 
 ## Notice
 
