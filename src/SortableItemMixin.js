@@ -98,7 +98,7 @@ export default (Component) => {
           ...rest } = this.props;
         return (
           <Component {...rest}
-            className={`${sortableClassName} ${className}`}
+            className={sortableClassName}
             style={sortableStyle}
             key={sortableIndex}
             sortHandle={sortHandle}
@@ -130,7 +130,7 @@ export default (Component) => {
 
     renderWithSortable(item) {
       return React.cloneElement(item, {
-        className: `${this.props.sortableClassName} ${item.props.className}`,
+        className: this.props.sortableClassName,
         style: this.props.sortableStyle,
         key: this.props.sortableIndex,
         sortHandle: this.props.sortHandle,
