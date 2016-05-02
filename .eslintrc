@@ -17,6 +17,9 @@
     "no-nested-ternary": 0,
     "no-param-reassign": 0,
     "prefer-rest-params": 0,
-    "vars-on-top": 0
+    "vars-on-top": 0,
+    "react/prop-types": [1, {
+      "ignore": ["className"]
+    }]
   }
 }

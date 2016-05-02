@@ -94,10 +94,11 @@ export default (Component) => {
       }
 
       render() {
-        const { sortableClassName, sortableStyle, sortableIndex, sortHandle, ...rest } = this.props;
+        const { sortableClassName, sortableStyle, sortableIndex, sortHandle, className,
+          ...rest } = this.props;
         return (
           <Component {...rest}
-            className={sortableClassName}
+            className={`${sortableClassName} ${className}`}
             style={sortableStyle}
             key={sortableIndex}
             sortHandle={sortHandle}
