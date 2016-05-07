@@ -7,6 +7,7 @@ import Dynamic from './pages/dynamic';
 import HOC from './pages/hoc';
 import Image from './pages/image';
 import Handle from './pages/handle';
+import Fixed from './pages/fixed';
 
 const App = ({ children }) => (
   <div className="wrapper">
@@ -16,6 +17,7 @@ const App = ({ children }) => (
       <li><Link to="/dynamic" activeClassName="active">Dynamic</Link></li>
       <li><Link to="/containment" activeClassName="active">Containment</Link></li>
       <li><Link to="/handle" activeClassName="active">Handle</Link></li>
+      <li><Link to="/fixed" activeClassName="active">Mixed with un-sortable items</Link></li>
     </ul>
     {children}
   </div>
@@ -29,6 +31,7 @@ const routes = (
       <Route path="/dynamic" component={Dynamic} />
       <Route path="/containment" component={Containment} />
       <Route path="/handle" component={Handle} />
+      <Route path="/fixed" component={Fixed} />
       <Redirect to="/normal" />
     </Route>
   </Router>
