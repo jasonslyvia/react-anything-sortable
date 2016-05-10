@@ -95,6 +95,8 @@ var SortableItem = React.createClass({
 });
 ````
 
+You can even pass un-sortable children to `<Sortable />` and it just works, checkout this [demo](http://jasonslyvia.github.io/react-anything-sortable/demo/#/fixed) to find out more. If you do so, remember to add according style to your un-sortable items.
+
 ## Props
 
 ### onSort
