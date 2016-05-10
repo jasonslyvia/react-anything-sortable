@@ -50,7 +50,6 @@ module.exports = function(config) {
       }
     },
 
-
     plugins: [
       'karma-webpack',
       'karma-mocha',

@@ -93,17 +93,15 @@ describe('Sortable', () => {
 
   describe('Provide sortable children with nulls', () => {
     beforeEach(() => {
-
       ReactDOM.render(
         <Sortable>
           {
-            ['hello1', 'hello2', ''].map(function(name) {
+            ['hello1', 'hello2', ''].map(name => {
               if (name) {
                 return (<DemoItem sortData={name} />);
               }
-              else {
-                return null;
-              }
+
+              return null;
             })
           }
         </Sortable>
@@ -277,6 +275,46 @@ describe('Sortable', () => {
 
       const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
       expect(children[0].textContent).to.equal('3');
+    });
+  });
+
+  describe('Mixing with un-sortable children', () => {
+    let component, target, callback;
+
+    beforeEach(() => {
+      callback = chai.spy();
+      component = ReactDOM.render(
+        <Sortable className="style-for-test" onSort={callback}>
+          <DemoItem sortData="1" className="item-1">1</DemoItem>
+          <div style={{ float: 'left', width: '50px', height: '50px'}}>fixed</div>
+          <DemoItem sortData="2" className="item-2">2</DemoItem>
+          <div style={{ float: 'left', width: '50px', height: '50px'}}>fixed</div>
+          <DemoItem sortData="3" className="item-3">3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+    });
+
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+      component = null;
+      target = null;
+    });
+
+    it('should switch position when dragging from left to right', () => {
+      target = document.querySelector('.ui-sortable-item');
+      moveX(target, 25, 200);
+
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      expect(children[children.length - 1].textContent).to.equal('1');
+    });
+
+    it('should ignore un-sortable children with no `sortData`', () => {
+      target = document.querySelector('.ui-sortable-item');
+      moveX(target, 25, 200);
+
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+
+      expect(callback).to.have.been.called.with(['2', '3', '1']);
     });
   });
 
