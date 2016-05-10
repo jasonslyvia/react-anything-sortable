@@ -18,7 +18,7 @@ const STACK_SIZE = 6;
 const getSortTarget = (child) => {
   // `onSortableItemReadyToMove` only exist when using mixins or decorators
   return child && child.props && typeof child.props.onSortableItemReadyToMove === 'function';
-}
+};
 
 /**
  * @class Sortable
@@ -39,13 +39,11 @@ const Sortable = React.createClass({
   },
 
   getInitialState() {
-    const { sortTarget } = this.props;
-    const sortChildren = this.props.children ?
-      Array.isArray(this.props.children) ?
-        this.props.children.filter(getSortTarget) :
-        [] :
-      [];
+    const children = Array.isArray(this.props.children) ?
+                     this.props.children :
+                     [this.props.children];
 
+    const sortChildren = children.filter(getSortTarget);
     this.sortChildren = sortChildren;
 
     // keep tracking the dimension and coordinates of all children
@@ -412,9 +410,7 @@ const Sortable = React.createClass({
     let draggingItem;
 
     const items = _orderArr.map((itemIndex, index) => {
-      const item = Array.isArray(this.props.children) ?
-                   this.sortChildren[itemIndex] :
-                   this.sortChildren;
+      const item = this.sortChildren[itemIndex];
       if (!item) {
         return;
       }
@@ -440,7 +436,11 @@ const Sortable = React.createClass({
       });
     });
 
-    const result = this.props.children.map((child, i) => {
+    const children = Array.isArray(this.props.children) ?
+                     this.props.children :
+                     [this.props.children];
+
+    const result = children.map(child => {
       if (getSortTarget(child)) {
         return items.shift();
       }
