@@ -195,3 +195,12 @@ a.active {
 .handle-demo .demo-item .handle:hover {
   color: #f40;
 }
+
+.fixed {
+  float: left;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  margin-right: 20px;
+}

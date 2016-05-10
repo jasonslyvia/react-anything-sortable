@@ -98,6 +98,7 @@ export default (Component) => {
           ...rest } = this.props;
         return (
           <Component {...rest}
+            sortable={true}
             className={sortableClassName}
             style={sortableStyle}
             key={sortableIndex}

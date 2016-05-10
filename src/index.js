@@ -15,6 +15,10 @@ import SortableItemMixin from './SortableItemMixin';
 
 
 const STACK_SIZE = 6;
+const getSortTarget = (child) => {
+  // `onSortableItemReadyToMove` only exist when using mixins or decorators
+  return child && child.props && typeof child.props.onSortableItemReadyToMove === 'function';
+};
 
 /**
  * @class Sortable
@@ -35,12 +39,15 @@ const Sortable = React.createClass({
   },
 
   getInitialState() {
+    const children = Array.isArray(this.props.children) ?
+                     this.props.children :
+                     [this.props.children];
+
+    const sortChildren = children.filter(getSortTarget);
+    this.sortChildren = sortChildren;
+
     // keep tracking the dimension and coordinates of all children
-    this._dimensionArr = this.props.children ?
-                          Array.isArray(this.props.children) ?
-                            this.props.children.map(() => ({})) :
-                            [{}] :
-                         [];
+    this._dimensionArr = sortChildren.map(() => ({}));
 
     // keep tracking the order of all children
     this._orderArr = [];
@@ -372,9 +379,7 @@ const Sortable = React.createClass({
 
   getSortData() {
     return this._orderArr.map((itemIndex) => {
-      const item = Array.isArray(this.props.children) ?
-                   this.props.children[itemIndex] :
-                   this.props.children;
+      const item = this.sortChildren[itemIndex];
       if (!item) {
         return undefined;
       }
@@ -405,12 +410,11 @@ const Sortable = React.createClass({
     let draggingItem;
 
     const items = _orderArr.map((itemIndex, index) => {
-      const item = Array.isArray(this.props.children) ?
-                 this.props.children[itemIndex] :
-                 this.props.children;
+      const item = this.sortChildren[itemIndex];
       if (!item) {
-        return undefined;
+        return;
       }
+
       if (index === this._draggingIndex) {
         draggingItem = this.renderDraggingItem(item);
       }
@@ -432,7 +436,18 @@ const Sortable = React.createClass({
       });
     });
 
-    return items.concat([draggingItem]);
+    const children = Array.isArray(this.props.children) ?
+                     this.props.children :
+                     [this.props.children];
+
+    const result = children.map(child => {
+      if (getSortTarget(child)) {
+        return items.shift();
+      }
+      return child;
+    }).concat([draggingItem]);
+
+    return result;
   },
 
   /**
