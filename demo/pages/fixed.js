@@ -18,8 +18,8 @@ export default class Fixed extends React.Component {
     return (
       <div className="demo-container">
         <h4 className="demo-title">
-          Using decorators
-          <a href="https://github.com/jasonslyvia/react-anything-sortable/tree/master/demo/pages/hoc.js" target="_blank">source</a>
+          Mixed with un-sortable children
+          <a href="https://github.com/jasonslyvia/react-anything-sortable/tree/master/demo/pages/fixed.js" target="_blank">source</a>
         </h4>
         <p className="sort-result">result: {this.state.result}</p>
         <Sortable onSort={::this.handleSort} className="style-for-test">
