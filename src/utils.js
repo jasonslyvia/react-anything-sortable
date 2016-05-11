@@ -66,22 +66,25 @@ export function outerHeightWithMargin(el) {
   return _height;
 }
 
+function hasClass(elClassName, className) {
+  return (` ${elClassName} `).replace(/[\n\t]/g, ' ').indexOf(` ${className} `) > -1;
+}
+
 export function closest(el, className) {
   className = className.replace(/^[\b\.]/, '');
-  const reg = new RegExp(`\\b${className}\\b`);
 
   const finder = (_el, _className) => {
     const _elClassName = typeof _el.className === 'object' ?
                          _el.className.baseVal :
                          _el.className;
-    if (_elClassName && _elClassName.match(reg)) {
+    if (_elClassName && hasClass(_elClassName, _className)) {
       return _el;
     } else if (_el.parentNode === null) {
       // matches document
       return null;
-    } else {
-      return finder(_el.parentNode, _className);
     }
+
+    return finder(_el.parentNode, _className);
   };
 
   return finder(el, className);

@@ -489,7 +489,7 @@ describe('Sortable', () => {
       ReactDOM.unmountComponentAtNode(document.getElementById('react'));
     });
 
-    it('should not move when `sortHandleClass` is set and target doesn\'t match', () => {
+    it('should not move when `sortHandle` is set and target doesn\'t match', () => {
       ReactDOM.render(
         <Sortable sortHandle="handle">
           <DemoItem sortData="1" className="item-1">
