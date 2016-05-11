@@ -8,7 +8,8 @@
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config webpack.conf.js",
     "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
     "demo:build": "NODE_ENV=production ./node_modules/.bin/webpack --config demo/webpack.config.js",
-    "demo:watch": "./node_modules/.bin/webpack-dev-server --inline --config demo/webpack.config.js --content-base demo --port 8722 --host 0.0.0.0"
+    "demo:watch": "./node_modules/.bin/webpack-dev-server --inline --config demo/webpack.config.js --content-base demo --port 8722 --host 0.0.0.0",
+    "gh-pages": "git checkout gh-pages && git reset --hard master && npm run demo:build && git add . && git commit -m 'update demo' && git push -f origin gh-pages && git checkout master"
   },
   "repository": {
     "type": "git",
