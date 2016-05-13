@@ -101,7 +101,6 @@ export default (Component) => {
             sortable={true}
             className={sortableClassName}
             style={sortableStyle}
-            key={sortableIndex}
             sortHandle={sortHandle}
             onMouseDown={::this.handleSortableItemReadyToMove}
             onTouchStart={::this.handleSortableItemReadyToMove}
@@ -133,7 +132,6 @@ export default (Component) => {
       return React.cloneElement(item, {
         className: this.props.sortableClassName,
         style: this.props.sortableStyle,
-        key: this.props.sortableIndex,
         sortHandle: this.props.sortHandle,
         onMouseDown: this.handleSortableItemReadyToMove,
         onTouchStart: this.handleSortableItemReadyToMove

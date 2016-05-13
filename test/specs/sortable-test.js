@@ -55,9 +55,9 @@ describe('Sortable', () => {
     beforeEach(() => {
       ReactDOM.render(
         <Sortable>
-          <DemoItem sortData="1" />
-          <DemoItem sortData="2" />
-          <DemoItem sortData="3" />
+          <DemoItem sortData="1" key={1} />
+          <DemoItem sortData="2" key={2} />
+          <DemoItem sortData="3" key={3} />
         </Sortable>
       , document.getElementById('react'));
     });
@@ -98,7 +98,7 @@ describe('Sortable', () => {
           {
             ['hello1', 'hello2', ''].map(name => {
               if (name) {
-                return (<DemoItem sortData={name} />);
+                return (<DemoItem sortData={name} key={name} />);
               }
 
               return null;
@@ -124,9 +124,9 @@ describe('Sortable', () => {
     beforeEach(() => {
       component = ReactDOM.render(
         <Sortable className="style-for-test">
-          <DemoItem sortData="1" className="item-1">1</DemoItem>
-          <DemoItem sortData="2" className="item-2">2</DemoItem>
-          <DemoItem sortData="3" className="item-3">3</DemoItem>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
         </Sortable>
       , document.getElementById('react'));
     });
@@ -245,9 +245,9 @@ describe('Sortable', () => {
     beforeEach(() => {
       component = ReactDOM.render(
         <Sortable className="style-for-test full-width">
-          <DemoItem sortData="1" className="item-1">1</DemoItem>
-          <DemoItem sortData="2" className="item-2">2</DemoItem>
-          <DemoItem sortData="3" className="item-3">3</DemoItem>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
         </Sortable>
       , document.getElementById('react'));
     });
@@ -285,11 +285,11 @@ describe('Sortable', () => {
       callback = chai.spy();
       component = ReactDOM.render(
         <Sortable className="style-for-test" onSort={callback}>
-          <DemoItem sortData="1" className="item-1">1</DemoItem>
-          <div style={{ float: 'left', width: '50px', height: '50px'}}>fixed</div>
-          <DemoItem sortData="2" className="item-2">2</DemoItem>
-          <div style={{ float: 'left', width: '50px', height: '50px'}}>fixed</div>
-          <DemoItem sortData="3" className="item-3">3</DemoItem>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <div style={{ float: 'left', width: '50px', height: '50px'}} key='a'>fixed</div>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <div style={{ float: 'left', width: '50px', height: '50px'}} key='b'>fixed</div>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
         </Sortable>
       , document.getElementById('react'));
     });
@@ -326,9 +326,9 @@ describe('Sortable', () => {
 
       ReactDOM.render(
         <Sortable onSort={callback}>
-          <DemoItem sortData="1" className="item-1">1</DemoItem>
-          <DemoItem sortData="2" className="item-2">2</DemoItem>
-          <DemoItem sortData="3" className="item-3">3</DemoItem>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
         </Sortable>
       , document.getElementById('react'));
     });
@@ -362,9 +362,9 @@ describe('Sortable', () => {
     it('should NOT move when mouse outside of Sortable container', () => {
       ReactDOM.render(
         <Sortable containment>
-          <DemoItem sortData="1" className="item-1">1</DemoItem>
-          <DemoItem sortData="2" className="item-2">2</DemoItem>
-          <DemoItem sortData="3" className="item-3">3</DemoItem>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
         </Sortable>
       , document.getElementById('react'));
 
@@ -492,15 +492,15 @@ describe('Sortable', () => {
     it('should not move when `sortHandle` is set and target doesn\'t match', () => {
       ReactDOM.render(
         <Sortable sortHandle="handle">
-          <DemoItem sortData="1" className="item-1">
+          <DemoItem sortData="1" className="item-1" key={1}>
             1
             <span className="handle">↔</span>
           </DemoItem>
-          <DemoItem sortData="2" className="item-2">
+          <DemoItem sortData="2" className="item-2" key={2}>
             2
             <span className="handle">↔</span>
           </DemoItem>
-          <DemoItem sortData="3" className="item-3">
+          <DemoItem sortData="3" className="item-3" key={3}>
             3
             <span className="handle">↔</span>
           </DemoItem>
@@ -523,19 +523,19 @@ describe('Sortable', () => {
     it('should not throw when sort handle is/contains SVG', () => {
       ReactDOM.render(
         <Sortable sortHandle="handle">
-          <DemoItem sortData="1" className="item-1">
+          <DemoItem sortData="1" className="item-1" key={1}>
             1
             <span className="handle">
               <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M.004.393H4.74l6.56 10.61-.003-10.61H16v15.214h-4.696L4.71 4.997v10.61H0L.004.393" fill-rule="nonzero"></path></svg>
             </span>
           </DemoItem>
-          <DemoItem sortData="2" className="item-2">
+          <DemoItem sortData="2" className="item-2" key={2}>
             2
             <span className="handle">
               <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M.004.393H4.74l6.56 10.61-.003-10.61H16v15.214h-4.696L4.71 4.997v10.61H0L.004.393" fill-rule="nonzero"></path></svg>
             </span>
           </DemoItem>
-          <DemoItem sortData="3" className="item-3">
+          <DemoItem sortData="3" className="item-3" key={3}>
             3
             <span className="handle">
               <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M.004.393H4.74l6.56 10.61-.003-10.61H16v15.214h-4.696L4.71 4.997v10.61H0L.004.393" fill-rule="nonzero"></path></svg>
@@ -555,6 +555,74 @@ describe('Sortable', () => {
       draggingItem = document.querySelector('.ui-sortable-dragging');
 
       expect(draggingItem).to.exist;
+    });
+  });
+
+  describe('Dynamic sortables', () => {
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+    });
+
+    it('should automatically update when children change', () => {
+      ReactDOM.render(
+        <Sortable dynamic>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      ReactDOM.render(
+        <Sortable dynamic>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      let children = document.querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(3);
+      expect(children[0].textContent).to.equal('2');
+
+      ReactDOM.render(
+        <Sortable dynamic>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      children = document.querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(2);
+      expect(children[1].textContent).to.equal('3');
+    });
+  });
+
+  describe('A sortable with stateful items', () => {
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+    });
+
+    it('should correctly reorder keyed items, maintaining state', () => {
+      ReactDOM.render(
+        <Sortable className="style-for-test">
+          <DemoItem sortData="1" className="item-1" key={1}><input size="3" /></DemoItem>
+          <DemoItem sortData="2" className="item-2" key={2}><input size="3" /></DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}><input size="3" /></DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      let inputs = document.querySelectorAll('.ui-sortable-item input');
+      inputs[0].value = 'foo';
+      inputs[1].value = 'bar';
+      inputs[2].value = 'baz';
+
+      const target = document.querySelector('.ui-sortable-item');
+      moveX(target, 25, 210);
+
+      inputs = document.querySelectorAll('.ui-sortable-item input');
+
+      expect(inputs[0].value).to.equal('bar');
+      expect(inputs[1].value).to.equal('baz');
+      expect(inputs[2].value).to.equal('foo');
     });
   });
 });
