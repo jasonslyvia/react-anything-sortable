@@ -119,6 +119,14 @@ Constrain dragging area within sortable container.
 
 [demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html#/containment)
 
+### dynamic
+
+Type: Bool Default: false
+
+Dynamically update the sortable when its children change. If using this option, make sure to use the onSort callback to update the order of the children passed to the Sortable component when the user sorts!
+
+[demo](http://jasonslyvia.github.io/react-anything-sortable/demo/index.html#/dynamic)
+
 ### sortHandle
 
 Type: String Default: undefined
@@ -139,7 +147,7 @@ Will be returned by `onSort` callback in the form of array.
 
 1. Specify your style for `Sortable` and `Sortable Items`, check `sortable.css`, **it is NOT optional!**
 2. Don't forget the `this.renderWithSortable` call in `SortableItem`, or spread props to your component if using decorators.
-3. Since we can't track any children modification in `Sortable`, you have to use `key` to force update `Sortable` when adding/removing children. Checkout [dynamic demo](http://jasonslyvia.github.io/react-anything-sortable/demo/#/dynamic) for more details.
+3. In order to dynamically add or remove `SortableItem`s or change their order from outside the `Sortable`, you must use the `dynamic` option. This also requires using the `onSort` callback to update the order of the children when sorting happens.
 4. Make sure to add `draggable={false}` to images within sortable components to prevent glitching. See [here](https://github.com/jasonslyvia/react-anything-sortable/blob/master/demo/components/ImageItem.js) for an example.
 
 
