@@ -446,7 +446,7 @@ const Sortable = React.createClass({
         sortHandle: this.props.sortHandle
       };
 
-      if (!this.props.dynamic && !item.key) {
+      if (item.key === undefined) {
         sortableProps.key = index;
       }
 
