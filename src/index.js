@@ -427,14 +427,14 @@ const Sortable = React.createClass({
         return;
       }
 
+      if (index === this._draggingIndex) {
+        draggingItem = this.renderDraggingItem(item);
+      }
+
       const isPlaceHolder = _dimensionArr[index].isPlaceHolder;
       const itemClassName = `ui-sortable-item
                              ${isPlaceHolder && 'ui-sortable-placeholder'}
                              ${this.state.isDragging && isPlaceHolder && 'visible'}`;
-
-      if (index === this._draggingIndex && isPlaceHolder) {
-        draggingItem = this.renderDraggingItem(item);
-      }
 
       const sortableProps = {
         sortableClassName: `${item.props.className} ${itemClassName}`,

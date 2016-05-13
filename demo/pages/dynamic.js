@@ -37,7 +37,7 @@ export default class Dynamic extends React.Component {
         <DemoItem key={num} className="dynamic-item" sortData={num}>
           {num}
           <span className="delete"
-            onMouseDown={this.handleRemoveElement.bind(this, index)}
+            onClick={this.handleRemoveElement.bind(this, index)}
           >&times;</span>
         </DemoItem>
       );
