@@ -436,7 +436,7 @@ const Sortable = React.createClass({
         draggingItem = this.renderDraggingItem(item);
       }
 
-      return React.cloneElement(item, {
+      const sortableProps = {
         sortableClassName: `${item.props.className} ${itemClassName}`,
         sortableIndex: index,
         onSortableItemReadyToMove: isPlaceHolder ? undefined : (e) => {
@@ -444,7 +444,13 @@ const Sortable = React.createClass({
         },
         onSortableItemMount: this.handleChildUpdate,
         sortHandle: this.props.sortHandle
-      });
+      };
+
+      if (!this.props.dynamic && !item.key) {
+        sortableProps.key = index;
+      }
+
+      return React.cloneElement(item, sortableProps);
     });
 
     const children = Array.isArray(this.props.children) ?
