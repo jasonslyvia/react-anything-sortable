@@ -17,7 +17,7 @@ import SortableItemMixin from './SortableItemMixin';
 const STACK_SIZE = 6;
 const getSortTarget = (child) => {
   // `onSortableItemReadyToMove` only exist when using mixins or decorators
-  return child && child.props && typeof child.props.onSortableItemReadyToMove === 'function';
+  return child && child.props && isFunction(child.props.onSortableItemReadyToMove);
 };
 
 /**
@@ -279,7 +279,7 @@ const Sortable = React.createClass({
       if (relativeLeft < item.fullWidth && relativeTop < item.fullHeight) {
         if (relativeLeft < item.fullWidth / 2 && direction === 'left') {
           newIndex = index;
-        } else if (relativeLeft > item.fullWidth / 2 && direction === 'right'){
+        } else if (relativeLeft > item.fullWidth / 2 && direction === 'right') {
           newIndex = Math.min(index + 1, _dimensionArr.length - 1);
         } else if (relativeTop < item.fullHeight / 2 && direction === 'up') {
           newIndex = index;
