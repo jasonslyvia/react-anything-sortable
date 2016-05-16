@@ -204,3 +204,18 @@ a.active {
   line-height: 50px;
   margin-right: 20px;
 }
+
+.vertical-container {
+  width: 200px;
+  padding: 10px;
+  border: 1px #ccc solid;
+}
+
+.vertical.ui-sortable-item {
+  float: none;
+  display: block;
+  width: 100%;
+  padding: 10px 5px;
+  margin-bottom: 10px;
+  border: 1px #eee solid;
+}
