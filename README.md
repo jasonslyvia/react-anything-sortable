@@ -169,3 +169,4 @@ $ npm run demo:watch
 3. [zthomas](https://github.com/zthomas)
 4. [jakubruffer](https://github.com/jakubruffer)
 5. [Fabeline](https://github.com/Fabeline)
+6. [antialiasis](https://github.com/antialiasis)
