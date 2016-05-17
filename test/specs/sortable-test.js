@@ -557,5 +557,72 @@ describe('Sortable', () => {
       expect(draggingItem).to.exist;
     });
   });
+
+  describe('Dynamic sortables', () => {
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+    });
+
+    it('should automatically update when children change', () => {
+      ReactDOM.render(
+        <Sortable dynamic>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      ReactDOM.render(
+        <Sortable dynamic>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <DemoItem sortData="1" className="item-1" key={1}>1</DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      let children = document.querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(3);
+      expect(children[0].textContent).to.equal('2');
+
+      ReactDOM.render(
+        <Sortable dynamic>
+          <DemoItem sortData="2" className="item-2" key={2}>2</DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}>3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      children = document.querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(2);
+      expect(children[1].textContent).to.equal('3');
+    });
+
+    it('should correctly reorder keyed items, maintaining state', () => {
+      ReactDOM.render(
+        <Sortable className="style-for-test" dynamic>
+          <DemoItem sortData="1" className="item-1" key={1}><input size="3" /></DemoItem>
+          <DemoItem sortData="2" className="item-2" key={2}><input size="3" /></DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}><input size="3" /></DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      let inputs = document.querySelectorAll('.ui-sortable-item input');
+      inputs[0].value = 'foo';
+      inputs[1].value = 'bar';
+      inputs[2].value = 'baz';
+
+      ReactDOM.render(
+        <Sortable className="style-for-test" dynamic>
+          <DemoItem sortData="2" className="item-2" key={2}><input size="3" /></DemoItem>
+          <DemoItem sortData="3" className="item-3" key={3}><input size="3" /></DemoItem>
+          <DemoItem sortData="1" className="item-1" key={1}><input size="3" /></DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      inputs = document.querySelectorAll('.ui-sortable-item input');
+
+      expect(inputs[0].value).to.equal('bar');
+      expect(inputs[1].value).to.equal('baz');
+      expect(inputs[2].value).to.equal('foo');
+    });
+  });
 });
 

@@ -8,18 +8,15 @@ export default class Dynamic extends React.Component {
     this.state = {
       arr: [998, 225, 13]
     };
-    this._sortableKey = 0;
   }
 
   handleSort(sortedArray) {
-    this._sortableKey++;
     this.setState({
       arr: sortedArray
     });
   }
 
   handleAddElement() {
-    this._sortableKey++;
     this.setState({
       arr: this.state.arr.concat(Math.round(Math.random() * 1000))
     });
@@ -28,7 +25,6 @@ export default class Dynamic extends React.Component {
   handleRemoveElement(index) {
     const newArr = this.state.arr.slice();
     newArr.splice(index, 1);
-    this._sortableKey++;
 
     this.setState({
       arr: newArr
@@ -38,10 +34,10 @@ export default class Dynamic extends React.Component {
   render() {
     function renderItem(num, index) {
       return (
-        <DemoItem key={index} className="dynamic-item" sortData={num}>
+        <DemoItem key={num} className="dynamic-item" sortData={num}>
           {num}
           <span className="delete"
-            onMouseDown={this.handleRemoveElement.bind(this, index)}
+            onClick={this.handleRemoveElement.bind(this, index)}
           >&times;</span>
         </DemoItem>
       );
@@ -55,7 +51,7 @@ export default class Dynamic extends React.Component {
         </h4>
         <div className="dynamic-demo">
           <button onClick={::this.handleAddElement}>Add 1 element</button>
-          <Sortable key={this._sortableKey} onSort={::this.handleSort}>
+          <Sortable onSort={::this.handleSort} dynamic>
             {this.state.arr.map(renderItem, this)}
           </Sortable>
         </div>

@@ -35,13 +35,14 @@ const Sortable = React.createClass({
     className: PropTypes.string,
     sortHandle: PropTypes.string,
     containment: PropTypes.bool,
+    dynamic: PropTypes.bool,
     children: PropTypes.arrayOf(PropTypes.node)
   },
 
-  getInitialState() {
-    const children = Array.isArray(this.props.children) ?
-                     this.props.children :
-                     [this.props.children];
+  setArrays(currentChildren) {
+    const children = Array.isArray(currentChildren) ?
+                     currentChildren :
+                     [currentChildren];
 
     const sortChildren = children.filter(getSortTarget);
     this.sortChildren = sortChildren;
@@ -55,6 +56,10 @@ const Sortable = React.createClass({
     while (i < this._dimensionArr.length) {
       this._orderArr.push(i++);
     }
+  },
+
+  getInitialState() {
+    this.setArrays(this.props.children);
 
     return {
       isDragging: false,
@@ -72,6 +77,13 @@ const Sortable = React.createClass({
     this._left = rect.left + document.body.scrollLeft;
     this._bottom = this._top + rect.height;
     this._right = this._left + rect.width;
+  },
+
+  componentWillReceiveProps(nextProps) {
+    const { children, dynamic } = this.props;
+    if (dynamic && nextProps.children !== children) {
+      this.setArrays(nextProps.children);
+    }
   },
 
   componentWillUnmount() {
@@ -424,8 +436,7 @@ const Sortable = React.createClass({
                              ${isPlaceHolder && 'ui-sortable-placeholder'}
                              ${this.state.isDragging && isPlaceHolder && 'visible'}`;
 
-      return React.cloneElement(item, {
-        key: index,
+      const sortableProps = {
         sortableClassName: `${item.props.className} ${itemClassName}`,
         sortableIndex: index,
         onSortableItemReadyToMove: isPlaceHolder ? undefined : (e) => {
@@ -433,7 +444,13 @@ const Sortable = React.createClass({
         },
         onSortableItemMount: this.handleChildUpdate,
         sortHandle: this.props.sortHandle
-      });
+      };
+
+      if (item.key === undefined) {
+        sortableProps.key = index;
+      }
+
+      return React.cloneElement(item, sortableProps);
     });
 
     const children = Array.isArray(this.props.children) ?
@@ -467,7 +484,7 @@ const Sortable = React.createClass({
     };
     return React.cloneElement(item, {
       sortableClassName: `${item.props.className} ui-sortable-item ui-sortable-dragging`,
-      key: this._dimensionArr.length,
+      key: '_dragging',
       sortableStyle: style,
       isDragging: true,
       sortHandle: this.props.sortHandle
