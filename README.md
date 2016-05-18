@@ -143,6 +143,13 @@ Type: Any Default: undefined
 
 Will be returned by `onSort` callback in the form of array.
 
+### direction
+
+Type: String Default: false 
+Options: vertical, horizontal
+
+Will force dragging direction to vertical or horizontal mode.
+
 ## Notice
 
 1. Specify your style for `Sortable` and `Sortable Items`, check `sortable.css`, **it is NOT optional!**

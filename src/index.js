@@ -36,6 +36,7 @@ const Sortable = React.createClass({
     sortHandle: PropTypes.string,
     containment: PropTypes.bool,
     dynamic: PropTypes.bool,
+    direction: PropTypes.string,
     children: PropTypes.arrayOf(PropTypes.node)
   },
 
@@ -198,8 +199,8 @@ const Sortable = React.createClass({
 
     this.setState({
       isDragging: true,
-      top: newOffset.top,
-      left: newOffset.left,
+      top: this.props.direction === 'horizontal' ? this._initOffset.top : newOffset.top,
+      left: this.props.direction === 'vertical' ? this._initOffset.left : newOffset.left,
       placeHolderIndex: newIndex
     });
 
