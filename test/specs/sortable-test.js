@@ -376,6 +376,46 @@ describe('Sortable', () => {
     });
   });
 
+  describe('Direction lock', () => {
+
+    it('should NOT move vertically on horizontal mode', () => {
+      ReactDOM.render(
+        <Sortable direction="horizontal">
+          <DemoItem sortData="1" className="item-1">1</DemoItem>
+          <DemoItem sortData="2" className="item-2">2</DemoItem>
+          <DemoItem sortData="3" className="item-3">3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      const target = document.querySelector('.item-1');
+      const initOffset = target.getBoundingClientRect();
+      moveX(target, 100, 20, 50, true);
+
+      const draggingItem = document.querySelector('.ui-sortable-dragging');
+
+      expect(draggingItem.getBoundingClientRect().top).to.equal(initOffset.top);
+    });
+
+    it('should NOT move horizontally on vertical mode', () => {
+      ReactDOM.render(
+        <Sortable direction="vertical">
+          <DemoItem sortData="1" className="item-1">1</DemoItem>
+          <DemoItem sortData="2" className="item-2">2</DemoItem>
+          <DemoItem sortData="3" className="item-3">3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      const target = document.querySelector('.item-1');
+      const initOffset = target.getBoundingClientRect();
+      moveY(target, 100, 20, 50, true);
+
+      const draggingItem = document.querySelector('.ui-sortable-dragging');
+
+      expect(draggingItem.getBoundingClientRect().left).to.equal(initOffset.left);
+    });
+
+  });
+
   describe('Higher order component', () => {
     let component, target;
 
