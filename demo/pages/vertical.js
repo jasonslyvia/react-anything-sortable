@@ -22,7 +22,7 @@ export default class Vertical extends React.Component {
           <a href="https://github.com/jasonslyvia/react-anything-sortable/tree/master/demo/pages/vertical.js" target="_blank">source</a>
         </h4>
         <p className="sort-result">result: {this.state.result}</p>
-        <Sortable onSort={::this.handleSort} className="vertical-container">
+        <Sortable onSort={::this.handleSort} className="vertical-container" direction="vertical">
           <DemoHOCItem className="vertical" sortData="react" key={1}>
             React
           </DemoHOCItem>
