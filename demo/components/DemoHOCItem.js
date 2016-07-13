@@ -5,7 +5,12 @@ import { sortable } from '../../src/index.js';
 class DemoHOCItem extends React.Component {
   render() {
     return (
-      <div {...this.props}>
+      <div
+        className={this.props.className}
+        style={this.props.style}
+        onMouseDown={this.props.onMouseDown}
+        onTouchStart={this.props.onTouchStart}
+      >
         {this.props.children}
       </div>
     );
