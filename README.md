@@ -70,7 +70,13 @@ import { sortable } from 'react-anything-sortable';
 class SortableItem extends React.Component {
   render() {
     return (
-      <div {...this.props}>      // <-- make sure destructure props to your own item,
+      <div
+        className={this.props.className}
+        style={this.props.style}
+        onMouseDown={this.props.onMouseDown}
+        onTouchStart={this.props.onTouchStart}
+
+      >                          // <-- make sure pass these props to your own item,
         your item                //     it contains required `className`s and
       </div>                     //     event handlers
     );
