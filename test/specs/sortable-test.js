@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Sortable from '../../src/index';
 import DemoItem from '../../demo/components/DemoItem';
 import DemoHOCItem from '../../demo/components/DemoHOCItem';
+import DemoContainerItem from '../../demo/components/DemoContainerItem';
 import triggerEvent from '../triggerEvent';
 import spies from 'chai-spies';
 import { moveX, moveY } from '../mouseMove';
@@ -416,11 +417,99 @@ describe('Sortable', () => {
 
   });
 
-  describe('Higher order component', () => {
-    let component, target;
+  const componentTest = function() {
+    it('should add a dragging children', function() {
+      this.target = document.querySelector('.ui-sortable-item');
 
-    beforeEach(() => {
-      component = ReactDOM.render(
+      triggerEvent(this.target, 'mousedown', {
+        clientX: 11,
+        clientY: 11,
+        offset: {
+          left: 1,
+          top: 1
+        }
+      });
+
+      triggerEvent(this.target, 'mousemove');
+
+      const children = ReactDOM.findDOMNode(this.component).querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(4);
+    });
+
+
+    it('should switch position when dragging from left to right', function() {
+      this.target = document.querySelector('.ui-sortable-item');
+      moveX(this.target, 25, 210);
+
+      const children = ReactDOM.findDOMNode(this.component).querySelectorAll('.ui-sortable-item');
+      expect(children[children.length - 1].textContent).to.equal('1');
+    });
+
+
+    it('should switch position when dragging from right to left', function() {
+      this.target = document.querySelector('.item-3');
+      moveX(this.target, 210, 25);
+
+      const children = ReactDOM.findDOMNode(this.component).querySelectorAll('.ui-sortable-item');
+      expect(children[0].textContent).to.equal('3');
+    });
+
+    it('should remove dragging children when mouseup', function() {
+      this.target = document.querySelector('.ui-sortable-item');
+
+      triggerEvent(this.target, 'mousedown', {
+        clientX: 11,
+        clientY: 11,
+        offset: {
+          left: 1,
+          top: 1
+        }
+      });
+
+      triggerEvent(this.target, 'mouseup', {
+        clientX: 50,
+        clientY: 10
+      });
+
+      const children = ReactDOM.findDOMNode(this.component).querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(3);
+    });
+
+    it('should NOT move item if there is no preceding mousedown event', function() {
+      this.target = document.querySelector('.item-1');
+
+      triggerEvent(this.target, 'mousedown', {
+        clientX: 25,
+        clientY: 11,
+        offset: {
+          left: 1,
+          top: 1
+        }
+      });
+
+      triggerEvent(this.target, 'mouseup', {
+        clientX: 25,
+        clientY: 11
+      });
+
+      triggerEvent(this.target, 'mousemove', {
+        clientX: 26,
+        clientY: 11
+      });
+
+      triggerEvent(this.target, 'mousemove', {
+        clientX: 300,
+        clientY: 20
+      });
+
+      this.target = document.querySelector('.ui-sortable-dragging');
+      expect(this.target).to.not.exist;
+    });
+  }
+
+  describe('Higher order component', function() {
+    beforeEach(function() {
+      this.component = ReactDOM.render(
         <Sortable className="style-for-test">
           <DemoHOCItem sortData="1" className="item-1" key={1}>1</DemoHOCItem>
           <DemoHOCItem sortData="2" className="item-2" key={2}>2</DemoHOCItem>
@@ -429,99 +518,33 @@ describe('Sortable', () => {
       , document.getElementById('react'));
     });
 
-    afterEach(() => {
+    afterEach(function() {
       ReactDOM.unmountComponentAtNode(document.getElementById('react'));
-      component = null;
-      target = null;
+      this.component = null;
+      this.target = null;
     });
 
-    it('should add a dragging children', () => {
-      target = document.querySelector('.ui-sortable-item');
+    componentTest();
+  });
 
-      triggerEvent(target, 'mousedown', {
-        clientX: 11,
-        clientY: 11,
-        offset: {
-          left: 1,
-          top: 1
-        }
-      });
-
-      triggerEvent(target, 'mousemove');
-
-      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
-      expect(children.length).to.equal(4);
+  describe('SortableContainer component', function() {
+    beforeEach(function() {
+      this.component = ReactDOM.render(
+        <Sortable className="style-for-test">
+          <DemoContainerItem sortData="1" className="item-1" key={1}>1</DemoContainerItem>
+          <DemoContainerItem sortData="2" className="item-2" key={2}><span>2</span></DemoContainerItem>
+          <DemoContainerItem sortData="3" className="item-3" key={3}>3</DemoContainerItem>
+        </Sortable>
+      , document.getElementById('react'));
     });
 
-
-    it('should switch position when dragging from left to right', () => {
-      target = document.querySelector('.ui-sortable-item');
-      moveX(target, 25, 210);
-
-      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
-      expect(children[children.length - 1].textContent).to.equal('1');
+    afterEach(function() {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+      this.component = null;
+      this.target = null;
     });
 
-
-    it('should switch position when dragging from right to left', () => {
-      target = document.querySelector('.item-3');
-      moveX(target, 210, 25);
-
-      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
-      expect(children[0].textContent).to.equal('3');
-    });
-
-    it('should remove dragging children when mouseup', () => {
-      target = document.querySelector('.ui-sortable-item');
-
-      triggerEvent(target, 'mousedown', {
-        clientX: 11,
-        clientY: 11,
-        offset: {
-          left: 1,
-          top: 1
-        }
-      });
-
-      triggerEvent(target, 'mouseup', {
-        clientX: 50,
-        clientY: 10
-      });
-
-      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
-      expect(children.length).to.equal(3);
-    });
-
-    it('should NOT move item if there is no preceding mousedown event', () => {
-      target = document.querySelector('.item-1');
-
-      triggerEvent(target, 'mousedown', {
-        clientX: 25,
-        clientY: 11,
-        offset: {
-          left: 1,
-          top: 1
-        }
-      });
-
-      triggerEvent(target, 'mouseup', {
-        clientX: 25,
-        clientY: 11
-      });
-
-      triggerEvent(target, 'mousemove', {
-        clientX: 26,
-        clientY: 11
-      });
-
-      triggerEvent(target, 'mousemove', {
-        clientX: 300,
-        clientY: 20
-      });
-
-      target = document.querySelector('.ui-sortable-dragging');
-      expect(target).to.not.exist;
-    });
+    componentTest();
   });
 
   describe('Sort handle', () => {
