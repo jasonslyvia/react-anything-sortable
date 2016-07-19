@@ -64,13 +64,37 @@ A modern usage would be
 
 ```javascript
 import React from 'react';
+import { SortableContainer } from 'react-anything-sortable';
+
+class SortableItem extends React.Component {
+  render() {
+    return (
+      <SortableContainer>
+        <div>
+          your item
+        </div>
+      </SortableContainer>
+    );
+  }
+};
+```
+
+or you want to construct it manually
+
+```javascript
+import React from 'react';
 import { sortable } from 'react-anything-sortable';
 
 @sortable
 class SortableItem extends React.Component {
   render() {
     return (
-      <div {...this.props}>      // <-- make sure destructure props to your own item,
+      <div                       // <-- make sure pass props to your own item,
+        className={this.props.className}
+        style={this.props.style}
+        onMouseDown={this.props.onMouseDown}
+        onTouchStart={this.props.onTouchStart}
+      >
         your item                //     it contains required `className`s and
       </div>                     //     event handlers
     );
