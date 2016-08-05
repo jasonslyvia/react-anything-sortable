@@ -24,14 +24,6 @@ function handleSortableItemReadyToMove(e) {
 function handleComponentDidMount() {
   const node = ReactDOM.findDOMNode(this);
 
-  on(node, 'selectstart', (e) => {
-    if (e.preventDefault) {
-      e.preventDefault();
-    } else {
-      e.returnValue = false;
-    }
-  });
-
   if (isFunction(this.props.onSortableItemMount)) {
     this.props.onSortableItemMount(position(node),
                                    width(node),
