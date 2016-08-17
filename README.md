@@ -31,7 +31,7 @@ $ npm install --save react-anything-sortable
 // UMD build is provided as well, but please do consider use modern module bundlers like webpack or browserify.
 ```
 
-You have to add necessary styles for sortable working properly, if you're using bundle tools like webpack, just 
+You have to add necessary styles for sortable to work properly, if you're using bundle tools like webpack, just 
 
 ```javascript
 import 'react-anything-sortable/sortable.css';
