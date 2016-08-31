@@ -66,6 +66,7 @@ A modern usage would be
 import React from 'react';
 import { SortableContainer } from 'react-anything-sortable';
 
+@sortable
 class SortableItem extends React.Component {
   render() {
     return (
@@ -79,7 +80,7 @@ class SortableItem extends React.Component {
 };
 ```
 
-or you want to construct it manually
+Or you want to construct it manually
 
 ```javascript
 import React from 'react';
