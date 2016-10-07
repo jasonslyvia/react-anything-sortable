@@ -428,7 +428,7 @@ const Sortable = React.createClass({
         return;
       }
 
-      if (index === this._draggingIndex) {
+      if (index === this._draggingIndex && this.state.isDragging) {
         draggingItem = this.renderDraggingItem(item);
       }
 
