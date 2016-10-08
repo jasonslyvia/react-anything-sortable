@@ -70,7 +70,7 @@ import { SortableContainer } from 'react-anything-sortable';
 class SortableItem extends React.Component {
   render() {
     return (
-      <SortableContainer>
+      <SortableContainer {...this.props}>
         <div>
           your item
         </div>
