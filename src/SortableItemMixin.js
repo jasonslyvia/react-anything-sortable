@@ -67,7 +67,7 @@ const _defaultProps = {
 
 /**
  * @class A factory for generating either mixin or High Order Component
- *        depending if there is a argument passed in
+ *        depending if there is an argument passed in
  *
  * @param {React} Component An optinal argument for creating HOCs, leave it
  *                blank if you'd like old mixin
