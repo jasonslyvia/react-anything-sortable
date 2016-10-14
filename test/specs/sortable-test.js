@@ -527,6 +527,37 @@ describe('Sortable', () => {
     componentTest();
   });
 
+  describe('SortableContainer component with custom component', function() {
+    beforeEach(function() {
+      const CustomComponent = ({ className, style, onMouseDown, onMouseStart, children }) => (
+        <div
+          className={className}
+          style={style}
+          onMouseDown={onMouseDown}
+          onMouseStart={onMouseStart}
+        >
+          {children}
+        </div>
+      )
+
+      this.component = ReactDOM.render(
+        <Sortable className="style-for-test">
+          <DemoContainerItem sortData="1" className="item-1" key={1} component={<CustomComponent />}>1</DemoContainerItem>
+          <DemoContainerItem sortData="2" className="item-2" key={2} component={<div />}>2</DemoContainerItem>
+          <DemoContainerItem sortData="3" className="item-3" key={3} component={<span />}>3</DemoContainerItem>
+        </Sortable>
+      , document.getElementById('react'));
+    });
+
+    afterEach(function() {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+      this.component = null;
+      this.target = null;
+    });
+
+    componentTest();
+  });
+
   describe('SortableContainer component', function() {
     beforeEach(function() {
       this.component = ReactDOM.render(
