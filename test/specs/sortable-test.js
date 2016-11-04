@@ -687,5 +687,53 @@ describe('Sortable', () => {
       expect(inputs[2].value).to.equal('foo');
     });
   });
+
+  describe('Dragging children with dynamic', () => {
+    let component, target;
+
+    beforeEach(() => {
+      
+    });
+
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(document.getElementById('react'));
+      component = null;
+      target = null;
+    });
+
+    it('should add a dragging children if mouse is moved', () => {
+
+      component = ReactDOM.render(
+        <Sortable className="style-for-test" dynamic>
+          <DemoItem sortData="1" className="item-1">1</DemoItem>
+          <DemoItem sortData="2" className="item-2">2</DemoItem>
+          <DemoItem sortData="3" className="item-3">3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      target = document.querySelector('.ui-sortable-item');
+
+      triggerEvent(target, 'mousedown', {
+        clientX: 11,
+        clientY: 11,
+      });
+
+      component = ReactDOM.render(
+        <Sortable className="style-for-test" dynamic>
+          <DemoItem sortData="1" className="item-1">1</DemoItem>
+          <DemoItem sortData="2" className="item-2">2</DemoItem>
+          <DemoItem sortData="3" className="item-3">3</DemoItem>
+        </Sortable>
+      , document.getElementById('react'));
+
+      const children = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      expect(children.length).to.equal(3);
+
+      triggerEvent(target, 'mousemove');
+
+      const childrenAfter = ReactDOM.findDOMNode(component).querySelectorAll('.ui-sortable-item');
+      expect(childrenAfter.length).to.equal(4);
+    });
+  });
 });
 
