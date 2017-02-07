@@ -1,3 +1,7 @@
+This project is in INACTIVE status, feel free to use it if it suits your need, but no new feature will be added. For complicated sorting features, I'd recommend [react-dnd](https://github.com/react-dnd/react-dnd) by dan.
+
+-----
+
 # react-anything-sortable [![Build Status](https://travis-ci.org/jasonslyvia/react-anything-sortable.svg)](https://travis-ci.org/jasonslyvia/react-anything-sortable) [![npm version](https://badge.fury.io/js/react-anything-sortable.svg)](http://badge.fury.io/js/react-anything-sortable) [![Coverage Status](https://coveralls.io/repos/github/jasonslyvia/react-anything-sortable/badge.svg?branch=master)](https://coveralls.io/github/jasonslyvia/react-anything-sortable?branch=master)
 
 ## Features
