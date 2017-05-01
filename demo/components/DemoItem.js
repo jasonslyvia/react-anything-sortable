@@ -1,7 +1,8 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { SortableItemMixin } from '../../src/index.js';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [SortableItemMixin],
 
   getDefaultProps() {
