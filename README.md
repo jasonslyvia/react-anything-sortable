@@ -207,3 +207,4 @@ $ npm run demo:watch
 4. [jakubruffer](https://github.com/jakubruffer)
 5. [Fabeline](https://github.com/Fabeline)
 6. [antialiasis](https://github.com/antialiasis)
+7. [JasonKleban](https://github.com/JasonKleban)
