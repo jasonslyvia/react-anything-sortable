@@ -111,9 +111,10 @@ Or if you favor the old fashion way
 
 ````javascript
 var React = require('react');
+var createReactClass = require('create-react-class');
 var SortableItemMixin = require('react-anything-sortable').SortableItemMixin;
 
-var SortableItem = React.createClass({
+var SortableItem = createReactClass({
   mixins: [SortableItemMixin],
 
   render: function(){

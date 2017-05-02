@@ -7,7 +7,9 @@
 /**
  * @dependency
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import { on, off, isFunction, isNumeric, position, closest, get,
         assign, findMostOften } from './utils';
@@ -23,7 +25,7 @@ const getSortTarget = (child) => {
 /**
  * @class Sortable
  */
-const Sortable = React.createClass({
+const Sortable = createReactClass({
   propTypes: {
     /**
      * callback fires after sort operation finish
