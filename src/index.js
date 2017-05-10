@@ -15,6 +15,8 @@ import { on, off, isFunction, isNumeric, position, closest, get,
         assign, findMostOften } from './utils';
 import SortableItemMixin from './SortableItemMixin';
 
+const doc = window.document;
+
 
 const STACK_SIZE = 6;
 const getSortTarget = (child) => {
@@ -76,8 +78,11 @@ const Sortable = createReactClass({
     const container = ReactDOM.findDOMNode(this);
     const rect = container.getBoundingClientRect();
 
-    this._top = rect.top + document.body.scrollTop;
-    this._left = rect.left + document.body.scrollLeft;
+    const scrollTop = (doc.docElement && doc.docElement.scrollTop) || doc.body.scrollTop;
+    const scrollLeft = (doc.docElement && doc.docElement.scrollLeft) || doc.body.scrollLeft;
+
+    this._top = rect.top + scrollTop;
+    this._left = rect.left + scrollLeft;
     this._bottom = this._top + rect.height;
     this._right = this._left + rect.width;
   },
@@ -132,19 +137,19 @@ const Sortable = createReactClass({
       this.handleMouseUp.call(this, e);
     };
 
-    on(document, 'touchmove', this.__touchMoveHandler);
-    on(document, 'touchend', this.__touchEndOrCancelHandler);
-    on(document, 'touchcancel', this.__touchEndOrCancelHandler);
-    on(document, 'mousemove', this.__mouseMoveHandler);
-    on(document, 'mouseup', this.__mouseUpHandler);
+    on(doc, 'touchmove', this.__touchMoveHandler);
+    on(doc, 'touchend', this.__touchEndOrCancelHandler);
+    on(doc, 'touchcancel', this.__touchEndOrCancelHandler);
+    on(doc, 'mousemove', this.__mouseMoveHandler);
+    on(doc, 'mouseup', this.__mouseUpHandler);
   },
 
   unbindEvent() {
-    off(document, 'touchmove', this.__touchMoveHandler);
-    off(document, 'touchend', this.__touchEndOrCancelHandler);
-    off(document, 'touchcancel', this.__touchEndOrCancelHandler);
-    off(document, 'mousemove', this.__mouseMoveHandler);
-    off(document, 'mouseup', this.__mouseUpHandler);
+    off(doc, 'touchmove', this.__touchMoveHandler);
+    off(doc, 'touchend', this.__touchEndOrCancelHandler);
+    off(doc, 'touchcancel', this.__touchEndOrCancelHandler);
+    off(doc, 'mousemove', this.__mouseMoveHandler);
+    off(doc, 'mouseup', this.__mouseUpHandler);
 
     this.__mouseMoveHandler = null;
     this.__mouseUpHandler = null;
@@ -359,7 +364,7 @@ const Sortable = createReactClass({
                            this.state.placeHolderIndex :
                            this._draggingIndex;
 
-    // Since `mousemove` is listened on document, when cursor move too fast,
+    // Since `mousemove` is listened on doc, when cursor move too fast,
     // `e.target` may be `body` or some other stuff instead of
     // `.ui-sortable-item`
     const target = get('.ui-sortable-dragging') ||
