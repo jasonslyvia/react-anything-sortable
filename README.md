@@ -1,4 +1,4 @@
-This project is in INACTIVE status, feel free to use it if it suits your need, but no new feature will be added. For complicated sorting features, I'd recommend [react-dnd](https://github.com/react-dnd/react-dnd) by dan.
+This project is in INACTIVE status, bugfix will be maintained, but no new feature will be added. Feel free to use it if it suits your need, for complicated sorting features I'd recommend [react-dnd](https://github.com/react-dnd/react-dnd) by dan.
 
 -----
 
