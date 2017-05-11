@@ -15,7 +15,7 @@ import { on, off, isFunction, isNumeric, position, closest, get,
         assign, findMostOften } from './utils';
 import SortableItemMixin from './SortableItemMixin';
 
-const doc = window.document;
+const doc = typeof window === 'object' ? window.document : {};
 
 
 const STACK_SIZE = 6;
@@ -364,7 +364,7 @@ const Sortable = createReactClass({
                            this.state.placeHolderIndex :
                            this._draggingIndex;
 
-    // Since `mousemove` is listened on doc, when cursor move too fast,
+    // Since `mousemove` is listened on document, when cursor move too fast,
     // `e.target` may be `body` or some other stuff instead of
     // `.ui-sortable-item`
     const target = get('.ui-sortable-dragging') ||
