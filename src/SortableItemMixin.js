@@ -137,8 +137,8 @@ export default (Component) => {
         className: this.props.sortableClassName,
         style: this.props.sortableStyle,
         sortHandle: this.props.sortHandle,
-        onMouseDown: this.handleSortableItemReadyToMove,
-        onTouchStart: this.handleSortableItemReadyToMove
+        onMouseDown: ::this.handleSortableItemReadyToMove,
+        onTouchStart: ::this.handleSortableItemReadyToMove
       });
     }
   };
