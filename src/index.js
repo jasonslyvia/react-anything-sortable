@@ -75,16 +75,7 @@ const Sortable = createReactClass({
   },
 
   componentDidUpdate() {
-    const container = ReactDOM.findDOMNode(this);
-    const rect = container.getBoundingClientRect();
-
-    const scrollTop = (doc.docElement && doc.docElement.scrollTop) || doc.body.scrollTop;
-    const scrollLeft = (doc.docElement && doc.docElement.scrollLeft) || doc.body.scrollLeft;
-
-    this._top = rect.top + scrollTop;
-    this._left = rect.left + scrollLeft;
-    this._bottom = this._top + rect.height;
-    this._right = this._left + rect.width;
+    this.calculateContainer();
   },
 
   componentWillReceiveProps(nextProps) {
@@ -170,6 +161,8 @@ const Sortable = createReactClass({
     this._isReadyForDragging = true;
     this._hasInitDragging = false;
 
+    // calculate container current position
+    this.calculateContainer();
     // start listening mousemove and mouseup
     this.bindEvent();
   },
@@ -332,6 +325,20 @@ const Sortable = createReactClass({
     const srcEl = arr.splice(src, 1)[0];
     arr.splice(to, 0, srcEl);
     return arr;
+  },
+
+  calculateContainer() {
+    const container = ReactDOM.findDOMNode(this);
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+
+    const scrollTop = (doc.docElement && doc.docElement.scrollTop) || doc.body.scrollTop;
+    const scrollLeft = (doc.docElement && doc.docElement.scrollLeft) || doc.body.scrollLeft;
+
+    this._top = rect.top + scrollTop;
+    this._left = rect.left + scrollLeft;
+    this._bottom = this._top + rect.height;
+    this._right = this._left + rect.width;
   },
 
   /**
