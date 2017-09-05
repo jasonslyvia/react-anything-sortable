@@ -78,8 +78,8 @@ const Sortable = createReactClass({
     const container = ReactDOM.findDOMNode(this);
     const rect = container.getBoundingClientRect();
 
-    const scrollTop = (doc.docElement && doc.docElement.scrollTop) || doc.body.scrollTop;
-    const scrollLeft = (doc.docElement && doc.docElement.scrollLeft) || doc.body.scrollLeft;
+    const scrollTop = (doc.documentElement && doc.documentElement.scrollTop) || doc.body.scrollTop;
+    const scrollLeft = (doc.documentElement && doc.documentElement.scrollLeft) || doc.body.scrollLeft;
 
     this._top = rect.top + scrollTop;
     this._left = rect.left + scrollLeft;
@@ -160,7 +160,7 @@ const Sortable = createReactClass({
   /**
    * getting ready for dragging
    * @param  {object} e     React event
-   * @param  {numbner} index index of pre-dragging item
+   * @param  {index} index of pre-dragging item
    */
   handleMouseDown(e, index) {
     this._draggingIndex = index;
@@ -217,7 +217,6 @@ const Sortable = createReactClass({
 
   /**
    * replace placeholder with dragging item
-   * @param  {object} e     React event
    */
   handleMouseUp() {
     const _hasMouseMoved = this._isMouseMoving;
