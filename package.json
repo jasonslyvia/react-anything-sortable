@@ -1,6 +1,6 @@
 {
   "name": "react-anything-sortable",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "A ReactJS component that can drag and sort any children with IE8 compatibility",
   "main": "lib/index.js",
   "scripts": {
