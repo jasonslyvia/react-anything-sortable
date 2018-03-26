@@ -510,11 +510,11 @@ const Sortable = createReactClass({
 });
 
 const SortableContainer = ({
-  className, style, onMouseDown, onTouchStart, children,
+  className, style, onMouseDown, onTouchStart, children, component,
 }) => {
-  if (React.isValidElement(children)) {
-    return React.cloneElement(children, {
-      className, style, onMouseDown, onTouchStart
+  if (React.isValidElement(component)) {
+    return React.cloneElement(component, {
+      className, style, onMouseDown, onTouchStart, children,
     });
   } else {
     return React.createElement('div', {

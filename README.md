@@ -47,12 +47,27 @@ Or copy this css to your own style base.
 
 You can check the straight-forward demo by examining `demo` folder, or here's a brief example.
 
-In `app.js`
-
 ````javascript
 var ReactDOM = require('react-dom');
-var Sortable = require('react-anything-sortable');
-var SortableItem = require('./SortableItem');
+var { Sortable, sortable } = require('react-anything-sortable');
+
+@sortable
+class SortableItem extends React.Component {
+  render() {
+    return (
+      <div                       // <-- make sure pass props
+        className={this.props.className}
+        style={this.props.style}
+        onMouseDown={this.props.onMouseDown}
+        onTouchStart={this.props.onTouchStart}
+      >
+        <div>
+          your item
+        </div>
+      </div>
+    );
+  }
+};
 
 ReactDOM.render(
 <Sortable onSort={handleSort}>
@@ -60,51 +75,6 @@ ReactDOM.render(
   <SortableItem sortData="2" />
 </Sortable>
 , document.body);
-````
-
-and in `SortableItem.js`
-
-A modern usage would be
-
-```javascript
-import React from 'react';
-import { SortableContainer } from 'react-anything-sortable';
-
-@sortable
-class SortableItem extends React.Component {
-  render() {
-    return (
-      <SortableContainer>
-        <div>
-          your item
-        </div>
-      </SortableContainer>
-    );
-  }
-};
-```
-
-Or you want to construct it manually
-
-```javascript
-import React from 'react';
-import { sortable } from 'react-anything-sortable';
-
-@sortable
-class SortableItem extends React.Component {
-  render() {
-    return (
-      <div                       // <-- make sure pass props to your own item,
-        className={this.props.className}
-        style={this.props.style}
-        onMouseDown={this.props.onMouseDown}
-        onTouchStart={this.props.onTouchStart}
-      >
-        your item                //     it contains required `className`s and
-      </div>                     //     event handlers
-    );
-  }
-};
 ```
 
 Or if you favor the old fashion way
@@ -124,6 +94,79 @@ var SortableItem = createReactClass({
   }
 });
 ````
+
+Or use with `SortableContainer`, it wrapped by `sortable` decorator and help you accept necessary props.
+**Notice**: Do not put `SortableContainer` inside your own component.
+
+````javascript
+var ReactDOM = require('react-dom');
+var { Sortable } = require('react-anything-sortable');
+
+ReactDOM.render(
+<Sortable onSort={handleSort}>
+  <SortableContainer sortData="1" >
+    <div> your item </div>
+  </SortableContainer>
+  <SortableContainer sortData="2">
+    <div> your item </div>
+  </SortableContainer>
+</Sortable>
+, document.body);
+
+```
+
+`<SortableContainer />` will create a `<div>` tag to wrap your own item default. If you
+want to customize the `SortableContainer`, you can pass component prop to it. Like:
+
+```javascript
+var ReactDOM = require('react-dom');
+var { Sortable } = require('react-anything-sortable');
+
+ReactDOM.render(
+<Sortable onSort={handleSort}>
+  <SortableContainer component={<span />} sortableData="1"}>
+    <div> your item </div>
+  </SortableContainer>
+  <SortableContainer compoennt={<div />} sortData="2">
+    <div> your item </div>
+  </SortableContainer>
+</Sortable>
+, document.body);
+```
+
+If the component passed to `SortableContainer` is your own component, you should make it
+accept `className`, `style`, `onMouseDown`, `onTouchStart`, `children` from props.
+
+```javascript
+import React from 'react';
+import { Sortable } from 'react-anything-sortable';
+
+class MyOwnContainer extends React.Component {
+  render() {
+    return (
+      <div                       // <-- make sure pass props
+        className={this.props.className}
+        style={this.props.style}
+        onMouseDown={this.props.onMouseDown}
+        onTouchStart={this.props.onTouchStart}
+      >
+        {children}
+      </div>
+    );
+  }
+};
+
+ReactDOM.render(
+<Sortable onSort={handleSort}>
+  <SortableContainer component={<MyOwnContainer />} sortableData="1">
+    <div>your item </div>
+  </SortableContainer>
+  <SortableContainer component={<MyOwnContainer />} sortableData="2">
+    <div>your item </div>
+  </SortableContainer>
+</Sortable>
+, document.body);
+```
 
 You can even pass un-sortable children to `<Sortable />` and it just works, checkout this [demo](http://jasonslyvia.github.io/react-anything-sortable/demo/#/fixed) to find out more. If you do so, remember to add according style to your un-sortable items.
 
