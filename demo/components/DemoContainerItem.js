@@ -1,5 +1,15 @@
 import React from 'react';
-import { SortableContainer } from '../../src/index.js';
+import { sortable, SortableContainer } from '../../src/index.js';
 
-export default SortableContainer;
+@sortable
+class DemoContainerItem extends React.Component {
+  render() {
+    return (
+      <SortableContainer {...this.props}>
+        {this.props.children}
+      </SortableContainer>
+    );
+  }
+}
 
+export default DemoContainerItem;
